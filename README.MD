@@ -42,3 +42,6 @@ room they are in and what dangers lurk in nearby rooms.
 
 ### Additional Challenges:
 - [ ] Six expansions to be added
+
+### References:
+Whitaker, R. B. (2022). The C# player’s guide. RB Whitaker, pp 241-246
