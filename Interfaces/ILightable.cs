@@ -1,6 +1,6 @@
 ﻿namespace TheFountainOfObjects.Interfaces;
 
-public interface Lightable
+public interface ILightable
 {
-    
+    void LightUp();
 }

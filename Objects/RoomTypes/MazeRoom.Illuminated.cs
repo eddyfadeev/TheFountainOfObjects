@@ -2,7 +2,7 @@
 
 namespace TheFountainOfObjects;
 
-public partial class MazeRoom : ILightable
+public class IlluminatedRoom(int x, int y) : MazeRoom(x, y), ILightable
 {
     public void LightUp()
     {

@@ -5,6 +5,9 @@ namespace TheFountainOfObjects;
 public partial class MazeRoom(int x, int y)
 {
     public (int x, int y) RoomLocation { get; init; } = (x, y);
+    private bool _isSmelly;
+    private bool _isNoisy;
+    private bool _isLighted;
 
     public void IdentifyTheRoom()
     {
@@ -21,5 +24,10 @@ public partial class MazeRoom(int x, int y)
         {
             Console.WriteLine("You see nothing in this room.");
         }
+    }
+
+    internal MazeRoom CreateRoom(int xPos, int yPos)
+    {
+        return new MazeRoom(xPos, yPos);
     }
 }

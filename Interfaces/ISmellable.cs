@@ -1,6 +1,6 @@
 ﻿namespace TheFountainOfObjects.Interfaces;
 
-public interface Smellable
+public interface ISmellable
 {
-    
+     void Smell();
 }

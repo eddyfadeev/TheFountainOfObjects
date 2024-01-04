@@ -2,5 +2,5 @@
 
 public interface IHearable
 {
-    
+    void MakeNoise();
 }

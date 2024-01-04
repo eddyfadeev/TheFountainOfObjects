@@ -2,7 +2,7 @@
 
 namespace TheFountainOfObjects;
 
-public partial class MazeRoom : IHearable
+public class NoisyRoom(int x, int y) : MazeRoom(x, y), IHearable
 {
     public void MakeNoise()
     {
