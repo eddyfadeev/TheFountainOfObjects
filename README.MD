@@ -38,7 +38,7 @@ room they are in and what dangers lurk in nearby rooms.
   narrative items (intro, ending, etc.) may be magenta, descriptive text in white, input from the user
   in cyan, text describing entrance light in yellow, messages about the fountain in blue.
 - [ ] An example of what the program might look like is shown below:
-  ![example.png](C:\Users\eddyf\Downloads\example.png)
+  ![example.png](/example.png)
 
 ### Additional Challenges:
 - [ ] Six expansions to be added
