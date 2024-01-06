@@ -2,17 +2,34 @@
 
 public class Game
 {
-    private MazeRoom[ , ] _mazeRooms;
+    private readonly Room[ , ] _mazeRooms;
     
     public Game(int size)
     {
-        _mazeRooms = new MazeRoom[size, size];
-        // for (int x = 0; x < size; x++)
-        // {
-        //     for (int y = 0; y < size; y++) 
-        //     {
-        //         _mazeRooms[x, y] = new MazeRoom(x, y);
-        //     }
-        // }
+        _mazeRooms = new Room[size, size];
+        _mazeRooms[0, 0] = new EntranceRoom();
+        _mazeRooms[0, 2] = new FountainRoom();
+        
+        for (int row = 0; row < size; row++)
+        {
+            for (int col = 0; col < size; col++) 
+            {
+                if ((row == 0 && col == 0) || (row == 0 && col == 2)) continue;
+                
+                _mazeRooms[row, col] = new EmptyRoom(row, col);
+            }
+        }
+    }
+    
+    public void GetRooms()
+    {
+        for (int row = 0; row <= _mazeRooms.Rank + 1; row++)
+        {
+            for (int col = 0; col <= _mazeRooms.Rank + 1; col++)
+            {
+                Console.WriteLine($"Row: {row}, Column: {col}");
+                Console.WriteLine(_mazeRooms[row, col].IdentifyRoom());
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿## Math Game: A simple math game for kids
+﻿## The Fountain of Objects
 The Fountain of Objects game is a 2D grid-based world full of rooms. Most rooms are empty, but a few
 are unique rooms. One room is the cavern entrance. Another is the fountain room, containing the
 Fountain of Objects.
