@@ -5,6 +5,8 @@ class Program
     static void Main(string[] args)
     {
         Game game = new Game(4);
-        game.GetRooms();
+        
+        GameUtils.PrintRooms(game._mazeRooms);
+        
     }
 }

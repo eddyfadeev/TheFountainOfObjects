@@ -6,7 +6,7 @@ public class EmptyRoom(int row, int col, RoomType room = RoomType.Empty)
     public override RoomType IdentifyRoom()
     {
         Console.WriteLine("You feel nothing in this room.");
-        Console.WriteLine("It is empty.");
+        Console.WriteLine(!IsEmpty() ? "" : "It is empty.");
 
         return RoomType;
     }

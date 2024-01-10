@@ -2,7 +2,7 @@
 
 public class Game
 {
-    private readonly Room[ , ] _mazeRooms;
+    public readonly Room[ , ] _mazeRooms;
     
     public Game(int size)
     {
@@ -20,16 +20,23 @@ public class Game
             }
         }
     }
+
+    public void MovePlayer()
+    {
+        
+    }
     
-    public void GetRooms()
+    /*public void GetRooms()
     {
         for (int row = 0; row <= _mazeRooms.Rank + 1; row++)
         {
             for (int col = 0; col <= _mazeRooms.Rank + 1; col++)
             {
+                _mazeRooms[row, col].SetOccupancy(new Player());
                 Console.WriteLine($"Row: {row}, Column: {col}");
                 Console.WriteLine(_mazeRooms[row, col].IdentifyRoom());
+                Console.WriteLine(_mazeRooms[row, col].IsEmpty());
             }
         }
-    }
+    }*/
 }
