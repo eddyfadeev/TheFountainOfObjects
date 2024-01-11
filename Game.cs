@@ -2,10 +2,13 @@
 
 public class Game
 {
-    public readonly Room[ , ] _mazeRooms;
+    private readonly Room[ , ] _mazeRooms;
+    private readonly Player _player;
     
     public Game(int size)
     {
+        _player = CreatePLayer();
+        
         _mazeRooms = new Room[size, size];
         _mazeRooms[0, 0] = new EntranceRoom();
         _mazeRooms[0, 2] = new FountainRoom();
@@ -19,24 +22,53 @@ public class Game
                 _mazeRooms[row, col] = new EmptyRoom(row, col);
             }
         }
+        
+        _mazeRooms[0, 0].AddGameObject(_player);
     }
 
-    public void MovePlayer()
+    public void Start()
     {
-        
-    }
-    
-    /*public void GetRooms()
-    {
-        for (int row = 0; row <= _mazeRooms.Rank + 1; row++)
+        while (true)
         {
-            for (int col = 0; col <= _mazeRooms.Rank + 1; col++)
-            {
-                _mazeRooms[row, col].SetOccupancy(new Player());
-                Console.WriteLine($"Row: {row}, Column: {col}");
-                Console.WriteLine(_mazeRooms[row, col].IdentifyRoom());
-                Console.WriteLine(_mazeRooms[row, col].IsEmpty());
-            }
+            GameUtils.PrintRooms(_mazeRooms);
+            
+            var makeAMove = Console.ReadLine();
+            MovePlayer(makeAMove);
         }
-    }*/
+    }
+
+    private void MovePlayer(string direction)
+    {
+        (int row, int column) previousPosition = _player.GetPosition();
+        
+        int fieldSize = 4;
+        
+        try
+        {
+            Direction moveDirection = direction.ToLower() switch
+            {
+                "west" => Direction.West,
+                "east" => Direction.East,
+                "north" => Direction.North,
+                "south" => Direction.South,
+                _ => throw new KeyNotFoundException("Please enter a valid direction.")
+            };
+            
+            _player.Move(moveDirection, fieldSize);
+            _mazeRooms[_player.GetPosition().row, _player.GetPosition().column].AddGameObject(_player);
+            _mazeRooms[previousPosition.row, previousPosition.column].RemoveGameObject(_player);
+            _mazeRooms[previousPosition.row, previousPosition.column].SetEmpty();
+        }
+        catch (KeyNotFoundException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    private Player CreatePLayer()
+    {
+        var player = new Player();
+        player.SetName();
+        return player;
+    }
 }

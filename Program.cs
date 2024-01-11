@@ -6,7 +6,6 @@ class Program
     {
         Game game = new Game(4);
         
-        GameUtils.PrintRooms(game._mazeRooms);
-        
+        game.Start();
     }
 }
