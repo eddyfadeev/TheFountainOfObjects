@@ -16,19 +16,22 @@ public abstract class Room(int row, int column, RoomType roomType)
     
     public void SetEmpty()
     {
-        if (insideRoom.Count == 0)
-        {
-            _isEmpty = true;
-        }
-        else
-        {
-            Console.WriteLine("This room is not empty.");
-        }
+        _isEmpty = insideRoom.Count == 0;
     }
     
-    public void SetOccupancy(GameObject gameObject)
+    internal void AddGameObject(GameObject gameObject)
     {
-        _isEmpty = false;
         insideRoom.Add(gameObject);
+        _isEmpty = false;
+    }
+    
+    internal void RemoveGameObject(GameObject gameObject)
+    {
+        insideRoom.Remove(gameObject);
+    }
+    
+    internal bool ObjectIsPresent(Type type)
+    {
+        return insideRoom.Any(obj => obj.GetType() == type);
     }
 }

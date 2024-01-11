@@ -2,9 +2,22 @@
 
 public abstract class GameObject
 {
-    private protected (int row, int column) Position { get; set; }
+    protected (int row, int column) Position { get; set; }
+    private protected string? _name;
     
-    public abstract void Move(Direction direction);
+    public abstract (int row, int column) Move(Direction direction, int fieldSize);
+    
+    public abstract bool CanMove(Direction direction, int fieldSize);
 
-    public abstract void GetPosition();
+    public abstract (int row, int column) GetPosition();
+    
+    public string GetName()
+    {
+        return _name;
+    }
+
+    internal virtual void SetName()
+    {
+        _name = this.ToString();
+    }
 }
