@@ -19,8 +19,8 @@ room they are in and what dangers lurk in nearby rooms.
 - - [x] Show the fountain's position on the map (if visited)
 - - [x] Show entrance position on the map
 #### WIP:
-- [ ] Show the player's path on the map
-- [ ] Show what you can sense from the adjacent rooms
+- - [ ] Show the player's path on the map
+- - [ ] Show what you can sense from the adjacent rooms
 
 - [x] The game’s flow works like this: The player is told what they can sense in the dark (see, hear, smell).
   Then the player gets a chance to perform some action by typing it in.Their chosen action is resolved (the player moves, state of things in the game changes, checking for a win or a loss, etc.). Then the
