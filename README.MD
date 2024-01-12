@@ -9,35 +9,41 @@ Unnatural darkness pervades the caverns, preventing both natural and human-made 
 must navigate the caverns in the dark, relying on their sense of smell and hearing to determine what
 room they are in and what dangers lurk in nearby rooms.
 ### Objectives:
-- [ ] The world consists of a grid of rooms, where each room can be referenced by its row and column.
+- [x] The world consists of a grid of rooms, where each room can be referenced by its row and column.
   North is up, east is right, south is down, and west is left:
 
   ![map.jpg](/map.jpg)
+#### Improvements:
+- - [x] Show the map to the user
+- - [x] Show the player's position on the map
+- - [x] Show the fountain's position on the map (if visited)
+- - [x] Show entrance position on the map
+#### WIP:
+- [ ] Show the player's path on the map
+- [ ] Show what you can sense from the adjacent rooms
 
-- [ ] The game’s flow works like this: The player is told what they can sense in the dark (see, hear, smell).
+- [x] The game’s flow works like this: The player is told what they can sense in the dark (see, hear, smell).
   Then the player gets a chance to perform some action by typing it in.Their chosen action is resolved (the player moves, state of things in the game changes, checking for a win or a loss, etc.). Then the
-  loop repeats.
-- [ ] Most rooms are empty rooms, and there is nothing to sense.
-- [ ] The player is in one of the rooms and can move between them by typing commands like the
+  loop repeats. Most rooms are empty rooms, and there is nothing to sense. The player is in one of the rooms and can move between them by typing commands like the
   following: “move north”, “move south”, “move east”, and “move west”. The player should not be able
-  to move past the end of the map
-- [ ] You don't need to record results on a database. Once the program is closed the results will be deleted
-- [ ] The room at (Row=0, Column=0) is the cavern entrance (and exit). The player should start here. The
+  to move past the end of the map. You don't need to record results on a database. Once the program is closed the results will be deleted
+- [x] The room at (Row=0, Column=0) is the cavern entrance (and exit). The player should start here. The
   player can sense light coming from outside the cavern when in this room. (“You see light in this room
   coming from outside the cavern. This is the entrance.”)
-- [ ] The room at (Row=0, Column=2) is the fountain room, containing the Fountain of Objects itself. The
-  Fountain can be either enabled or disabled. The player can hear the fountain but hears different
-  things depending on if it is on or not. (“You hear water dripping in this room. The Fountain of Objects
-  is here!” or “You hear the rushing waters from the Fountain of Objects. It has been reactivated!”) The
-  fountain is off initially. In the fountain room, the player can type “enable fountain” to enable it. If the
-  player is not in the fountain room and runs this, there should be no effect, and the player should be
-  told so.
-- [ ] The player wins by moving to the fountain room, enabling the Fountain of Objects, and moving back
+- [x] The room at (Row=0, Column=2) is the fountain room, containing the Fountain of Objects itself. The
+  Fountain can be either enabled or disabled. 
+- [ ] The player can hear the fountain but hears different things depending on if it is on or not. (“You hear water dripping in this room. The Fountain of Objects
+  is here!” or “You hear the rushing waters from the Fountain of Objects. It has been reactivated!”) 
+- [x] The fountain is off initially. 
+- [x] In the fountain room, the player can type “enable fountain” to enable it.
+- [x] If the player is not in the fountain room and runs this, there should be no effect, and the player should be told so.
+- [x] The player wins by moving to the fountain room, enabling the Fountain of Objects, and moving back
   to the cavern entrance. If the player is in the entrance and the fountain is on, the player wins.
 - [ ] Use different colors to display the different types of text in the console window. For example,
   narrative items (intro, ending, etc.) may be magenta, descriptive text in white, input from the user
-  in cyan, text describing entrance light in yellow, messages about the fountain in blue.
-- [ ] An example of what the program might look like is shown below:
+  in cyan, text describing entrance light in yellow, messages about the fountain in blue. 
+
+- An example of what the program might look like is shown below:
   ![example.png](/example.png)
 
 ### Additional Challenges:

@@ -21,8 +21,14 @@ public class FountainRoom(int row = 0, int col = 2, RoomType room = RoomType.Fou
         return RoomType;
     }
     
-    public void ActivateFountain()
+    internal bool ActivateFountain()
     {
         _isFountainActive = true;
+        return true;
+    }
+    
+    internal bool IsFountainActive()
+    {
+        return _isFountainActive;
     }
 }
