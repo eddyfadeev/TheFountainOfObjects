@@ -11,11 +11,15 @@ static class GameUtils
             {
                 var roomSign = rooms[row, column].RoomType switch
                 {
-                    RoomType.Empty => "E",
-                    RoomType.Entrance => "I",
+                    RoomType.Empty => " ",
+                    RoomType.Entrance => "E",
                     RoomType.Fountain => "F",
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                if (rooms[row, column].ObjectIsPresent(typeof(Player)))
+                {
+                    roomSign += "P";
+                }
 
                 if (column == 0)
                 {
