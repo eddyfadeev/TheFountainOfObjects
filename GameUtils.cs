@@ -35,6 +35,14 @@ static class GameUtils
             Console.WriteLine("-----------------");
             for (int column = 0; column <= rooms.Rank + 1; column++)
             {
+                if (rooms[row, column].IsRevealed())
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                }
+                else
+                {
+                    Console.ResetColor();
+                }
                 string roomSign = " ";
                 
                 if (rooms[row, column].IsRevealed())

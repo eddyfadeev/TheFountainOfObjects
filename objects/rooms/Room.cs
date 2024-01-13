@@ -8,14 +8,22 @@ public abstract class Room(int row, int column, RoomType roomType)
     private bool _isEmpty = true;
     private bool _isRevealed;
 
-    public abstract RoomType IdentifyRoom();
+    protected ConsoleColor _consoleColor = roomType switch
+    {
+        RoomType.Entrance => ConsoleColor.Yellow,
+        RoomType.Fountain => ConsoleColor.Blue,
+        RoomType.Empty => ConsoleColor.White,
+        _ => ConsoleColor.White
+    };
+
+    internal abstract void IdentifyRoom();
     
-    public bool IsEmpty()
+    internal bool IsEmpty()
     {
         return _isEmpty;
     }
     
-    public void SetEmpty()
+    internal void SetEmpty()
     {
         _isEmpty = insideRoom.Count == 0;
     }
@@ -44,5 +52,10 @@ public abstract class Room(int row, int column, RoomType roomType)
     internal bool IsRevealed()
     {
         return _isRevealed;
+    }
+    
+    protected void ResetColor()
+    {
+        Console.ResetColor();
     }
 }

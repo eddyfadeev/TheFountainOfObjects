@@ -3,11 +3,10 @@
 public class EmptyRoom(int row, int col, RoomType room = RoomType.Empty) 
     : Room(row, col, room)
 {
-    public override RoomType IdentifyRoom()
+    internal override void IdentifyRoom()
     {
+        Console.ForegroundColor = _consoleColor;
         Console.WriteLine("You feel nothing in this room.");
-        Console.WriteLine(!IsEmpty() ? "" : "It is empty.");
-
-        return RoomType;
+        ResetColor();
     }
 }
