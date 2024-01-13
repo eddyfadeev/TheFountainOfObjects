@@ -67,7 +67,7 @@ public class Game (int fieldSize)
             _gameRound++;
             bool fountainActive = (_mazeRooms[0, 2] as FountainRoom).IsFountainActive();
             Room currentRoom = _mazeRooms[_player.GetPosition().row, _player.GetPosition().column];
-            RoomType currentRoomType = _mazeRooms[_player.GetPosition().row, _player.GetPosition().column].IdentifyRoom();
+            RoomType currentRoomType = _mazeRooms[_player.GetPosition().row, _player.GetPosition().column].RoomType;
             
             if (currentRoomType is RoomType.Entrance && fountainActive && _gameRound > 1)
             {
@@ -78,6 +78,7 @@ public class Game (int fieldSize)
                 break;
             }
             
+            currentRoom.IdentifyRoom();
             Console.Write("\nWhat do you want to do? ");
             
             var makeAMove = GameUtils.ProcessInput(inGameCommands);

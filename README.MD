@@ -18,9 +18,10 @@ room they are in and what dangers lurk in nearby rooms.
 - - [x] Show the player's position on the map
 - - [x] Show the fountain's position on the map (if visited)
 - - [x] Show entrance position on the map
+- - [x] Show the player's path on the map
 #### WIP:
-- - [ ] Show the player's path on the map
-- - [ ] Show what you can sense from the adjacent rooms
+- [ ] Show what you can sense from the adjacent rooms
+
 
 - [x] The game’s flow works like this: The player is told what they can sense in the dark (see, hear, smell).
   Then the player gets a chance to perform some action by typing it in.Their chosen action is resolved (the player moves, state of things in the game changes, checking for a win or a loss, etc.). Then the
@@ -32,14 +33,14 @@ room they are in and what dangers lurk in nearby rooms.
   coming from outside the cavern. This is the entrance.”)
 - [x] The room at (Row=0, Column=2) is the fountain room, containing the Fountain of Objects itself. The
   Fountain can be either enabled or disabled. 
-- [ ] The player can hear the fountain but hears different things depending on if it is on or not. (“You hear water dripping in this room. The Fountain of Objects
+- [x] The player can hear the fountain but hears different things depending on if it is on or not. (“You hear water dripping in this room. The Fountain of Objects
   is here!” or “You hear the rushing waters from the Fountain of Objects. It has been reactivated!”) 
 - [x] The fountain is off initially. 
 - [x] In the fountain room, the player can type “enable fountain” to enable it.
 - [x] If the player is not in the fountain room and runs this, there should be no effect, and the player should be told so.
 - [x] The player wins by moving to the fountain room, enabling the Fountain of Objects, and moving back
   to the cavern entrance. If the player is in the entrance and the fountain is on, the player wins.
-- [ ] Use different colors to display the different types of text in the console window. For example,
+- [x] Use different colors to display the different types of text in the console window. For example,
   narrative items (intro, ending, etc.) may be magenta, descriptive text in white, input from the user
   in cyan, text describing entrance light in yellow, messages about the fountain in blue. 
 

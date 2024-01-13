@@ -5,8 +5,9 @@ public class FountainRoom(int row = 0, int col = 2, RoomType room = RoomType.Fou
 {
     private bool _isFountainActive;
     
-    public override RoomType IdentifyRoom()
+    internal override void IdentifyRoom()
     {
+        Console.ForegroundColor = _consoleColor;
         if (_isFountainActive)
         {
             Console.WriteLine("You hear the rushing waters from the Fountain of Objects.");
@@ -17,8 +18,9 @@ public class FountainRoom(int row = 0, int col = 2, RoomType room = RoomType.Fou
             Console.WriteLine("You hear water dipping in this room.");
             Console.WriteLine("The Fountain of Objects is here!");
         }
+        Console.ResetColor();
 
-        return RoomType;
+        ResetColor();
     }
     
     internal bool ActivateFountain()
