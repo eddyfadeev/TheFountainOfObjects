@@ -13,14 +13,6 @@ room they are in and what dangers lurk in nearby rooms.
   North is up, east is right, south is down, and west is left:
 
   ![map.jpg](/map.jpg)
-#### Improvements:
-- - [x] Show the map to the user
-- - [x] Show the player's position on the map
-- - [x] Show the fountain's position on the map (if visited)
-- - [x] Show entrance position on the map
-- - [x] Show the player's path on the map
-#### WIP:
-- [ ] Show what you can sense from the adjacent rooms
 
 
 - [x] The game’s flow works like this: The player is told what they can sense in the dark (see, hear, smell).
@@ -47,6 +39,14 @@ room they are in and what dangers lurk in nearby rooms.
 - An example of what the program might look like is shown below:
   ![example.png](/example.png)
 
+#### Improvements:
+- - [x] Show the map to the user
+- - [x] Show the player's position on the map
+- - [x] Show the fountain's position on the map (if visited)
+- - [x] Show entrance position on the map
+- - [x] Show the player's path on the map
+#### WIP:
+- [ ] Show what you can sense from the adjacent rooms
 ### Additional Challenges:
 - [ ] Six expansions to be added
 
