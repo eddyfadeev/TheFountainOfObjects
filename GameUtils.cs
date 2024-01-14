@@ -73,6 +73,7 @@ static class GameUtils
                 {
                     Console.Write($" {roomSign} |");
                 }
+                Console.ResetColor();
             }
         }
         Console.WriteLine("-----------------");

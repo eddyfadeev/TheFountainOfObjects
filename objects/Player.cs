@@ -1,12 +1,16 @@
-﻿namespace TheFountainOfObjects;
+﻿using TheFountainOfObjects.intefaces;
 
-public class Player : GameObject
+namespace TheFountainOfObjects;
+
+public class Player : GameObject, IMovable
 {
+    private bool _isAlive;
     public Player()
     {
         Position = (0, 0);
+        _isAlive = true;
     }
-    public override (int row, int column) Move(Direction direction, int fieldSize)
+    public (int row, int column) Move(Direction direction, int fieldSize)
     {
         if (!CanMove(direction, fieldSize))
         {
@@ -26,7 +30,7 @@ public class Player : GameObject
         return Position;
     }
 
-    public override bool CanMove(Direction direction, int fieldSize)
+    public bool CanMove(Direction direction, int fieldSize)
     {
         return direction switch
         {
@@ -38,12 +42,8 @@ public class Player : GameObject
         };
     }
 
-    // TODO: Rename to GetPositionMessage and implement GetPosition
-    public override (int row, int column) GetPosition()
-    {
-        //Console.WriteLine($"You are in the room at row: {Position.row + 1}, column: {Position.column + 1}");
-        return (Position.row, Position.column);
-    }
+    // TODO: implement GetPositionMessage 
+    //Console.WriteLine($"You are in the room at row: {Position.row + 1}, column: {Position.column + 1}");
     
     internal override void SetName()
     {
@@ -51,5 +51,10 @@ public class Player : GameObject
         var name = Console.ReadLine();
 
         _name = string.IsNullOrEmpty(name) ? "Player" : name;
+    }
+    
+    internal void KillPlayer()
+    {
+        _isAlive = false;
     }
 }
