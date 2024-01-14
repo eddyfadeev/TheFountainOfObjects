@@ -1,7 +1,7 @@
 ﻿namespace TheFountainOfObjects;
 
-public class FountainRoom(int row = 0, int col = 2, RoomType room = RoomType.Fountain)
-    : Room(row, col, room)
+public class FountainRoom(int row, int column, RoomType room = RoomType.Fountain)
+    : Room(row, column, room)
 {
     private bool _isFountainActive;
     

@@ -2,7 +2,7 @@
 
 namespace TheFountainOfObjects;
 
-public class EntranceRoom(int row = 0, int column = 0, RoomType room = RoomType.Entrance)
+public class EntranceRoom(int row, int column, RoomType room = RoomType.Entrance)
     : Room(row, column, room)
 {
     internal override void IdentifyRoom()

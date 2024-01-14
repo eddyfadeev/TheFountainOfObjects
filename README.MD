@@ -1,4 +1,4 @@
-﻿## The Fountain of Objects
+﻿# The Fountain of Objects
 The Fountain of Objects game is a 2D grid-based world full of rooms. Most rooms are empty, but a few
 are unique rooms. One room is the cavern entrance. Another is the fountain room, containing the
 Fountain of Objects.
@@ -36,7 +36,7 @@ room they are in and what dangers lurk in nearby rooms.
   narrative items (intro, ending, etc.) may be magenta, descriptive text in white, input from the user
   in cyan, text describing entrance light in yellow, messages about the fountain in blue. 
 
-- An example of what the program might look like is shown below:
+#### An example of what the program might look like is shown below:
   ![example.png](/example.png)
 
 #### Improvements:
@@ -45,10 +45,42 @@ room they are in and what dangers lurk in nearby rooms.
 - - [x] Show the fountain's position on the map (if visited)
 - - [x] Show entrance position on the map
 - - [x] Show the player's path on the map
+- 
 #### WIP:
 - [ ] Show what you can sense from the adjacent rooms
-### Additional Challenges:
-- [ ] Six expansions to be added
+
+## Expansions:
+
+### Small, Medium, Large
+
+The larger the Cavern of Objects is, the more difficult the game becomes. The basic game only requires
+a small 4×4 world, but we will add a medium 6×6 world and a large 8×8 world for this challenge.
+
+#### Objectives:
+- [x] Before the game begins, ask the player whether they want to play a small, medium, or large game.
+  Create a 4×4 world if they choose a small world, a 6×6 world if they choose a medium world, and an
+  8×8 world if they choose a large world.
+- [x] Pick an appropriate location for both the Fountain Room and the Entrance room
+- **Note**:
+  When combined with the Amaroks, Maelstroms, or Pits challenges, you will need to adapt the
+  game by adding amaroks, maelstroms, and pits to all three sizes.
+
+### Pits
+
+The Cavern of Objects is a dangerous place. Some rooms open up to bottomless pits. Entering a pit
+means death. The player can sense a pit is in an adjacent room because a draft of air pushes through the
+pits into adjacent rooms. Add pit rooms to the game. End the game if the player stumbles into one.
+
+#### Objectives:
+- [ ] Add a pit room to your 4×4 cavern anywhere that isn’t the fountain or entrance room
+- [ ] Players can sense the draft blowing out of pits in adjacent rooms (all eight directions): “You feel a
+  draft. There is a pit in a nearby room.”
+- [x] If a player ends their turn in a room with a pit, they lose the game
+- **Note**: 
+When combined with the Small, Medium, or Large challenge, add one pit to the 4×4 world, two
+  pits to the 6×6 world, and four pits to the 8×8 world, in locations of your choice.
+
+- [ ] Four expansions to be added
 
 ### References:
-Whitaker, R. B. (2022). The C# player’s guide. RB Whitaker, pp 241-246
+Whitaker, R. B. (2022). The C# player’s guide. RB Whitaker, pp 241–246
