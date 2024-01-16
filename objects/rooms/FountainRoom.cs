@@ -1,7 +1,7 @@
 ﻿namespace TheFountainOfObjects;
 
-public class FountainRoom(int row, int column, RoomType room = RoomType.Fountain)
-    : Room(row, column, room)
+public class FountainRoom((int row, int column) position, RoomType room = RoomType.Fountain)
+    : Room(position, room)
 {
     private bool _isFountainActive;
     
@@ -11,12 +11,12 @@ public class FountainRoom(int row, int column, RoomType room = RoomType.Fountain
         if (_isFountainActive)
         {
             Console.WriteLine("You hear the rushing waters from the Fountain of Objects.");
-            Console.WriteLine("It has been reactivated!");
+            Console.WriteLine("It has been reactivated!\n");
         }
         else
         {
             Console.WriteLine("You hear water dipping in this room.");
-            Console.WriteLine("The Fountain of Objects is here!");
+            Console.WriteLine("The Fountain of Objects is here!\n");
         }
         Console.ResetColor();
 

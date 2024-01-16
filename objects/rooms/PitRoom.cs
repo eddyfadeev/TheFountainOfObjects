@@ -1,6 +1,6 @@
 ﻿namespace TheFountainOfObjects;
 
-public class PitRoom(int row, int column, RoomType roomType = RoomType.Pit) : Room(row, column, roomType)
+public class PitRoom((int row, int column) position, RoomType roomType = RoomType.Pit) : Room(position, roomType)
 {
     internal void FallInPit()
     {
@@ -14,6 +14,8 @@ public class PitRoom(int row, int column, RoomType roomType = RoomType.Pit) : Ro
 
     internal override void IdentifyRoom()
     {
-        Console.WriteLine("You feel a draft. There is a pit in a nearby room.");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("You feel a draft. There is a pit in a nearby room.\n");
+        Console.ResetColor();
     }
 }
