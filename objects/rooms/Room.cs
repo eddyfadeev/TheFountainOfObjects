@@ -1,9 +1,9 @@
 ﻿namespace TheFountainOfObjects;
 
-public abstract class Room(int row, int column, RoomType roomType)
+public abstract class Room((int row, int column) position, RoomType roomType)
 {
-    public (int row, int column) RoomLocation { get; init; } = (row, column);
-    private List<GameObject> insideRoom = new ();
+    public (int row, int column) RoomLocation { get; init; } = position;
+    private List<GameObject> _insideRoom = new ();
     internal RoomType RoomType { get; } = roomType;
     private bool _isEmpty = true;
     private bool _isRevealed;
@@ -12,6 +12,7 @@ public abstract class Room(int row, int column, RoomType roomType)
     {
         RoomType.Entrance => ConsoleColor.Yellow,
         RoomType.Fountain => ConsoleColor.Blue,
+        RoomType.Pit => ConsoleColor.Red,
         RoomType.Empty => ConsoleColor.White,
         _ => ConsoleColor.White
     };
@@ -25,23 +26,23 @@ public abstract class Room(int row, int column, RoomType roomType)
     
     internal void SetEmpty()
     {
-        _isEmpty = insideRoom.Count == 0;
+        _isEmpty = _insideRoom.Count == 0;
     }
     
     internal void AddGameObject(GameObject gameObject)
     {
-        insideRoom.Add(gameObject);
+        _insideRoom.Add(gameObject);
         _isEmpty = false;
     }
     
     internal void RemoveGameObject(GameObject gameObject)
     {
-        insideRoom.Remove(gameObject);
+        _insideRoom.Remove(gameObject);
     }
     
     internal bool ObjectIsPresent(Type type)
     {
-        return insideRoom.Any(obj => obj.GetType() == type);
+        return _insideRoom.Any(obj => obj.GetType() == type);
     }
     
     internal void RevealRoom()
@@ -57,5 +58,12 @@ public abstract class Room(int row, int column, RoomType roomType)
     protected void ResetColor()
     {
         Console.ResetColor();
+    }
+
+    internal GameObject GetObject(Type type)
+    {
+        var gameObject = _insideRoom.FirstOrDefault(obj => obj.GetType() == type);
+        
+        return gameObject;
     }
 }

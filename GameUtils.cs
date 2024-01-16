@@ -28,25 +28,20 @@ static class GameUtils
         }
         
     }
-    internal static void PrintRooms(Room[,] rooms)
+    internal static void PrintRooms(int fieldSize, Room[,] rooms)
     {
-        for (int row = 0; row <= rooms.Rank + 1; row++)
+        string separator = new string('-', fieldSize * 4 + 1);
+        
+        for (int row = 0; row < fieldSize; row++)
         {
-            Console.WriteLine("-----------------");
-            for (int column = 0; column <= rooms.Rank + 1; column++)
+            Console.WriteLine(separator);
+            for (int column = 0; column < fieldSize; column++)
             {
-                if (rooms[row, column].IsRevealed())
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                }
-                else
-                {
-                    Console.ResetColor();
-                }
                 string roomSign = " ";
                 
                 if (rooms[row, column].IsRevealed())
                 {
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
                     roomSign = rooms[row, column].RoomType switch
                     {
                         RoomType.Empty => " ",
@@ -54,6 +49,10 @@ static class GameUtils
                         RoomType.Fountain => "F",
                         _ => " "
                     };
+                }
+                else
+                {
+                    Console.ResetColor();
                 }
                 
                 if (rooms[row, column].ObjectIsPresent(typeof(Player)))
@@ -65,7 +64,7 @@ static class GameUtils
                 {
                     Console.Write($"| {roomSign} |");    
                 } 
-                else if (column == rooms.Rank + 1)
+                else if (column == fieldSize - 1)
                 {
                     Console.Write($" {roomSign} |\n");
                 }
@@ -76,6 +75,6 @@ static class GameUtils
                 Console.ResetColor();
             }
         }
-        Console.WriteLine("-----------------");
+        Console.WriteLine(separator);
     }
 }
