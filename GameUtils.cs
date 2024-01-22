@@ -1,12 +1,20 @@
 ﻿namespace TheFountainOfObjects;
 
+/// <summary>
+/// Utility class for game-related operations.
+/// </summary>
 static class GameUtils
 {
+    /// <summary>
+    /// Processes the user input by reading commands from the console.
+    /// </summary>
+    /// <param name="commands">The list of valid commands.</param>
+    /// <returns>The input command provided by the user.</returns>
     internal static string ProcessInput(List<string> commands)
     {
         while (true)
         {
-            var input = Console.ReadLine().ToLower().TrimStart().TrimEnd();
+            var input = Console.ReadLine().ToLower().Trim();
             
             if (string.IsNullOrEmpty(input))
             {
@@ -16,7 +24,7 @@ static class GameUtils
             {
                 Environment.Exit(0);
             }
-            else if (commands.Exists(command => command == input))
+            else if (commands.Exists(command => command == input) || input.Equals("help"))
             {
                 return input;
             }
@@ -24,10 +32,14 @@ static class GameUtils
             {
                 Console.WriteLine("Please enter a valid command.");
             }
-            
         }
-        
     }
+
+    /// <summary>
+    /// Prints the rooms of a field.
+    /// </summary>
+    /// <param name="fieldSize">The size of the field.</param>
+    /// <param name="rooms">A two-dimensional array representing the rooms.</param>
     internal static void PrintRooms(int fieldSize, Room[,] rooms)
     {
         string separator = new string('-', fieldSize * 4 + 1);
@@ -76,5 +88,24 @@ static class GameUtils
             }
         }
         Console.WriteLine(separator);
+    }
+
+    /// <summary>
+    /// Gets the help information.
+    /// </summary>
+    internal static void GetHelp()
+    {
+        Console.Clear();
+        Console.WriteLine("HELP");
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine("The following commands are available:");
+        Console.WriteLine("move {direction} - moves the player to the specified direction");
+        Console.WriteLine("shoot {direction} - shoots an arrow to the specified direction");
+        Console.WriteLine("help - prints this help information");
+        Console.WriteLine("exit - exits the game\n");
+        Console.WriteLine("Available directions: north, south, east, west\n");
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+        Console.Clear();
     }
 }

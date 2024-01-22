@@ -49,7 +49,7 @@ public abstract class GameObject
         return adjacentRooms;
     }
     
-    private protected virtual bool CanMove(Direction direction, int fieldSize)
+    private protected virtual bool CanMakeAnAction(Direction direction, int fieldSize)
     {
         return direction switch
         {
@@ -61,21 +61,22 @@ public abstract class GameObject
         };
     }
 
-    private protected virtual bool CanMove(int rowOffset, int columnOffset, int fieldSize)
+    private protected virtual bool CanMakeAnAction(int rowOffset, int columnOffset, int fieldSize)
     {
         return Position.column + columnOffset > 0 && Position.column + columnOffset < fieldSize && 
                Position.row + rowOffset > 0 && Position.row + rowOffset < fieldSize;
     }
     
-    public virtual void Move(Direction direction, int fieldSize)
+    public virtual (int row, int col) MakeAnAction(Direction direction, int fieldSize, string actionIntended)
     {
-        if (!CanMove(direction, fieldSize))
+        (int row, int col) newPosition = (0, 0);
+        if (!CanMakeAnAction(direction, fieldSize))
         {
-            Console.WriteLine("You can't move in that direction.");
-            return;
+            Console.WriteLine($"You can't {actionIntended} in that direction.");
+            return Position;
         }
-
-        Position = direction switch
+        
+        newPosition = direction switch
         {
             Direction.East => (Position.row, Position.column + 1),
             Direction.West => (Position.row, Position.column - 1),
@@ -83,11 +84,13 @@ public abstract class GameObject
             Direction.South => (Position.row + 1, Position.column),
             _ => throw new KeyNotFoundException("Please enter a valid direction.")
         };
+        
+        return newPosition;
     }
     
-    public void Move(int rowOffset, int columnOffset, int fieldSize)
+    public void MakeAnAction(int rowOffset, int columnOffset, int fieldSize)
     {
-        if (CanMove(rowOffset, columnOffset,fieldSize))
+        if (CanMakeAnAction(rowOffset, columnOffset,fieldSize))
         {
             Position = (Position.row + rowOffset, Position.column + columnOffset);
         }
@@ -103,5 +106,10 @@ public abstract class GameObject
 
             Position = (rowPosition, columnPosition);
         }
+    }
+    
+    public virtual void Move(Direction direction, int fieldSize)
+    {
+        Position = MakeAnAction(direction, fieldSize, "move");
     }
 }
