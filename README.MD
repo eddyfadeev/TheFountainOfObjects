@@ -34,7 +34,7 @@ room they are in and what dangers lurk in nearby rooms.
   to the cavern entrance. If the player is in the entrance and the fountain is on, the player wins.
 - [x] Use different colors to display the different types of text in the console window. For example,
   narrative items (intro, ending, etc.) may be magenta, descriptive text in white, input from the user
-  in cyan, text describing entrance light in yellow, messages about the fountain in blue. 
+  in cyan, text describing entrance light in yellow, messages about the fountain in blue.
 
 #### An example of what the program might look like is shown below:
   ![example.png](/example.png)
@@ -45,9 +45,6 @@ room they are in and what dangers lurk in nearby rooms.
 - - [x] Show the fountain's position on the map (if visited)
 - - [x] Show entrance position on the map
 - - [x] Show the player's path on the map
-- 
-#### WIP:
-- [ ] Show what you can sense from the adjacent rooms
 
 ## Expansions:
 
@@ -127,11 +124,11 @@ The player brings a bow and several arrows with them into the Caverns. The playe
 the surrounding rooms, and if they hit a monster, they kill it, and it should no longer impact the game.
 
 #### Objectives:
-- [ ] Add the following commands that allow a player to shoot in any of the four directions: shoot north,
+- [x] Add the following commands that allow a player to shoot in any of the four directions: shoot north,
   shoot east, shoot south, and shoot west.When the player shoots in one of the four directions, an arrow
   is fired into the room in that direction. If a monster is in that room, it is killed and should not affect
   the game anymore. They can no longer sense it, and it should not affect the player
-- [ ] The player only has five arrows and cannot shoot when they are out of arrows. Display the number
+- [x] The player only has five arrows and cannot shoot when they are out of arrows. Display the number
   of arrows the player has when displaying the game’s status before asking for their action.
 
 ### Getting Help
@@ -140,21 +137,21 @@ key elements that make playing the Fountain of Objects easier: introductory text
 and a **help** command that lists all available commands and what they each do.
 
 #### Objectives:
-- [ ] When the game starts, display text that describes the game shown below: 
+- [x] When the game starts, display text that describes the game shown below: 
 
 ![start-output.png](/start-output.png)
 
-- [ ] If you chose to do the Pits challenge, add the following to the description: “Look out for pits. You
+- [x] If you chose to do the Pits challenge, add the following to the description: “Look out for pits. You
   will feel a breeze if a pit is in an adjacent room. If you enter a room with a pit, you will die.”
-- [ ] If you chose to do the Maelstroms challenge, add the following to the description: “Maelstroms are
+- [x] If you chose to do the Maelstroms challenge, add the following to the description: “Maelstroms are
   violent forces of sentient wind. Entering a room with one could transport you to any other location
   in the caverns. You will be able to hear their growling and groaning in nearby rooms.”
-- [ ] If you chose to do the Amaroks challenge, add the following to the description: “Amaroks roam the
+- [x] If you chose to do the Amaroks challenge, add the following to the description: “Amaroks roam the
   caverns. Encountering one is certain death, but you can smell their rotten stench in nearby rooms.”
-- [ ] If you chose to do the Getting Armed challenge, add the following to the description: “You carry with
+- [x] If you chose to do the Getting Armed challenge, add the following to the description: “You carry with
   you a bow and a quiver of arrows. You can use them to shoot monsters in the caverns but be warned:
   you have a limited supply.”
-- [ ] When the player types the command help, display all available commands and a short description
+- [x] When the player types the command help, display all available commands and a short description
   of what each does. The complete list of commands will depend on what challenges you complete.
 
 ### References:
