@@ -2,7 +2,7 @@
 
 public enum Direction
 {
-    DontMove,
+    DoNothing,
     North,
     South,
     East,
