@@ -1,4 +1,4 @@
-namespace TheFountainOfObjects;
+﻿namespace TheFountainOfObjects;
 
 class Program
 {
