@@ -1,4 +1,4 @@
-namespace TheFountainOfObjects;
+﻿namespace TheFountainOfObjects;
 
 /// <summary>
 /// Utility class for game-related operations.
