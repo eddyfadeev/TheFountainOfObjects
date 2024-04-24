@@ -7,11 +7,11 @@ using Microsoft.Data.Sqlite;
 namespace TheFountainOfObjects.Services;
 internal class DatabaseManager
 {
-    private readonly string _connectionString = "Data Source=coding-Tracker.db";
+    private const string ConnectionString = "Data Source=coding-Tracker.db";
 
     private SqliteConnection GetConnection()
     {
-        var connection = new SqliteConnection(_connectionString);
+        var connection = new SqliteConnection(ConnectionString);
 
         connection.Open();
 
@@ -48,11 +48,11 @@ internal class DatabaseManager
 
     internal IEnumerable<PlayerObject> GetPlayers()
     {
-        using var connetion = GetConnection();
+        using var connection = GetConnection();
 
         const string getPlayersQuery = "SELECT * FROM Players ORDER BY Score DESC";
 
-        return connetion.Query<PlayerObject>(getPlayersQuery);
+        return connection.Query<PlayerObject>(getPlayersQuery);
     }
 
     internal int UpdatePlayer(int playerId, string? name = null, int? score = null)
@@ -77,7 +77,7 @@ internal class DatabaseManager
 
     private string BuildUpdateQuery(string? name, int? score)
     {
-        StringBuilder queryBuilder = new StringBuilder("UPDATE Players SET ");
+        var queryBuilder = new StringBuilder("UPDATE Players SET ");
         const string setName = "Name = @Name";
         const string setScore = "Score = @Score";
         const string idString = " WHERE Id = @Id";
