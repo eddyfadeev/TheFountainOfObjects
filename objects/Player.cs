@@ -29,6 +29,7 @@ public class Player : GameObject
         //Console.WriteLine($"You are in the room at row: {Position.row + 1}, column: {Position.column + 1}");
         return (Position.row, Position.column);
     }
+
     
     internal byte GetAvailableArrows()
     {

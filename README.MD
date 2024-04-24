@@ -14,6 +14,7 @@ room they are in and what dangers lurk in nearby rooms.
 
   ![map.jpg](/map.jpg)
 
+
 - [x] The game’s flow works like this: The player is told what they can sense in the dark (see, hear, smell).
   Then the player gets a chance to perform some action by typing it in.Their chosen action is resolved (the player moves, state of things in the game changes, checking for a win or a loss, etc.). Then the
   loop repeats. Most rooms are empty rooms, and there is nothing to sense. The player is in one of the rooms and can move between them by typing commands like the
