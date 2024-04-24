@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects;
+namespace TheFountainOfObjects;
 
 /// <summary>
 /// Represents a game instance of the maze game.
@@ -107,6 +107,8 @@ public class Game
                     break;
             }
         }
+
+        return newMaze;
     }
 
     /// <summary>
@@ -383,34 +385,36 @@ public class Game
     /// <returns>A two-dimensional array of Room objects representing the maze.</returns>
     private Room[,] CreateMaze(int size)
     {
+        int fieldSize = (int)size;
+        int objectsCount = fieldSize switch { 4 => 1, 6 => 2, 8 => 4, _ => 1 };
         _entrancePosition = (0, 0);
         _fountainPosition = (0, 0);
         Random random = new Random();
-        var newMaze = new Room[size, size];
-        int objectsCount = size switch { 4 => 1, 6 => 2, 8 => 4, _ => 1 };
+        var newMaze = new Room[fieldSize, fieldSize];
+        
         List<Tuple<int, int>> pitPositionsList = new List<Tuple<int, int>>(objectsCount);
         List<Tuple<int, int>> maelstromPositionsList = new List<Tuple<int, int>>(objectsCount);
         List<Tuple<int, int>> amarokPositionsList = new List<Tuple<int, int>>(objectsCount);
 
         while (_entrancePosition == _fountainPosition)
         {
-            _entrancePosition = (random.Next(0, size), random.Next(0, size/2 - 1));
-            _fountainPosition = (random.Next(0, size), random.Next(size / 2, size - 1));
+            _entrancePosition = (random.Next(0, fieldSize), random.Next(0, fieldSize/2 - 1));
+            _fountainPosition = (random.Next(0, fieldSize), random.Next(fieldSize / 2, fieldSize - 1));
         }
         
         for (int i = 0; i < objectsCount; i++)
         {
-            (int row, int col) pitPosition = (random.Next(0, size), random.Next(0, size));
-            (int row, int col) maelstormPosition = (random.Next(0, size), random.Next(0, size));
-            (int row, int col) amarokPosition = (random.Next(0, size), random.Next(0, size));
+            (int row, int col) pitPosition = (random.Next(0, fieldSize), random.Next(0, fieldSize));
+            (int row, int col) maelstormPosition = (random.Next(0, fieldSize), random.Next(0, fieldSize));
+            (int row, int col) amarokPosition = (random.Next(0, fieldSize), random.Next(0, fieldSize));
             
             bool samePositions = pitPosition == maelstormPosition || pitPosition == amarokPosition || maelstormPosition == amarokPosition;
 
             while (samePositions)
             {
-                pitPosition = (random.Next(0, size), random.Next(0, size));
-                maelstormPosition = (random.Next(0, size), random.Next(0, size));
-                amarokPosition = (random.Next(0, size), random.Next(0, size));
+                pitPosition = (random.Next(0, fieldSize), random.Next(0, fieldSize));
+                maelstormPosition = (random.Next(0, fieldSize), random.Next(0, fieldSize));
+                amarokPosition = (random.Next(0, fieldSize), random.Next(0, fieldSize));
                 
                 samePositions = pitPosition == maelstormPosition || pitPosition == amarokPosition || maelstormPosition == amarokPosition;
             }
@@ -448,9 +452,9 @@ public class Game
             newMaze[position.Item1, position.Item2] = new PitRoom((position.Item1, position.Item2));
         }
         
-        for (int row = 0; row < size; row++)
+        for (int row = 0; row < fieldSize; row++)
         {
-            for (int col = 0; col < size; col++) 
+            for (int col = 0; col < fieldSize; col++) 
             {
                 if ((row == _entrancePosition.row && col == _entrancePosition.col) || 
                     (row == _fountainPosition.row && col == _fountainPosition.col) ||
