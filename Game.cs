@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects;
+namespace TheFountainOfObjects;
 
 /// <summary>
 /// Represents a game instance of the maze game.
@@ -107,6 +107,8 @@ public class Game
                     break;
             }
         }
+
+        return newMaze;
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects;
+namespace TheFountainOfObjects;
 
 public class Player : GameObject
 {
@@ -9,6 +9,25 @@ public class Player : GameObject
         var name = Console.ReadLine();
 
         _name = string.IsNullOrEmpty(name) ? "Player" : name;
+    }
+
+    public override bool CanMove(Direction direction, int fieldSize)
+    {
+        return direction switch
+        {
+            Direction.East => Position.column + 1 < fieldSize,
+            Direction.West => Position.column - 1 >= 0,
+            Direction.North => Position.row - 1 >= 0,
+            Direction.South => Position.row + 1 < fieldSize,
+            _ => false
+        };
+    }
+
+    // TODO: Rename to GetPositionMessage and implement GetPosition
+    public override (int row, int column) GetPosition()
+    {
+        //Console.WriteLine($"You are in the room at row: {Position.row + 1}, column: {Position.column + 1}");
+        return (Position.row, Position.column);
     }
     
     internal byte GetAvailableArrows()
