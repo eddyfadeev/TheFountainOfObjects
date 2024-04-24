@@ -1,6 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheFountainOfObjects", "TheFountainOfObjects.csproj", "{6DF6F62A-B367-4C8C-A097-0707550B5692}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheFountainOfObjects.Controller", "TheFountainOfObjects.Controller.csproj", "{6DF6F62A-B367-4C8C-A097-0707550B5692}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4456495B-136F-4B4F-949B-C90C39E76141} = {4456495B-136F-4B4F-949B-C90C39E76141}
+		{BEB2322D-AC2C-4913-A188-D31F77FB4528} = {BEB2322D-AC2C-4913-A188-D31F77FB4528}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheFountainOfObjects.Model", "..\TheFountainOfObjects.Model\TheFountainOfObjects.Model.csproj", "{4456495B-136F-4B4F-949B-C90C39E76141}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheFountainOfObjects.View", "..\TheFountainOfObjects.View\TheFountainOfObjects.View.csproj", "{BEB2322D-AC2C-4913-A188-D31F77FB4528}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +23,19 @@ Global
 		{6DF6F62A-B367-4C8C-A097-0707550B5692}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DF6F62A-B367-4C8C-A097-0707550B5692}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DF6F62A-B367-4C8C-A097-0707550B5692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4456495B-136F-4B4F-949B-C90C39E76141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4456495B-136F-4B4F-949B-C90C39E76141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4456495B-136F-4B4F-949B-C90C39E76141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4456495B-136F-4B4F-949B-C90C39E76141}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEB2322D-AC2C-4913-A188-D31F77FB4528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEB2322D-AC2C-4913-A188-D31F77FB4528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEB2322D-AC2C-4913-A188-D31F77FB4528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEB2322D-AC2C-4913-A188-D31F77FB4528}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F32EE32-F105-4AEF-892C-CB56E2324F15}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,7 @@
-﻿namespace TheFountainOfObjects;
+﻿using TheFountainOfObjects.Model.GameObjects;
+using TheFountainOfObjects.Model.GameObjects.rooms;
+
+namespace TheFountainOfObjects;
 
 /// <summary>
 /// Utility class for game-related operations.

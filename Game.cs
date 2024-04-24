@@ -1,4 +1,9 @@
-﻿namespace TheFountainOfObjects;
+﻿using TheFountainOfObjects.Model;
+using TheFountainOfObjects.Model.Enums;
+using TheFountainOfObjects.Model.GameObjects;
+using TheFountainOfObjects.Model.GameObjects.rooms;
+
+namespace TheFountainOfObjects.Controller;
 
 /// <summary>
 /// Represents a game instance of the maze game.
