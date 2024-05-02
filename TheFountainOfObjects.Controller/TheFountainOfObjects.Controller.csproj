@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TheFountainOfObjects.Model\TheFountainOfObjects.Model.csproj" />
+    <ProjectReference Include="..\TheFountainOfObjects.View\TheFountainOfObjects.View.csproj" />
   </ItemGroup>
 
 </Project>
