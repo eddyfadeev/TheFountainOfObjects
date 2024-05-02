@@ -54,7 +54,7 @@ static class GameUtils
             {
                 string roomSign = " ";
                 
-                if (rooms[row, column].IsRevealed())
+                if (rooms[row, column].IsRoomRevealed())
                 {
                     Console.BackgroundColor = ConsoleColor.DarkYellow;
                     roomSign = rooms[row, column].RoomType switch

@@ -1,7 +1,7 @@
 ﻿namespace TheFountainOfObjects.Model.GameObjects.rooms;
 
-public class EmptyRoom((int row, int col) position, RoomType room = RoomType.Empty) 
-    : RoomBase(position, room)
+public class EmptyRoom((int row, int col) position, RoomType roomType = RoomType.Empty)
+    : RoomBase(position, roomType)
 {
     public override void IdentifyRoom()
     {

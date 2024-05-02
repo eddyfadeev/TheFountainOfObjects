@@ -1,22 +1,21 @@
-﻿using Spectre.Console;
-
-namespace TheFountainOfObjects.Model.GameObjects.rooms;
+﻿namespace TheFountainOfObjects.Model.GameObjects.rooms;
 
 public abstract class RoomBase
 {
-    public (int row, int column) RoomLocation { get; init; }
+    public (int row, int column) RoomCoordinates { get; init; }
     private readonly List<GameObject> _objectsInsideRoom = new ();
     public RoomType RoomType { get; }
     private bool _isEmpty = true;
-    private bool _isRevealed;
+    private bool _isRoomRevealed;
 
     protected readonly ConsoleColor ConsoleColor;
 
-    protected RoomBase((int row, int column) roomLocation, RoomType roomType)
+    protected RoomBase((int row, int column) roomCoordinates, RoomType roomType)
     {
-        RoomLocation = roomLocation;
+        RoomCoordinates = roomCoordinates;
         RoomType = roomType;
         
+        // TODO: Reconsider usage with a new layout structure mentioned in Program.cs file
         ConsoleColor = roomType switch
         {
             RoomType.Entrance => ConsoleColor.Yellow,
@@ -29,12 +28,12 @@ public abstract class RoomBase
 
     public abstract void IdentifyRoom();
     
-    public bool IsEmpty()
+    public bool IsRoomEmpty()
     {
         return _isEmpty;
     }
 
-    public void SetEmpty()
+    public void SetRoomEmpty()
     {
         _isEmpty = _objectsInsideRoom.Count == 0;
     }
@@ -57,14 +56,15 @@ public abstract class RoomBase
 
     public void RevealRoom()
     {
-        _isRevealed = true;
+        _isRoomRevealed = true;
     }
 
-    public bool IsRevealed()
+    public bool IsRoomRevealed()
     {
-        return _isRevealed;
+        return _isRoomRevealed;
     }
     
+    // TODO: Reconsider usage with a new layout structure mentioned in Program.cs file
     protected void ResetColor()
     {
         Console.ResetColor();

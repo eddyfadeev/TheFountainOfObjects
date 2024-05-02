@@ -10,4 +10,9 @@
     <PackageReference Include="Spectre.Console" Version="0.49.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TheFountainOfObjects.Model\TheFountainOfObjects.Model.csproj" />
+    <ProjectReference Include="..\TheFountainOfObjects.Utilities\TheFountainOfObjects.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>

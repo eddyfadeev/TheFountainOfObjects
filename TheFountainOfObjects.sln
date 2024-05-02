@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheFountainOfObjects.Model"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheFountainOfObjects.View", "TheFountainOfObjects.View\TheFountainOfObjects.View.csproj", "{8B233112-D988-4980-9349-099DF0757CAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheFountainOfObjects.Utilities", "TheFountainOfObjects.Utilities\TheFountainOfObjects.Utilities.csproj", "{7CAA26C9-4000-4C8C-B9F4-7EF07DC6CC7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{8B233112-D988-4980-9349-099DF0757CAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B233112-D988-4980-9349-099DF0757CAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B233112-D988-4980-9349-099DF0757CAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CAA26C9-4000-4C8C-B9F4-7EF07DC6CC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CAA26C9-4000-4C8C-B9F4-7EF07DC6CC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CAA26C9-4000-4C8C-B9F4-7EF07DC6CC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CAA26C9-4000-4C8C-B9F4-7EF07DC6CC7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

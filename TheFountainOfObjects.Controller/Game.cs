@@ -4,9 +4,6 @@ using TheFountainOfObjects.Model.GameObjects.rooms;
 
 namespace TheFountainOfObjects.Controller;
 
-/// <summary>
-/// Represents a game instance of the maze game.
-/// </summary>
 public class Game
 {
     private RoomBase[ , ]? _mazeRooms;
@@ -220,7 +217,7 @@ public class Game
             var amarok = _mazeRooms[shootPosition.row, shootPosition.col].GetObject(typeof(Amarok)) as Amarok;
             
             _mazeRooms[shootPosition.row, shootPosition.col].RemoveGameObject(amarok);
-            _mazeRooms[shootPosition.row, shootPosition.col].SetEmpty();
+            _mazeRooms[shootPosition.row, shootPosition.col].SetRoomEmpty();
             Console.WriteLine("You have killed the amarok!");
             _player.DecreaseAvailableArrows();
         }
@@ -304,7 +301,7 @@ public class Game
         }
         
         _mazeRooms[previousPosition.row, previousPosition.column].RemoveGameObject(gameObject);
-        _mazeRooms[previousPosition.row, previousPosition.column].SetEmpty();
+        _mazeRooms[previousPosition.row, previousPosition.column].SetRoomEmpty();
     }
 
     /// <summary>
