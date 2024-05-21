@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects.Model.GameObjects.rooms;
+﻿namespace TheFountainOfObjects.Model.GameObjects.Rooms;
 
 public class PitRoomBase((int row, int column) position, RoomType roomType = RoomType.Pit) : RoomBase(position, roomType)
 {

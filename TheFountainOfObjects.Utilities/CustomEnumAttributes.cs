@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects.Model.Services;
+﻿namespace TheFountainOfObjects.Utilities;
 
 public static class CustomEnumAttributes
 {

@@ -1,5 +1,5 @@
 ﻿using TheFountainOfObjects.Model.GameObjects;
-using TheFountainOfObjects.Model.GameObjects.rooms;
+using TheFountainOfObjects.Model.GameObjects.Rooms;
 
 namespace TheFountainOfObjects;
 
@@ -12,7 +12,7 @@ static class GameUtils
     /// Processes the user input by reading commands from the console.
     /// </summary>
     /// <param name="commands">The list of valid commands.</param>
-    /// <returns>The input command provided by the user.</returns>
+    /// <returns>A user provides the input command.</returns>
     internal static string ProcessInput(List<string> commands)
     {
         while (true)
@@ -91,24 +91,5 @@ static class GameUtils
             }
         }
         Console.WriteLine(separator);
-    }
-
-    /// <summary>
-    /// Gets the help information.
-    /// </summary>
-    internal static void GetHelp()
-    {
-        Console.Clear();
-        Console.WriteLine("HELP");
-        Console.WriteLine("----------------------------------");
-        Console.WriteLine("The following commands are available:");
-        Console.WriteLine("move {direction} - moves the player to the specified direction");
-        Console.WriteLine("shoot {direction} - shoots an arrow to the specified direction");
-        Console.WriteLine("help - prints this help information");
-        Console.WriteLine("exit - exits the game\n");
-        Console.WriteLine("Available directions: north, south, east, west\n");
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
-        Console.Clear();
     }
 }
