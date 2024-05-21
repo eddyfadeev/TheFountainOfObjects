@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects.Model.GameObjects.rooms;
+﻿namespace TheFountainOfObjects.Model.GameObjects.Rooms;
 
 public class EmptyRoom((int row, int col) position, RoomType roomType = RoomType.Empty)
     : RoomBase(position, roomType)

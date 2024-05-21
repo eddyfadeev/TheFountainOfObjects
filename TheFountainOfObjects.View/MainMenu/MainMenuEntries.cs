@@ -1,16 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static TheFountainOfObjects.Model.Services.CustomEnumAttributes;
+using static TheFountainOfObjects.Utilities.CustomEnumAttributes;
 
-namespace TheFountainOfObjects.View;
+namespace TheFountainOfObjects.View.MainMenu;
 
-public enum MenuEntries
+internal enum MainMenuEntries
 {
     [Display(Name = "Start Game"), Method("StartGame")]
     StartGame,
     [Display(Name = "Settings"), Method("ShowSettings")]
     Settings,
     [Display(Name = "Show Help"), Method("ShowHelp")]
-    ShowHelp,
+    Help,
+    [Display(Name = "Leaderboard"), Method("ShowLeaderboard")]
+    Leaderboard,
     [Display(Name = "Exit")]
     Exit
 }

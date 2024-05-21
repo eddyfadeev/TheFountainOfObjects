@@ -1,6 +1,6 @@
 ﻿using TheFountainOfObjects.Model.Enums;
 using TheFountainOfObjects.Model.GameObjects;
-using TheFountainOfObjects.Model.GameObjects.rooms;
+using TheFountainOfObjects.Model.GameObjects.Rooms;
 
 namespace TheFountainOfObjects.Controller;
 
@@ -63,7 +63,7 @@ public class Game
                     StartGame();
                     break;
                 case "help":
-                    GameUtils.GetHelp();
+                    
                     break;
                 case "settings":
                     ShowSettings();
@@ -153,7 +153,7 @@ public class Game
             
             if (makeAMove.Equals("help"))
             {
-                GameUtils.GetHelp();
+                
                 continue;
             }
 

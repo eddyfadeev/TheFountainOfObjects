@@ -1,4 +1,4 @@
-﻿namespace TheFountainOfObjects.Model.GameObjects.rooms;
+﻿namespace TheFountainOfObjects.Model.GameObjects.Rooms;
 
 public enum RoomType
 {

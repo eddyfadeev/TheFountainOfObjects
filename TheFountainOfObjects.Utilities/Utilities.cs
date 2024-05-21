@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace TheFountainOfObjects.Utilities;
 
@@ -18,5 +19,32 @@ public static class Utilities
                     .Cast<DisplayAttribute>()
                     .FirstOrDefault()?.Name ?? enumValue.ToString()
             ));
-    } 
+    }
+    
+    public static void InvokeActionForMenuEntry(Enum entry, object actionInstance)
+    {
+        var entryFieldInfo = entry.GetType().GetField(entry.ToString());
+        var methodAttribute = entryFieldInfo.GetCustomAttribute<CustomEnumAttributes.MethodAttribute>();
+
+        if (methodAttribute != null)
+        {
+            var method = actionInstance.GetType().GetMethod(
+                methodAttribute.MethodName, 
+                BindingFlags.Public | BindingFlags.Static
+            );
+
+            if (method != null)
+            {
+                method.Invoke(actionInstance, null);
+            }
+            else
+            {
+                Console.WriteLine($"Method '{methodAttribute.MethodName}' not found.");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"No methods assigned for {entry}.");
+        }
+    }
 }
