@@ -1,4 +1,6 @@
-﻿using TheFountainOfObjects.View;
+﻿using Spectre.Console;
+using TheFountainOfObjects.View;
+using TheFountainOfObjects.View.GameLayout;
 
 namespace TheFountainOfObjects.Controller;
 
@@ -8,7 +10,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        MainMenuView.ShowMainMenu();
+        //MainMenuView.ShowMainMenu();
+        
+        var gameLayout = new MenuLayout();
+        AnsiConsole.Write(gameLayout.layout);
         
         /*var game = new Game();
         

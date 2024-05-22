@@ -32,8 +32,6 @@ public class Game
             "medium",
             "large",
         ];
-        
-        ShowWelcomeMessage();
 
         Console.WriteLine("Please choose a field size you would like to play on.");
         Console.WriteLine("You can choose between 'small' (4x4), 'medium' (6x6) and 'large' (8x8).");
@@ -302,33 +300,6 @@ public class Game
         
         _mazeRooms[previousPosition.row, previousPosition.column].RemoveGameObject(gameObject);
         _mazeRooms[previousPosition.row, previousPosition.column].SetRoomEmpty();
-    }
-
-    /// <summary>
-    /// Displays the welcome message for The Fountain of Objects game.
-    /// </summary>
-    private void ShowWelcomeMessage()
-    {
-        Console.WriteLine("Welcome to The Fountain of Objects!\n");
-        Console.WriteLine("You enter the Cavern of Objects, a maze of rooms filled with dangerous pits in search.");
-        Console.WriteLine("of the Fountain of Objects.");
-        Console.WriteLine("Light is visible only in the entrance, and no other light is seen anywhere in the caverns.");
-        Console.WriteLine("You must navigate the Caverns with your other senses.");
-        Console.WriteLine("Find the Fountain of Objects, activate it, and return to the entrance.\n");
-        Console.WriteLine("Look out for pits. You will feel a breeze if a pit is in an adjacent room.");
-        Console.WriteLine("If you enter a room with a pit, you will die.\n");
-        Console.WriteLine("Maelstroms are violent forces of sentient wind.");
-        Console.WriteLine("Entering a room with one could transport you to any other location in the caverns.");
-        Console.WriteLine("You will be able to hear their growling and groaning in nearby rooms.\n");
-        Console.WriteLine("Amaroks roam the caverns.");
-        Console.WriteLine("Encountering one is certain death, but you can smell their rotten stench in nearby rooms.\n");
-        Console.WriteLine("You carry with you a bow and a quiver of arrows. You can use them to shoot monsters");
-        Console.WriteLine("in the caverns but be warned: you have a limited supply.\n");
-        Console.WriteLine("You can get help any time by typing in 'help'.");
-        Console.WriteLine("To exit the game, type in 'exit' any time.");
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
-        Console.Clear();
     }
 
     /// <summary>
