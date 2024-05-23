@@ -1,6 +1,7 @@
 ﻿global using static TheFountainOfObjects.Utilities.Utilities;
 
 using Spectre.Console;
+using Spectre.Console.Extensions;
 using TheFountainOfObjects.View.GameLayout;
 using TheFountainOfObjects.View.MainMenu;
 
@@ -63,7 +64,7 @@ public abstract class MenuViews
         _layoutManager.UpdateLayout();
     }
 
-    private protected virtual Table CreateMenuTable(
+    private protected virtual Align CreateMenuTable(
         List<KeyValuePair<MainMenuEntries, string>> entries,
         int selectedIndex)
     {
@@ -71,10 +72,14 @@ public abstract class MenuViews
         {
             ShowHeaders = false,
             Border = TableBorder.Rounded,
-            Title = new TableTitle(_menuName, new Style(foreground: Color.White, decoration: Decoration.Bold)),
-            Width = 70,
-            Expand = false,
-            
+            Title = new TableTitle(
+                _menuName, 
+                new Style(
+                foreground: Color.White, 
+                decoration: Decoration.Bold
+                )),
+            //Width = 70,
+            Expand = true,
         };
         
         table.AddColumn(new TableColumn(_menuName));
@@ -91,7 +96,10 @@ public abstract class MenuViews
             }
         }
 
-        return table;
+        Align aligner = new(table, HorizontalAlignment.Center, VerticalAlignment.Top);
+        //aligner.MiddleAligned();
+        
+        return aligner;
     }
     
     // private protected static TEnum GetUserChoice<TEnum>(
