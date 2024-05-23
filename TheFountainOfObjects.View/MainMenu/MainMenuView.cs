@@ -1,24 +1,29 @@
 ﻿using Spectre.Console;
-using TheFountainOfObjects.View.MainMenu;
+using static TheFountainOfObjects.View.StartScreen.StartScreen;
 
-namespace TheFountainOfObjects.View;
+namespace TheFountainOfObjects.View.MainMenu;
 
 public class MainMenuView : MenuViews
 {
     private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
-    private static readonly MainMenuView _mainMenuView = new();
+    private static readonly MainMenuView _mainMenuView = new ();
+
+    private MainMenuView() : base("Main Menu")
+    {
+    }
     
     public static void ShowMainMenu()
     {
-        AnsiConsole.Clear();
-        
-        var selectedEntry = GetUserChoice(_mainMenuEntriesList);
+        _mainMenuView.ShowStartScreen();
+        _layoutManager.SupportWindowIsVisible = true;
+        var selectedEntry = _mainMenuView.ShowMenu(_mainMenuEntriesList);
+        //_layoutManager.GameLayout["MainWindow"]
         
         InvokeActionForMenuEntry(selectedEntry, _mainMenuView);
     }
 
     // TODO: Fill up help menu with appropriate information.
-    public static void ShowHelp()
+    internal void ShowHelp()
     {
         Console.Clear();
         Console.WriteLine("HELP");
@@ -32,5 +37,15 @@ public class MainMenuView : MenuViews
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
         Console.Clear();
+    }
+    
+    public void ShowStartScreen()
+    {
+        var startScreen = new Panel(ShowIntro().Expand());
+        _layoutManager.SupportWindowIsVisible = false;
+
+        _layoutManager.MainWindow.Update(startScreen);
+        _layoutManager.UpdateLayout();
+        Console.ReadKey();
     }
 }

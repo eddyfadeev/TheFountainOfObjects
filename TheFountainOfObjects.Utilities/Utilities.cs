@@ -30,7 +30,7 @@ public static class Utilities
         {
             var method = actionInstance.GetType().GetMethod(
                 methodAttribute.MethodName, 
-                BindingFlags.Public | BindingFlags.Static
+                BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance
             );
 
             if (method != null)
