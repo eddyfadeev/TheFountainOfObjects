@@ -14,14 +14,22 @@ public class MainMenuView : MenuViews
     
     public static void ShowMainMenu()
     {
-        _mainMenuView.ShowStartScreen();
         _layoutManager.SupportWindowIsVisible = true;
         var selectedEntry = _mainMenuView.ShowMenu(_mainMenuEntriesList);
-        //_layoutManager.GameLayout["MainWindow"]
         
         InvokeActionForMenuEntry(selectedEntry, _mainMenuView);
     }
+    
+    public static void ShowStartScreen()
+    {
+        var startScreen = new Panel(ShowIntro().Expand());
+        _layoutManager.SupportWindowIsVisible = false;
 
+        _layoutManager.MainWindow.Update(startScreen);
+        _layoutManager.UpdateLayout();
+        Console.ReadKey();
+    }
+    
     // TODO: Fill up help menu with appropriate information.
     internal void ShowHelp()
     {
@@ -37,15 +45,5 @@ public class MainMenuView : MenuViews
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
         Console.Clear();
-    }
-    
-    public void ShowStartScreen()
-    {
-        var startScreen = new Panel(ShowIntro().Expand());
-        _layoutManager.SupportWindowIsVisible = false;
-
-        _layoutManager.MainWindow.Update(startScreen);
-        _layoutManager.UpdateLayout();
-        Console.ReadKey();
     }
 }

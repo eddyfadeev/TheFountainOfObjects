@@ -36,11 +36,6 @@ public class LayoutManager
         SetDefaultSize();
     }
 
-    static LayoutManager()
-    {
-        
-    }
-
     public void UpdateLayout()
     {
         Console.Clear();
@@ -48,8 +43,6 @@ public class LayoutManager
         GameLayout[SupportWindowName].IsVisible = SupportWindowIsVisible;
         
         AnsiConsole.Write(GameLayout);
-        //AnsiConsole.WriteLine();
-        //Console.ReadKey();
     }
     
     private void SetDefaultSize()

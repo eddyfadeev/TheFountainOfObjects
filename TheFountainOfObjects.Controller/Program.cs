@@ -11,6 +11,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        MainMenuView.ShowStartScreen();
         MainMenuView.ShowMainMenu();
         
         
