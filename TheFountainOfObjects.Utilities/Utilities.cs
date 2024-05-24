@@ -30,7 +30,7 @@ public static class Utilities
         {
             var method = actionInstance.GetType().GetMethod(
                 methodAttribute.MethodName, 
-                BindingFlags.Public | BindingFlags.Static
+                BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance
             );
 
             if (method != null)
@@ -47,4 +47,6 @@ public static class Utilities
             Console.WriteLine($"No methods assigned for {entry}.");
         }
     }
+    
+    //public static 
 }

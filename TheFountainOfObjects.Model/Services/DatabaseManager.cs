@@ -5,9 +5,9 @@ using TheFountainOfObjects.Model.DataObjects;
 
 namespace TheFountainOfObjects.Model.Services;
 
-internal class DatabaseManager
+public class DatabaseManager
 {
-    private const string ConnectionString = "Data Source=coding-Tracker.db";
+    private const string ConnectionString = "Data Source=players.db";
     
     public DatabaseManager()
     {
@@ -27,13 +27,13 @@ internal class DatabaseManager
     {
         using var connection = GetConnection();
 
-        const string createTableQuery = @"
+        const string createTableQuery = """
             CREATE TABLE IF NOT EXISTS Players (
                 Id INTEGER PRIMARY KEY,
                 Name TEXT NOT NULL,
                 Score INTEGER NOT NULL
             );
-        ";
+        """;
 
         connection.Execute(createTableQuery);
     }
@@ -42,21 +42,24 @@ internal class DatabaseManager
     {
         using var connection = GetConnection();
 
-        const string query = @"
+        const string query = """
             INSERT INTO Players (Name, Score)
             VALUES (@Name, 0);
-        ";
+        """;
 
         return connection.Execute(query, new { Name = name });
     }
-
-    internal IEnumerable<PlayerObject> GetPlayers()
+    
+    internal int AddPlayer(string name, int score)
     {
         using var connection = GetConnection();
 
-        const string getPlayersQuery = "SELECT * FROM Players ORDER BY Score DESC";
+        const string query = """
+            INSERT INTO Players (Name, Score)
+            VALUES (@Name, 0);
+        """;
 
-        return connection.Query<PlayerObject>(getPlayersQuery);
+        return connection.Execute(query, new { Name = name });
     }
 
     internal int UpdatePlayer(int playerId, string? name = null, int? score = null)
@@ -77,6 +80,25 @@ internal class DatabaseManager
         var parameters = PrepareUpdateParameters(playerToUpdate);
 
         return connection.Execute(updatePlayerQuery, parameters);
+    }
+    
+    public void ShowPlayers()
+    {
+        var players = RetrievePlayers();
+
+        foreach (var player in players)
+        {
+            Console.WriteLine($"Name: {player.Name}, Score: {player.Score}");
+        }
+    }
+    
+    private IEnumerable<PlayerObject> RetrievePlayers()
+    {
+        using var connection = GetConnection();
+
+        const string getPlayersQuery = "SELECT * FROM Players ORDER BY Score DESC";
+
+        return connection.Query<PlayerObject>(getPlayersQuery);
     }
 
     private string BuildUpdateQuery(string? name, int? score)

@@ -1,14 +1,17 @@
-﻿using TheFountainOfObjects.View;
+﻿using TheFountainOfObjects.Model.Services;
+using TheFountainOfObjects.View.CreatePlayerMenu;
+using TheFountainOfObjects.View.MainMenu;
+using TheFountainOfObjects.View.StartScreen;
 
 namespace TheFountainOfObjects.Controller;
-
-//  TODO: Use Spectre.Console layout widget for displaying the game and status information.
 // ! Left side is for the map, right top, for the player status, and right bottom for the game messages. 
 class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
-        MainMenuView.ShowMainMenu();
+        GameController gameController = new();
+        gameController.StartGame();
+        
         
         /*var game = new Game();
         
