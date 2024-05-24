@@ -4,16 +4,13 @@ namespace TheFountainOfObjects.Model.GameObjects;
 
 public class Player : GameObject
 {
-    private byte _availableArrows = 5;
-    public override void SetName()
+    private int _availableArrows = 5;
+    public void SetName(string name)
     {
-        Console.Write("Please enter your name or press enter for default name: ");
-        var name = Console.ReadLine();
-
         _name = string.IsNullOrEmpty(name) ? "Player" : name;
     }
 
-    public byte GetAvailableArrows()
+    public int GetAvailableArrows()
     {
         return _availableArrows;
     }

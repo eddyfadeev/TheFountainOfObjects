@@ -1,19 +1,19 @@
 ﻿using TheFountainOfObjects.View.GameLayout;
-using TheFountainOfObjects.View.MainMenu;
 
 namespace TheFountainOfObjects.View;
 
-public abstract class MenuViewBase<TEnum> where TEnum : Enum
+public abstract class MenuViewBase<TEnum> : IUpdatesLayout 
+    where TEnum : Enum
 {
-    private protected static readonly LayoutManager _layoutManager = new();
-    private readonly string _menuName;
-    
+    private static string _menuName;
+    public static LayoutManager _layoutManager { get; } = new();
+
     protected MenuViewBase(string menuName)
     {
         _menuName = menuName;
     }
 
-    private protected TEnum ShowMenu(
+    private protected static TEnum ShowMenu(
         IEnumerable<KeyValuePair<TEnum, string>> menuEntries,
         int? selectedEntry = null)
     {
@@ -45,7 +45,7 @@ public abstract class MenuViewBase<TEnum> where TEnum : Enum
         return selected.Key;
     }
 
-    private void RenderMenu(
+    private static void RenderMenu(
         List<KeyValuePair<TEnum,
             string>> entries, int selectedIndex)
     {
@@ -55,7 +55,7 @@ public abstract class MenuViewBase<TEnum> where TEnum : Enum
         _layoutManager.UpdateLayout();
     }
 
-    private Table CreateMenuTable(
+    private static Table CreateMenuTable(
         List<KeyValuePair<TEnum, string>> entries,
         int selectedIndex)
     {

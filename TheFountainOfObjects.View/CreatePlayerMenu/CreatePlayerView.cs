@@ -1,21 +1,23 @@
-﻿namespace TheFountainOfObjects.View.CreatePlayerMenu;
+﻿using TheFountainOfObjects.Model.GameObjects;
+
+namespace TheFountainOfObjects.View.CreatePlayerMenu;
 
 public sealed class CreatePlayerView : MenuViewBase<CreatePlayerEntries>
 {
     private static readonly IEnumerable<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries
         = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();
     
-    private static readonly CreatePlayerView Instance = new();
-    private CreatePlayerView() : base("Create Player")
+    private static readonly CreatePlayerView Instance = new("Create Player");
+    
+    private CreatePlayerView(string menuName) : base(menuName)
     {
     }
 
-    public static void ShowCreatePlayerPrompt()
+    public static void ShowCreatePlayerPrompt(Action<CreatePlayerEntries> onMenuEntrySelected)
     {
         _layoutManager.SupportWindowIsVisible = false;
-        var selectedEntry = Instance.ShowMenu(_createPlayerMenuEntries);
+        var selectedEntry = ShowMenu(_createPlayerMenuEntries);
         
-        InvokeActionForMenuEntry(selectedEntry, Instance);
-        Console.ReadKey();
+        onMenuEntrySelected(selectedEntry);
     }
 }

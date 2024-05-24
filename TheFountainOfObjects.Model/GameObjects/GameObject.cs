@@ -22,10 +22,10 @@ public class GameObject
         return _name;
     }
 
-    public virtual void SetName()
+    /*public virtual void SetName()
     {
         _name = this.ToString();
-    }
+    }*/
 
     public IEnumerable<Tuple<int, int>> GetAdjacentRoomsPositions(int fieldSize)
     {

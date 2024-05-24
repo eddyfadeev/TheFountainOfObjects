@@ -1,6 +1,8 @@
-﻿namespace TheFountainOfObjects.View.StartScreen;
+﻿using TheFountainOfObjects.View.GameLayout;
 
-public static class StartScreen
+namespace TheFountainOfObjects.View.StartScreen;
+
+public sealed class StartScreen : IUpdatesLayout
 {
     private const string IntroText = 
         "You enter the Cavern of Objects, a maze of rooms filled " +
@@ -23,7 +25,9 @@ public static class StartScreen
         // "but you can smell their rotten stench in nearby rooms."
         ;
 
-    internal static Table ShowIntro()
+    public static LayoutManager _layoutManager { get; } = new();
+
+    private static Table ComposeIntro()
     {
         Table tableIntro = new()
         {
@@ -46,5 +50,15 @@ public static class StartScreen
         tableIntro.AddRow(IntroText);
         
         return tableIntro;
+    }
+    
+    public void ShowStartScreen()
+    {
+        var startScreen = ComposeIntro();
+        _layoutManager.SupportWindowIsVisible = false;
+
+        _layoutManager.MainWindow.Update(startScreen);
+        _layoutManager.UpdateLayout();
+        Console.ReadKey();
     }
 }

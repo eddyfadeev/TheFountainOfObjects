@@ -5,28 +5,18 @@ namespace TheFountainOfObjects.View.MainMenu;
 public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
 {
     private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
-    private static readonly MainMenuView Instance = new ();
-
-    private MainMenuView() : base("Main Menu")
+    private static readonly MainMenuView Instance = new("Main Menu");
+    
+    private MainMenuView(string menuName) : base(menuName)
     {
     }
     
-    public static void ShowMainMenu()
+    public static void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
         _layoutManager.SupportWindowIsVisible = true;
-        var selectedEntry = Instance.ShowMenu(_mainMenuEntriesList);
+        var selectedEntry = ShowMenu(_mainMenuEntriesList);
         
-        InvokeActionForMenuEntry(selectedEntry, Instance);
-    }
-    
-    public static void ShowStartScreen()
-    {
-        var startScreen = ShowIntro();
-        _layoutManager.SupportWindowIsVisible = false;
-
-        _layoutManager.MainWindow.Update(startScreen);
-        _layoutManager.UpdateLayout();
-        Console.ReadKey();
+        onMenuEntrySelected(selectedEntry);
     }
     
     // TODO: Fill up help menu with appropriate information.

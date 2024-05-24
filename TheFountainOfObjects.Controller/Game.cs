@@ -43,7 +43,7 @@ public class Game
         Console.ReadKey();
         Console.Clear();
         
-        _player = CreatePLayer();
+        //_player = CreatePLayer();
 
         Console.Clear();
         while (isRunning)
@@ -303,17 +303,6 @@ public class Game
     }
 
     /// <summary>
-    /// Creates a new instance of the Player class, sets the name, and returns the player object.
-    /// </summary>
-    /// <returns>A new instance of the Player class with the name set.</returns>
-    private Player CreatePLayer()
-    {
-        var player = new Player();
-        player.SetName();
-        return player;
-    }
-
-    /// <summary>
     /// Creates a maze of the specified size and returns it as a two-dimensional array of Room objects.
     /// </summary>
     /// <param name="size">The size of the maze.</param>
@@ -458,7 +447,7 @@ public class Game
             
             else if (userInput.Equals("name"))
             {
-                _player.SetName();
+                //_player.SetName();
             }
             else
             {

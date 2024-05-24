@@ -49,14 +49,17 @@ public class DatabaseManager
 
         return connection.Execute(query, new { Name = name });
     }
-
-    internal IEnumerable<PlayerObject> GetPlayers()
+    
+    internal int AddPlayer(string name, int score)
     {
         using var connection = GetConnection();
 
-        const string getPlayersQuery = "SELECT * FROM Players ORDER BY Score DESC";
+        const string query = """
+            INSERT INTO Players (Name, Score)
+            VALUES (@Name, 0);
+        """;
 
-        return connection.Query<PlayerObject>(getPlayersQuery);
+        return connection.Execute(query, new { Name = name });
     }
 
     internal int UpdatePlayer(int playerId, string? name = null, int? score = null)
@@ -77,6 +80,25 @@ public class DatabaseManager
         var parameters = PrepareUpdateParameters(playerToUpdate);
 
         return connection.Execute(updatePlayerQuery, parameters);
+    }
+    
+    public void ShowPlayers()
+    {
+        var players = RetrievePlayers();
+
+        foreach (var player in players)
+        {
+            Console.WriteLine($"Name: {player.Name}, Score: {player.Score}");
+        }
+    }
+    
+    private IEnumerable<PlayerObject> RetrievePlayers()
+    {
+        using var connection = GetConnection();
+
+        const string getPlayersQuery = "SELECT * FROM Players ORDER BY Score DESC";
+
+        return connection.Query<PlayerObject>(getPlayersQuery);
     }
 
     private string BuildUpdateQuery(string? name, int? score)
