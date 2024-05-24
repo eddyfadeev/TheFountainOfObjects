@@ -1,6 +1,4 @@
-﻿using TheFountainOfObjects.Model.GameObjects;
-
-namespace TheFountainOfObjects.View.CreatePlayerMenu;
+﻿namespace TheFountainOfObjects.View.CreatePlayerMenu;
 
 public sealed class CreatePlayerView : MenuViewBase<CreatePlayerEntries>
 {
@@ -11,6 +9,7 @@ public sealed class CreatePlayerView : MenuViewBase<CreatePlayerEntries>
     
     private CreatePlayerView(string menuName) : base(menuName)
     {
+        
     }
 
     public static void ShowCreatePlayerPrompt(Action<CreatePlayerEntries> onMenuEntrySelected)
