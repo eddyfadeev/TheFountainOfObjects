@@ -1,16 +1,13 @@
-﻿using Spectre.Console;
-using Spectre.Console.Rendering;
+﻿namespace TheFountainOfObjects.View.GameLayout;
 
-namespace TheFountainOfObjects.View.GameLayout;
-
-public class LayoutManager
+public sealed class LayoutManager
 {
     private const string MainWindowName = "MainWindow";
     private const string SupportWindowName = "SupportWindow";
     private const string SupportNestedTopName = "Top";
     private const string SupportNestedBottomName = "Bottom";
 
-    public Layout GameLayout { get; }
+    private Layout GameLayout { get; }
     public Layout MainWindow { get; set; }
     public Layout SupportWindowTop { get; set; }
     public Layout SupportWindowBottom { get; set; }

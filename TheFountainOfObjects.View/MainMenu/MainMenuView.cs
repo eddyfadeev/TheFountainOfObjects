@@ -1,12 +1,11 @@
-﻿using Spectre.Console;
-using static TheFountainOfObjects.View.StartScreen.StartScreen;
+﻿using static TheFountainOfObjects.View.StartScreen.StartScreen;
 
 namespace TheFountainOfObjects.View.MainMenu;
 
-public class MainMenuView : MenuViews
+public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
 {
     private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
-    private static readonly MainMenuView _mainMenuView = new ();
+    private static readonly MainMenuView Instance = new ();
 
     private MainMenuView() : base("Main Menu")
     {
@@ -15,14 +14,14 @@ public class MainMenuView : MenuViews
     public static void ShowMainMenu()
     {
         _layoutManager.SupportWindowIsVisible = true;
-        var selectedEntry = _mainMenuView.ShowMenu(_mainMenuEntriesList);
+        var selectedEntry = Instance.ShowMenu(_mainMenuEntriesList);
         
-        InvokeActionForMenuEntry(selectedEntry, _mainMenuView);
+        InvokeActionForMenuEntry(selectedEntry, Instance);
     }
     
     public static void ShowStartScreen()
     {
-        var startScreen = new Panel(ShowIntro().Expand());
+        var startScreen = ShowIntro();
         _layoutManager.SupportWindowIsVisible = false;
 
         _layoutManager.MainWindow.Update(startScreen);
