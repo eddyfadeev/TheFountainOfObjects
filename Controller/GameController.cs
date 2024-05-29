@@ -15,7 +15,7 @@ public class GameController
         _startScreen.ShowStartScreen();
         _createPlayerController.ShowCreatePlayerPrompt();
         _loadPlayerController.ShowLoadPlayerMenu();
-        Console.ReadKey();
+        //Console.ReadKey();
         _mainMenuController.ShowMainMenu();
     }
 }

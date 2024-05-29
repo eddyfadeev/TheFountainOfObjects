@@ -10,12 +10,18 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
 
     private protected static TEnum ShowMenu(
         IEnumerable<KeyValuePair<TEnum, string>> menuEntries,
+        bool isDynamicallyGeneratedEnum = false,
         int? selectedEntry = null)
     {
         var entries = new List<KeyValuePair<TEnum, string>>(menuEntries);
         var selectedIndex = selectedEntry ?? 0;
         var isRunning = true;
         KeyValuePair<TEnum, string> selected = default;
+        
+        if (isDynamicallyGeneratedEnum)
+        {
+            entries.Add(new KeyValuePair<TEnum, string>(default(TEnum), "[bold white]To previous menu[/]"));
+        }
 
         while (isRunning)
         {
@@ -33,6 +39,10 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
             else if (key == ConsoleKey.Enter)
             {
                 selected = entries[selectedIndex];
+                isRunning = false;
+            }
+            else if (key == ConsoleKey.Escape || selected.Value == "To previous menu")
+            {
                 isRunning = false;
             }
         }
@@ -78,7 +88,7 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
             }
             else
             {
-                table.AddRow($"{entries[i].Value}");
+                table.AddRow($"[green]{entries[i].Value}[/]");
             }
         }
 

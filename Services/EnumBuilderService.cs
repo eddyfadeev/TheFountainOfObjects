@@ -21,7 +21,7 @@ public class EnumBuilderService
             enumBuilder.DefineLiteral(enumValueName, (int)id);
         }
 
-        Console.ReadKey();
+        //Console.ReadKey();
         return enumBuilder.CreateType();
     }
 }

@@ -1,6 +1,4 @@
-﻿using Model.Services;
-
-namespace View.LoadPlayerMenu;
+﻿namespace View.LoadPlayerMenu;
 
 public sealed class LoadPlayerView : MenuViewBase<Enum>
 {
@@ -9,10 +7,10 @@ public sealed class LoadPlayerView : MenuViewBase<Enum>
         _menuName = "Load Player";
     }
 
-    public static Enum ShowLoadPlayerMenu(IEnumerable<KeyValuePair<Enum, string>> enumEntries, Action<Enum> onMenuEntrySelected)
+    public static Enum ShowLoadPlayerMenu(IEnumerable<KeyValuePair<Enum, string>> enumEntries)
     {
         _layoutManager.SupportWindowIsVisible = false;
-        var selectedEntry = ShowMenu(enumEntries);
+        var selectedEntry = ShowMenu(enumEntries, true);
 
         return selectedEntry;
     }

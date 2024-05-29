@@ -9,10 +9,14 @@ namespace Controller;
 
 public sealed class LoadPlayerController : BaseController<Enum>
 {
-    public void ShowLoadPlayerMenu()
+    public Enum ShowLoadPlayerMenu()
     {
+        Console.Clear();
+        
         var entries = GetEnumEntries(InitializeEnum());
-        LoadPlayerView.ShowLoadPlayerMenu(entries, OnMenuEntrySelected);
+        var selectedPlayer = LoadPlayerView.ShowLoadPlayerMenu(entries);
+
+        return selectedPlayer;
     }
 
     private Type InitializeEnum()

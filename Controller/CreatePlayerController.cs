@@ -8,6 +8,7 @@ namespace Controller;
 public class CreatePlayerController : BaseController<CreatePlayerEntries>
 {
     public Player Player { get; private set; }
+    
     public void ShowCreatePlayerPrompt()
     {
         CreatePlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
@@ -25,10 +26,22 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     
     private void LoadPlayer()
     {
-        Console.Clear();
-        
-        var databaseManager = new DatabaseManager();
-        
-        databaseManager.ShowPlayers();
+        var loadPlayer = new LoadPlayerController();
+        bool isRunning = true;
+
+        while (isRunning)
+        {
+            var selection = loadPlayer.ShowLoadPlayerMenu();
+            
+            if (selection is null || selection.Equals("To previous menu"))
+            {
+                isRunning = false;
+                //ShowCreatePlayerPrompt();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
