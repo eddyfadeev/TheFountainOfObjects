@@ -11,7 +11,14 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     
     public void ShowCreatePlayerPrompt()
     {
-        CreatePlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
+        bool playerIsCreated = false;
+
+        while (!playerIsCreated)
+        {
+            CreatePlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
+            
+            playerIsCreated = Player is not null;
+        }
     }
     
     private void CreatePlayer()
@@ -27,21 +34,33 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     private void LoadPlayer()
     {
         var loadPlayer = new LoadPlayerController();
-        bool isRunning = true;
 
+        var selection = loadPlayer.ShowLoadPlayerMenu();
+        
+        if (selection is not null)
+        {
+            var databaseManager = new DatabaseManager();
+            Player = new Player();
+            
+            //Player = databaseManager.LoadPlayer(selection.)
+            
+            Player.SetName(selection.ToString());
+        }
+        
+        /*
         while (isRunning)
         {
-            var selection = loadPlayer.ShowLoadPlayerMenu();
+            
             
             if (selection is null || selection.Equals("To previous menu"))
             {
                 isRunning = false;
-                //ShowCreatePlayerPrompt();
+                ShowCreatePlayerPrompt();
             }
             else
             {
                 throw new NotImplementedException();
             }
-        }
+        }*/
     }
 }

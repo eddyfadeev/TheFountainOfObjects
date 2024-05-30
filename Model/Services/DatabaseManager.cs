@@ -66,6 +66,15 @@ public class DatabaseManager
 
         return connection.Execute(updatePlayerQuery, parameters);
     }
+
+    public PlayerDTO LoadPlayer(int playerId)
+    {
+        using var connection = GetConnection();
+        
+        const string loadPlayerQuery = "SELECT * FROM Players WHERE Id = @Id";
+        
+        return connection.QueryFirstOrDefault<PlayerDTO>(loadPlayerQuery, new { Id = playerId });
+    }
     
     public void ShowPlayers()
     {
