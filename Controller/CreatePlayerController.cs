@@ -7,9 +7,10 @@ namespace Controller;
 
 public class CreatePlayerController : BaseController<CreatePlayerEntries>
 {
-    public Player Player { get; private set; }
+    private DatabaseManager _databaseManager = new();
+    private Player? Player { get; set; }
     
-    public void ShowCreatePlayerPrompt()
+    public Player ShowCreatePlayerPrompt()
     {
         bool playerIsCreated = false;
 
@@ -19,16 +20,29 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
             
             playerIsCreated = Player is not null;
         }
+        
+        return Player!;
     }
     
     private void CreatePlayer()
     {
         Console.Clear();
+
+        var existentName = true;
+        var name = string.Empty;
         
-        var name = AnsiConsole.Ask<string>("Please, enter your name > ");
+        while (existentName)
+        {
+            name = AnsiConsole.Ask<string>("Please, enter your name > ");
+            existentName = _databaseManager.RetrievePlayers().Any(p => p.Name == name);
+            
+            if (existentName)
+            {
+                AnsiConsole.MarkupLine("[red]This name is already taken. Please, choose another one.[/]");
+            }
+        }
         
-        Player = new Player();
-        Player.SetName(name);
+        PreparePlayer(name);
     }
     
     private void LoadPlayer()
@@ -39,28 +53,29 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         
         if (selection is not null)
         {
-            var databaseManager = new DatabaseManager();
-            Player = new Player();
-            
-            //Player = databaseManager.LoadPlayer(selection.)
-            
-            Player.SetName(selection.ToString());
+            PreparePlayer(selection);
         }
-        
-        /*
-        while (isRunning)
+        else
         {
-            
-            
-            if (selection is null || selection.Equals("To previous menu"))
-            {
-                isRunning = false;
-                ShowCreatePlayerPrompt();
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }*/
+            ShowCreatePlayerPrompt();
+        }
+    }
+
+    private void PreparePlayer(Enum selectedEntry)
+    {
+        var playerIdToLoad = Convert.ToInt64(selectedEntry);
+        var loadedPLayer = _databaseManager.LoadPlayer(playerIdToLoad);
+
+        Player = new Player(loadedPLayer.Name, (int)loadedPLayer.Score!);
+        {
+            Player.Id = (int)loadedPLayer.Id;
+        }
+    }
+
+    private void PreparePlayer(string name)
+    {
+        const int defaultScore = 0;
+        
+        Player = new Player(name, defaultScore);
     }
 }

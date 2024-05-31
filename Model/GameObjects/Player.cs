@@ -4,11 +4,16 @@ namespace Model.GameObjects;
 
 public class Player : GameObject
 {
-    private int _availableArrows = 5;
-    public void SetName(string name)
+    public int? Id { get; set; }
+    public int Score { get; set; }
+
+    public Player(string name, int score)
     {
-        _name = string.IsNullOrEmpty(name) ? "Player" : name;
+        Name = name;
+        Score = score;
     }
+    
+    private int _availableArrows = 5;
 
     public int GetAvailableArrows()
     {

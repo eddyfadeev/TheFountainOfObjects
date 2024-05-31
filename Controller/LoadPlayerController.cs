@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Model.DataObjects;
 using Model.Services;
 using Services;
 using View.LoadPlayerMenu;
@@ -24,7 +23,7 @@ public sealed class LoadPlayerController : BaseController<Enum>
         var databaseManager = new DatabaseManager();
         var enumBuilderService = new EnumBuilderService();
         var enumData = databaseManager.RetrievePlayers();
-        var loadPlayerEnum = enumBuilderService.CreateEnumType("Load Player", enumData.ToList());
+        var loadPlayerEnum = enumBuilderService.CreateEnumType("LoadPlayerEnum", enumData.ToList());
 
         return loadPlayerEnum;
     }

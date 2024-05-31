@@ -5,7 +5,12 @@ namespace Model.GameObjects;
 public class GameObject
 {
     protected (int row, int column) Position { get; set; }
-    private protected string? _name;
+
+    public string? Name
+    {
+        get;
+        set;
+    }
 
     public (int row, int column) GetPosition()
     {
@@ -16,16 +21,6 @@ public class GameObject
     {
         Position = (row, column);
     }
-    
-    public string GetName()
-    {
-        return _name;
-    }
-
-    /*public virtual void SetName()
-    {
-        _name = this.ToString();
-    }*/
 
     public IEnumerable<Tuple<int, int>> GetAdjacentRoomsPositions(int fieldSize)
     {

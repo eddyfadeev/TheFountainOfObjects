@@ -38,13 +38,12 @@ public class DatabaseManager
         connection.Execute(createTableQuery);
     }
 
-    public int AddPlayer(string name, int? score = null)
+    public int AddPlayer(string name, int score)
     {
         using var connection = GetConnection();
-        var scoreToWrite = score ?? 0; 
         const string query = "INSERT INTO Players (Name, Score) VALUES (@Name, @Score);";
 
-        return connection.Execute(query, new { Name = name, Score = scoreToWrite });
+        return connection.Execute(query, new { Name = name, Score = score });
     }
 
     public int UpdatePlayer(int playerId, string? name = null, int? score = null)
@@ -67,11 +66,11 @@ public class DatabaseManager
         return connection.Execute(updatePlayerQuery, parameters);
     }
 
-    public PlayerDTO LoadPlayer(int playerId)
+    public PlayerDTO LoadPlayer(long playerId)
     {
         using var connection = GetConnection();
         
-        const string loadPlayerQuery = "SELECT * FROM Players WHERE Id = @Id";
+        const string loadPlayerQuery = "SELECT Name, Id, Score FROM Players WHERE Id = @Id";
         
         return connection.QueryFirstOrDefault<PlayerDTO>(loadPlayerQuery, new { Id = playerId });
     }

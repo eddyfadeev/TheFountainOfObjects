@@ -430,7 +430,7 @@ public class Game
 
             Console.WriteLine("SETTINGS");
             Console.WriteLine("----------------------------------");
-            Console.WriteLine($"Player name (name): {_player.GetName()}");
+            //Console.WriteLine($"Player name (name): {_player.GetName()}");
             Console.WriteLine($"Field size: {_fieldSize} x {_fieldSize}");
             Console.WriteLine("----------------------------------");
             Console.WriteLine("Available sizes:");

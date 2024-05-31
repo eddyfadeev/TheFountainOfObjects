@@ -14,14 +14,12 @@ public class EnumBuilderService
         var moduleBuilder = assemblyBuilder.DefineDynamicModule("MainModule");
 
         var enumBuilder = moduleBuilder.DefineEnum(enumName, TypeAttributes.Public, typeof(int));
-        
 
-        foreach (var (id, enumValueName, _) in enumData)
+        foreach (var player in enumData)
         {
-            enumBuilder.DefineLiteral(enumValueName, (int)id);
+            enumBuilder.DefineLiteral(player.Name, (int)player.Id);
         }
 
-        //Console.ReadKey();
         return enumBuilder.CreateType();
     }
 }

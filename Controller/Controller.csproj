@@ -14,8 +14,4 @@
     <ProjectReference Include="..\View\View.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
