@@ -1,9 +1,11 @@
-﻿namespace View.MainMenu;
+﻿using View.Leaderboard;
+
+namespace View.MainMenu;
 
 public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
 {
     private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
-    
+    private static readonly LeaderboardView _leaderboardView = new ();
     static MainMenuView()
     {
         _menuName = "Main Menu";
@@ -15,6 +17,12 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
         var selectedEntry = ShowMenu(_mainMenuEntriesList);
         
         onMenuEntrySelected(selectedEntry);
+    }
+
+    public static void ShowLeaderboard()
+    {
+        _layoutManager.SupportWindowIsVisible = false;
+        _leaderboardView.ShowLeaderboard();
     }
     
     // TODO: Fill up help menu with appropriate information and move to the other class

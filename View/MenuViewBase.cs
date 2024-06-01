@@ -60,11 +60,9 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
         _layoutManager.UpdateLayout();
     }
 
-    private static Table CreateMenuTable(
-        List<KeyValuePair<TEnum, string>> entries,
-        int selectedIndex)
+    private protected static Table CreateTableLayout()
     {
-        var table = new Table()
+        var table = new Table 
         {
             ShowHeaders = false,
             ShowFooters = false,
@@ -77,8 +75,17 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
                 )),
             Expand = true,
         };
-
+        
         table.AddColumn(new TableColumn(_menuName));
+
+        return table;
+    }
+
+    private static Table CreateMenuTable(
+        List<KeyValuePair<TEnum, string>> entries,
+        int selectedIndex)
+    {
+        var table = CreateTableLayout();
 
         for (int i = 0; i < entries.Count; i++)
         {

@@ -8,4 +8,9 @@ public class MainMenuController : BaseController<MainMenuEntries>
     {
         MainMenuView.ShowMainMenu(OnMenuEntrySelected);
     }
+    
+    public void ShowLeaderboard()
+    {
+        MainMenuView.ShowLeaderboard();
+    }
 }
