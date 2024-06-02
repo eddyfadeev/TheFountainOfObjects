@@ -52,4 +52,25 @@ public sealed class LayoutManager
         GameLayout[SupportWindowName].Size(supportWindowSize);
         GameLayout[SupportWindowName].MinimumSize(supportWindowSize);
     }
+    
+    public Table CreateTableLayout(string menuName)
+    {
+        var table = new Table 
+        {
+            ShowHeaders = false,
+            ShowFooters = false,
+            Border = TableBorder.Rounded,
+            Title = new TableTitle(
+                menuName,
+                new Style(
+                    foreground: Color.White,
+                    decoration: Decoration.Bold
+                )),
+            Expand = true,
+        };
+        
+        table.AddColumn(new TableColumn(menuName).Centered());
+
+        return table;
+    }
 }

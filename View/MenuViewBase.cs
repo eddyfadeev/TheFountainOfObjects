@@ -8,64 +8,22 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
     public static LayoutManager _layoutManager { get; } = new();
     protected abstract string MenuName { get; }
 
-    private protected  TEnum ShowMenu(
+    private protected void ShowMenu(
         IEnumerable<KeyValuePair<TEnum, string>> menuEntries,
-        bool? isDynamicallyGeneratedEnum = null,
-        int? selectedEntry = null)
+        bool? isDynamicallyGeneratedEnum = null)
     {
         var entries = new List<KeyValuePair<TEnum, string>>(menuEntries);
         var isDynamicEnum = isDynamicallyGeneratedEnum ?? false;
-        var selectedIndex = selectedEntry ?? 0;
         
         if (isDynamicEnum)
         {
             entries.Add(new KeyValuePair<TEnum, string>(default, "[bold white]To previous menu[/]"));
         }
-
-        var selected = SelectEntry(ref entries, ref selectedIndex);
-
-        return selected.Key;
     }
 
-    private KeyValuePair<TEnum, string> SelectEntry(
-        ref List<KeyValuePair<TEnum, string>> menuEntries, 
-        ref int selectedIndex)
+    private void RenderMenu(List<KeyValuePair<TEnum, string>> entries)
     {
-        var userMadeChoice = false;
-        KeyValuePair<TEnum, string> selected = new();
-        
-        while (!userMadeChoice)
-        {
-            RenderMenu(menuEntries, selectedIndex);
-            var key = Console.ReadKey(true).Key;
-
-            if (key == ConsoleKey.UpArrow)
-            {
-                selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : menuEntries.Count - 1;
-            }
-            else if (key == ConsoleKey.DownArrow)
-            {
-                selectedIndex = (selectedIndex + 1) % menuEntries.Count;
-            }
-            else if (key == ConsoleKey.Enter)
-            {
-                selected = menuEntries[selectedIndex];
-                userMadeChoice = true;
-            }
-            else if (key == ConsoleKey.Escape || selected.Value == "To previous menu")
-            {
-                userMadeChoice = true;
-            }
-        }
-        
-        return selected;
-    }
-
-    private void RenderMenu(
-        List<KeyValuePair<TEnum,
-            string>> entries, int selectedIndex)
-    {
-        var table = CreateMenuTable(entries, selectedIndex);
+        var table = CreateMenuTable(entries);
         _layoutManager.MainWindow.Update(table);
 
         _layoutManager.UpdateLayout();
@@ -92,17 +50,13 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
         return table;
     }
 
-    private Table CreateMenuTable(
-        List<KeyValuePair<TEnum, string>> entries,
-        int selectedIndex)
+    public Table CreateMenuTable(List<KeyValuePair<TEnum, string>> entries)
     {
-        var table = CreateTableLayout();
+        var table = _layoutManager.CreateTableLayout(MenuName);
 
         for (int i = 0; i < entries.Count; i++)
         {
-            table.AddRow(i == selectedIndex
-                ? $"[bold yellow]> {entries[i].Value}[/]"
-                : $"[green]{entries[i].Value}[/]");
+            table.AddRow($"[green]{entries[i].Value}[/]");
         }
 
         return table;

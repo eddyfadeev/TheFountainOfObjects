@@ -2,7 +2,7 @@
 
 namespace View.MainMenu;
 
-public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
+public sealed class MainMenuView : MenuViewBase<MainMenuEntries>, ISelectable<MainMenuEntries>
 {
     private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
     private static readonly LeaderboardView _leaderboardView = new ();
@@ -11,7 +11,9 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
         _layoutManager.SupportWindowIsVisible = true;
-        var selectedEntry = ShowMenu(_mainMenuEntriesList);
+        ShowMenu(_mainMenuEntriesList);
+        
+        
         
         onMenuEntrySelected(selectedEntry);
     }
@@ -23,7 +25,7 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
     }
     
     // TODO: Fill up help menu with appropriate information and move to the other class
-    // ShowHelp method should call the appropriate method from the other class to show the help information
+    // !ShowHelp method should call the appropriate method from the other class to show the help information
     internal void ShowHelp()
     {
         Console.Clear();
@@ -39,4 +41,15 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
         Console.ReadKey();
         Console.Clear();
     }
+
+    public MainMenuEntries SelectEntry(
+        ref List<KeyValuePair<MainMenuEntries, string>> menuEntries,
+        ref int selectedIndex)
+    {
+        return 
+    }
+
+    public void RenderMenu(List<KeyValuePair<MainMenuEntries, string>> menuEntries, int selectedIndex) => throw new NotImplementedException();
+
+    public Table CreateMenuTable(List<KeyValuePair<MainMenuEntries, string>> menuEntries, int selectedIndex) => throw new NotImplementedException();
 }
