@@ -20,11 +20,13 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
         Console.ReadKey();
     }
 
-    public void ShowTopTen()
+    public Table ShowTopTen()
     {
         const int numberOfEntries = 10;
         var topTenTable = CreateLeaderboardTable(numberOfEntries);
         topTenTable.ShowFooters = false;
+
+        return topTenTable;
     }
 
     private Table CreateLeaderboardTable(int? numberOfEntries = null)

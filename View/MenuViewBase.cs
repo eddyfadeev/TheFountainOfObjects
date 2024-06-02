@@ -5,7 +5,6 @@ namespace View;
 public abstract class MenuViewBase<TEnum> : IUpdatesLayout 
     where TEnum : Enum
 {
-
     public static LayoutManager _layoutManager { get; } = new();
     protected abstract string MenuName { get; }
 
@@ -20,7 +19,7 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
         
         if (isDynamicEnum)
         {
-            entries.Add(new KeyValuePair<TEnum, string>(default(TEnum), "[bold white]To previous menu[/]"));
+            entries.Add(new KeyValuePair<TEnum, string>(default, "[bold white]To previous menu[/]"));
         }
 
         var selected = SelectEntry(ref entries, ref selectedIndex);
@@ -88,7 +87,7 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
             Expand = true,
         };
         
-        table.AddColumn(new TableColumn(MenuName));
+        table.AddColumn(new TableColumn(MenuName).Centered());
 
         return table;
     }
@@ -101,14 +100,9 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
 
         for (int i = 0; i < entries.Count; i++)
         {
-            if (i == selectedIndex)
-            {
-                table.AddRow($"[bold yellow]> {entries[i].Value}[/]");
-            }
-            else
-            {
-                table.AddRow($"[green]{entries[i].Value}[/]");
-            }
+            table.AddRow(i == selectedIndex
+                ? $"[bold yellow]> {entries[i].Value}[/]"
+                : $"[green]{entries[i].Value}[/]");
         }
 
         return table;
