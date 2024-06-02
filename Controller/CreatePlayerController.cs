@@ -12,11 +12,12 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     
     public Player ShowCreatePlayerPrompt()
     {
+        var createPlayerView = new CreatePlayerView();
         bool playerIsCreated = false;
 
         while (!playerIsCreated)
         {
-            CreatePlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
+            createPlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
             
             playerIsCreated = Player is not null;
         }

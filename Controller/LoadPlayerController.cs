@@ -11,9 +11,10 @@ public sealed class LoadPlayerController : BaseController<Enum>
     public Enum ShowLoadPlayerMenu()
     {
         Console.Clear();
-        
+     
+        var loadPlayerView = new LoadPlayerView();
         var entries = GetEnumEntries(InitializeEnum());
-        var selectedPlayer = LoadPlayerView.ShowLoadPlayerMenu(entries);
+        var selectedPlayer = loadPlayerView.ShowLoadPlayerMenu(entries);
 
         return selectedPlayer;
     }

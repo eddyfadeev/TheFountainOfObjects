@@ -2,12 +2,9 @@
 
 public sealed class LoadPlayerView : MenuViewBase<Enum>
 {
-    static LoadPlayerView()
-    {
-        _menuName = "Load Player";
-    }
+    protected override string MenuName => "Load Player";
 
-    public static Enum ShowLoadPlayerMenu(IEnumerable<KeyValuePair<Enum, string>> enumEntries)
+    public  Enum ShowLoadPlayerMenu(IEnumerable<KeyValuePair<Enum, string>> enumEntries)
     {
         _layoutManager.SupportWindowIsVisible = false;
         var selectedEntry = ShowMenu(enumEntries, true);

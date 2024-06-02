@@ -6,7 +6,9 @@ public class MainMenuController : BaseController<MainMenuEntries>
 {
     public void ShowMainMenu()
     {
-        MainMenuView.ShowMainMenu(OnMenuEntrySelected);
+        var mainMenuView = new MainMenuView();
+        
+        mainMenuView.ShowMainMenu(OnMenuEntrySelected);
     }
     
     public void ShowLeaderboard()

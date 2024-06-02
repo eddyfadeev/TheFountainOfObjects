@@ -6,12 +6,9 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>
 {
     private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
     private static readonly LeaderboardView _leaderboardView = new ();
-    static MainMenuView()
-    {
-        _menuName = "Main Menu";
-    }
+    protected override string MenuName => "Main Menu";
     
-    public static void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
+    public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
         _layoutManager.SupportWindowIsVisible = true;
         var selectedEntry = ShowMenu(_mainMenuEntriesList);

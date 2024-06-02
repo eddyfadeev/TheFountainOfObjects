@@ -5,14 +5,10 @@ namespace View.Leaderboard;
 
 public sealed class LeaderboardView : MenuViewBase<Enum>
 {
-    private static List<PlayerDTO> Players { get; }
     private static readonly DatabaseManager _databaseManager = new();
+    private List<PlayerDTO> Players { get; } = _databaseManager.RetrievePlayers().ToList();
+    protected override string MenuName => "Leaderboard";
     
-    static LeaderboardView()
-    {
-        _menuName = "Leaderboard";
-        Players = _databaseManager.RetrievePlayers().ToList();
-    }
     public void ShowLeaderboard()
     {
         Console.Clear();
@@ -26,7 +22,8 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
 
     public void ShowTopTen()
     {
-        var topTenTable = CreateLeaderboardTable(10);
+        const int numberOfEntries = 10;
+        var topTenTable = CreateLeaderboardTable(numberOfEntries);
         topTenTable.ShowFooters = false;
     }
 
@@ -43,10 +40,11 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
         for (int i = 0; i < numberOfEntries; i++)
         {
             var player = Players[i];
-            leaderboardTable.AddRow(player.Name, player.Score.ToString());
+            leaderboardTable.AddRow($"{i + 1} {player.Name}", player.Score.ToString());
         }
 
         table.AddRow(leaderboardTable);
+        
         table.Caption = new TableTitle("[white bold]Press any key to continue...[/]");
         
         return table;
@@ -58,7 +56,7 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
                 Border = TableBorder.None,
             };
         
-            innerTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]");
+            innerTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]").Centered();
         
             return innerTable;
         }

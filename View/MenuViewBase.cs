@@ -5,52 +5,64 @@ namespace View;
 public abstract class MenuViewBase<TEnum> : IUpdatesLayout 
     where TEnum : Enum
 {
-    private protected static string _menuName;
-    public static LayoutManager _layoutManager { get; } = new();
 
-    private protected static TEnum ShowMenu(
+    public static LayoutManager _layoutManager { get; } = new();
+    protected abstract string MenuName { get; }
+
+    private protected  TEnum ShowMenu(
         IEnumerable<KeyValuePair<TEnum, string>> menuEntries,
-        bool isDynamicallyGeneratedEnum = false,
+        bool? isDynamicallyGeneratedEnum = null,
         int? selectedEntry = null)
     {
         var entries = new List<KeyValuePair<TEnum, string>>(menuEntries);
+        var isDynamicEnum = isDynamicallyGeneratedEnum ?? false;
         var selectedIndex = selectedEntry ?? 0;
-        var isRunning = true;
-        KeyValuePair<TEnum, string> selected = default;
         
-        if (isDynamicallyGeneratedEnum)
+        if (isDynamicEnum)
         {
             entries.Add(new KeyValuePair<TEnum, string>(default(TEnum), "[bold white]To previous menu[/]"));
         }
 
-        while (isRunning)
-        {
-            RenderMenu(entries, selectedIndex);
-            var key = Console.ReadKey(true).Key;
-
-            if (key == ConsoleKey.UpArrow)
-            {
-                selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : entries.Count - 1;
-            }
-            else if (key == ConsoleKey.DownArrow)
-            {
-                selectedIndex = (selectedIndex + 1) % entries.Count;
-            }
-            else if (key == ConsoleKey.Enter)
-            {
-                selected = entries[selectedIndex];
-                isRunning = false;
-            }
-            else if (key == ConsoleKey.Escape || selected.Value == "To previous menu")
-            {
-                isRunning = false;
-            }
-        }
+        var selected = SelectEntry(ref entries, ref selectedIndex);
 
         return selected.Key;
     }
 
-    private static void RenderMenu(
+    private KeyValuePair<TEnum, string> SelectEntry(
+        ref List<KeyValuePair<TEnum, string>> menuEntries, 
+        ref int selectedIndex)
+    {
+        var userMadeChoice = false;
+        KeyValuePair<TEnum, string> selected = new();
+        
+        while (!userMadeChoice)
+        {
+            RenderMenu(menuEntries, selectedIndex);
+            var key = Console.ReadKey(true).Key;
+
+            if (key == ConsoleKey.UpArrow)
+            {
+                selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : menuEntries.Count - 1;
+            }
+            else if (key == ConsoleKey.DownArrow)
+            {
+                selectedIndex = (selectedIndex + 1) % menuEntries.Count;
+            }
+            else if (key == ConsoleKey.Enter)
+            {
+                selected = menuEntries[selectedIndex];
+                userMadeChoice = true;
+            }
+            else if (key == ConsoleKey.Escape || selected.Value == "To previous menu")
+            {
+                userMadeChoice = true;
+            }
+        }
+        
+        return selected;
+    }
+
+    private void RenderMenu(
         List<KeyValuePair<TEnum,
             string>> entries, int selectedIndex)
     {
@@ -60,7 +72,7 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
         _layoutManager.UpdateLayout();
     }
 
-    private protected static Table CreateTableLayout()
+    private protected Table CreateTableLayout()
     {
         var table = new Table 
         {
@@ -68,7 +80,7 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
             ShowFooters = false,
             Border = TableBorder.Rounded,
             Title = new TableTitle(
-                _menuName,
+                MenuName,
                 new Style(
                     foreground: Color.White,
                     decoration: Decoration.Bold
@@ -76,12 +88,12 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
             Expand = true,
         };
         
-        table.AddColumn(new TableColumn(_menuName));
+        table.AddColumn(new TableColumn(MenuName));
 
         return table;
     }
 
-    private static Table CreateMenuTable(
+    private Table CreateMenuTable(
         List<KeyValuePair<TEnum, string>> entries,
         int selectedIndex)
     {
