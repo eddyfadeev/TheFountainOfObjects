@@ -11,7 +11,7 @@ public sealed class LayoutManager
     public Layout MainWindow { get; set; }
     public Layout SupportWindowTop { get; set; }
     public Layout SupportWindowBottom { get; set; }
-    internal bool SupportWindowIsVisible { get; set; }
+    public bool SupportWindowIsVisible { get; set; }
     
     public LayoutManager()
     {
@@ -60,13 +60,16 @@ public sealed class LayoutManager
             ShowHeaders = false,
             ShowFooters = false,
             Border = TableBorder.Rounded,
+            Expand = true,
             Title = new TableTitle(
                 menuName,
                 new Style(
                     foreground: Color.White,
                     decoration: Decoration.Bold
                 )),
-            Expand = true,
+            Caption = new TableTitle(
+                "\nPress any key to continue...", 
+                new Style(foreground: Color.White)),
         };
         
         table.AddColumn(new TableColumn(menuName).Centered());

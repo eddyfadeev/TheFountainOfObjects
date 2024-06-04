@@ -7,7 +7,6 @@ public sealed class LoadPlayerView : SelectableMenuViewBase<Enum>
     public Enum ShowLoadPlayerMenu(List<KeyValuePair<Enum, string>> enumEntries)
     {
         _layoutManager.SupportWindowIsVisible = false;
-        ShowMenu(enumEntries, true);
         
         var selectedEntry = SelectEntry(ref enumEntries);
 

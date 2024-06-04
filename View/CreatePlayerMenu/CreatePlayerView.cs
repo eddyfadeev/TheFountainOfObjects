@@ -9,7 +9,6 @@ public sealed class CreatePlayerView : SelectableMenuViewBase<CreatePlayerEntrie
     public void ShowCreatePlayerPrompt(Action<CreatePlayerEntries> onMenuEntrySelected)
     {
         _layoutManager.SupportWindowIsVisible = false;
-        ShowMenu(_createPlayerMenuEntries);
         
         var selectedEntry = SelectEntry(ref _createPlayerMenuEntries);
         

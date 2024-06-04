@@ -31,7 +31,7 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
 
     private Table CreateLeaderboardTable(int? numberOfEntries = null)
     {
-        var table = CreateTableLayout();
+        var table = _layoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = CreateInnerTable();
         
         if (numberOfEntries is null || numberOfEntries > Players.Count)

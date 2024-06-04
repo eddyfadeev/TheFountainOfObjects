@@ -8,28 +8,15 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
     public static LayoutManager _layoutManager { get; } = new();
     public abstract string MenuName { get; }
 
-    private protected void ShowMenu(
-        IEnumerable<KeyValuePair<TEnum, string>> menuEntries,
-        bool? isDynamicallyGeneratedEnum = null)
-    {
-        var entries = new List<KeyValuePair<TEnum, string>>(menuEntries);
-        var isDynamicEnum = isDynamicallyGeneratedEnum ?? false;
-        
-        if (isDynamicEnum)
-        {
-            entries.Add(new KeyValuePair<TEnum, string>(default, "[bold white]To previous menu[/]"));
-        }
-    }
-
-    private void RenderMenu(List<KeyValuePair<TEnum, string>> entries)
+    /*private void RenderMenu(List<KeyValuePair<TEnum, string>> entries)
     {
         var table = CreateMenuTable(entries);
         _layoutManager.MainWindow.Update(table);
 
         _layoutManager.UpdateLayout();
-    }
+    }*/
 
-    private protected Table CreateTableLayout()
+    /*private protected Table CreateTableLayout()
     {
         var table = new Table 
         {
@@ -48,9 +35,9 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
         table.AddColumn(new TableColumn(MenuName).Centered());
 
         return table;
-    }
+    }*/
 
-    public Table CreateMenuTable(List<KeyValuePair<TEnum, string>> entries)
+    /*public Table CreateMenuTable(List<KeyValuePair<TEnum, string>> entries)
     {
         var table = _layoutManager.CreateTableLayout(MenuName);
 
@@ -60,5 +47,5 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
         }
 
         return table;
-    }
+    }*/
 }

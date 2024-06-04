@@ -2,7 +2,7 @@
 
 namespace View.StartScreen;
 
-public sealed class StartScreen : IUpdatesLayout
+public sealed class StartScreen : MenuViewBase<Enum>
 {
     private const string IntroText = 
         "You enter the Cavern of Objects, a maze of rooms filled " +
@@ -25,33 +25,19 @@ public sealed class StartScreen : IUpdatesLayout
         // "but you can smell their rotten stench in nearby rooms."
         ;
 
-    public string MenuName => "The Fountain of Objects";
-
-    public static LayoutManager _layoutManager { get; } = new();
-
+    //public static LayoutManager _layoutManager { get; } = new();
+    
+    public override string MenuName => "The Fountain of Objects";
+    
     private Table ComposeIntro()
     {
-        Table tableIntro = new()
-        {
-            ShowHeaders = false,
-            ShowFooters = true,
-            Border = TableBorder.Rounded,
-            Expand = true,
-            Title = new TableTitle(
-                MenuName, 
-                new Style(
-                    foreground: Color.White, 
-                    decoration: Decoration.Bold
-                )),
-            Caption = new TableTitle(
-                "\nPress any key to continue...", 
-                new Style(foreground: Color.White)),
-        };
+        var introTable = _layoutManager.CreateTableLayout(MenuName);
         
-        tableIntro.AddColumn("Intro");
-        tableIntro.AddRow(IntroText);
+        introTable.ShowFooters = true;
         
-        return tableIntro;
+        introTable.AddRow(IntroText);
+        
+        return introTable;
     }
     
     public void ShowStartScreen()
