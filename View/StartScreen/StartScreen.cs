@@ -25,9 +25,11 @@ public sealed class StartScreen : IUpdatesLayout
         // "but you can smell their rotten stench in nearby rooms."
         ;
 
+    public string MenuName => "The Fountain of Objects";
+
     public static LayoutManager _layoutManager { get; } = new();
 
-    private static Table ComposeIntro()
+    private Table ComposeIntro()
     {
         Table tableIntro = new()
         {
@@ -36,7 +38,7 @@ public sealed class StartScreen : IUpdatesLayout
             Border = TableBorder.Rounded,
             Expand = true,
             Title = new TableTitle(
-                "The Fountain of Objects", 
+                MenuName, 
                 new Style(
                     foreground: Color.White, 
                     decoration: Decoration.Bold

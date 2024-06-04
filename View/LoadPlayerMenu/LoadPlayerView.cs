@@ -1,13 +1,15 @@
 ﻿namespace View.LoadPlayerMenu;
 
-public sealed class LoadPlayerView : MenuViewBase<Enum>
+public sealed class LoadPlayerView : SelectableMenuViewBase<Enum>
 {
-    protected override string MenuName => "Load Player";
+    public override string MenuName => "Load Player";
 
-    public  Enum ShowLoadPlayerMenu(IEnumerable<KeyValuePair<Enum, string>> enumEntries)
+    public Enum ShowLoadPlayerMenu(List<KeyValuePair<Enum, string>> enumEntries)
     {
         _layoutManager.SupportWindowIsVisible = false;
-        var selectedEntry = ShowMenu(enumEntries, true);
+        ShowMenu(enumEntries, true);
+        
+        var selectedEntry = SelectEntry(ref enumEntries);
 
         return selectedEntry;
     }

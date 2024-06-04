@@ -1,8 +1,9 @@
 ﻿namespace View;
 
-public interface ISelectable<TEnum>
+public interface ISelectable<TEnum> : IUpdatesLayout
 where TEnum : Enum
 {
+    int SelectedIndex { get; set; }
     TEnum SelectEntry(
         ref List<KeyValuePair<TEnum, string>> menuEntries);
     
@@ -22,6 +23,7 @@ public static class SelectableExtensions
         where TEnum : Enum
     {
         var userMadeChoice = false;
+        var selectedIndex = 0;
         KeyValuePair<TEnum, string> selected = new();
         
         while (!userMadeChoice)
@@ -53,11 +55,10 @@ public static class SelectableExtensions
 
     public static void RenderMenu<TEnum>(
         this ISelectable<TEnum> selectable,
-        List<KeyValuePair<TEnum, string>> menuEntries,
-        int selectedIndex)
+        List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var table = selectable.CreateMenuTable(menuEntries, selectedIndex);
+        var table = CreateMenuTable(selectable, selectable.MenuName, menuEntries);
         MenuViewBase<TEnum>._layoutManager.MainWindow.Update(table);
         MenuViewBase<TEnum>._layoutManager.UpdateLayout();
     }
@@ -72,7 +73,7 @@ public static class SelectableExtensions
         
         for (int i = 0; i < menuEntries.Count; i++)
         {
-            table.AddRow(i == selectedIndex
+            table.AddRow(i == selectable.SelectedIndex
                 ? $"[bold yellow]> {menuEntries[i].Value}[/]"
                 : $"[green]{menuEntries[i].Value}[/]");
         }

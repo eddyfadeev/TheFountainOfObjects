@@ -7,7 +7,7 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
 {
     private static readonly DatabaseManager _databaseManager = new();
     private List<PlayerDTO> Players { get; } = _databaseManager.RetrievePlayers().ToList();
-    protected override string MenuName => "Leaderboard";
+    public override string MenuName => "Leaderboard";
     
     public void ShowLeaderboard()
     {

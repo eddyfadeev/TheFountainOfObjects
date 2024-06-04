@@ -6,7 +6,7 @@ public abstract class MenuViewBase<TEnum> : IUpdatesLayout
     where TEnum : Enum
 {
     public static LayoutManager _layoutManager { get; } = new();
-    protected abstract string MenuName { get; }
+    public abstract string MenuName { get; }
 
     private protected void ShowMenu(
         IEnumerable<KeyValuePair<TEnum, string>> menuEntries,

@@ -2,19 +2,21 @@
 
 namespace View.MainMenu;
 
-public sealed class MainMenuView : MenuViewBase<MainMenuEntries>, ISelectable<MainMenuEntries>
+public sealed class MainMenuView : SelectableMenuViewBase<MainMenuEntries>
 {
-    private static readonly IEnumerable<KeyValuePair<MainMenuEntries,string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
-    private static readonly LeaderboardView _leaderboardView = new ();
-    protected override string MenuName => "Main Menu";
-    
+    private List<KeyValuePair<MainMenuEntries, string>> _mainMenuEntriesList =
+        GetEnumValuesAndDisplayNames<MainMenuEntries>();
+
+    private static readonly LeaderboardView _leaderboardView = new();
+    public override string MenuName => "Main Menu";
+
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
         _layoutManager.SupportWindowIsVisible = true;
         ShowMenu(_mainMenuEntriesList);
-        
-        
-        
+
+        var selectedEntry = SelectEntry(ref _mainMenuEntriesList);
+
         onMenuEntrySelected(selectedEntry);
     }
 
@@ -23,7 +25,7 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>, ISelectable<Ma
         _layoutManager.SupportWindowIsVisible = false;
         _leaderboardView.ShowLeaderboard();
     }
-    
+
     // TODO: Fill up help menu with appropriate information and move to the other class
     // !ShowHelp method should call the appropriate method from the other class to show the help information
     internal void ShowHelp()
@@ -41,15 +43,4 @@ public sealed class MainMenuView : MenuViewBase<MainMenuEntries>, ISelectable<Ma
         Console.ReadKey();
         Console.Clear();
     }
-
-    public MainMenuEntries SelectEntry(
-        ref List<KeyValuePair<MainMenuEntries, string>> menuEntries,
-        ref int selectedIndex)
-    {
-        return 
-    }
-
-    public void RenderMenu(List<KeyValuePair<MainMenuEntries, string>> menuEntries, int selectedIndex) => throw new NotImplementedException();
-
-    public Table CreateMenuTable(List<KeyValuePair<MainMenuEntries, string>> menuEntries, int selectedIndex) => throw new NotImplementedException();
 }

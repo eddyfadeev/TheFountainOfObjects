@@ -5,7 +5,7 @@ namespace Utilities;
 
 public static class Utilities
 {
-    public static IEnumerable<KeyValuePair<TEnum, string>>
+    public static List<KeyValuePair<TEnum, string>>
         GetEnumValuesAndDisplayNames<TEnum>()
         where TEnum : Enum
     {
@@ -18,7 +18,7 @@ public static class Utilities
                     ?.GetCustomAttributes(typeof(DisplayAttribute), false)
                     .Cast<DisplayAttribute>()
                     .FirstOrDefault()?.Name ?? enumValue.ToString()
-            ));
+            )).ToList();
     }
     
     public static void InvokeActionForMenuEntry(Enum entry, object actionInstance)
