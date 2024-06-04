@@ -1,0 +1,19 @@
+﻿using View.Leaderboard;
+using View.StartScreen;
+
+namespace Controller;
+
+public class GameController
+{
+    private readonly StartScreen _startScreen = new();
+    private readonly CreatePlayerController _createPlayerController = new();
+    private readonly MainMenuController _mainMenuController = new();
+    
+    public void StartGame()
+    {
+        //_leaderboardView.ShowLeaderboardTopTen();
+        _startScreen.ShowStartScreen();
+        var player = _createPlayerController.ShowCreatePlayerPrompt();
+        _mainMenuController.ShowMainMenu();
+    }
+}
