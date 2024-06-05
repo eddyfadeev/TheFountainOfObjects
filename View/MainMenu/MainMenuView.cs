@@ -12,7 +12,7 @@ public sealed class MainMenuView : SelectableMenuViewBase<MainMenuEntries>
 
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
-        var supportWindowTop = _leaderboardView.ShowTopTen();
+        var supportWindowTop = _leaderboardView.CreateTopTen();
         _layoutManager.SupportWindowIsVisible = true;
         _layoutManager.SupportWindowTop.Update(supportWindowTop);
 

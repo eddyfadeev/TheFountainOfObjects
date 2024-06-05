@@ -1,4 +1,5 @@
-﻿using View.Leaderboard;
+﻿using View.CreatePlayerMenu;
+using View.Leaderboard;
 using View.StartScreen;
 
 namespace Controller;
@@ -11,7 +12,8 @@ public class GameController
     
     public void StartGame()
     {
-        //_leaderboardView.ShowLeaderboardTopTen();
+        //Console.CursorVisible = false;
+        CreatePlayerView.CreatePlayer();
         _startScreen.ShowStartScreen();
         var player = _createPlayerController.ShowCreatePlayerPrompt();
         _mainMenuController.ShowMainMenu();

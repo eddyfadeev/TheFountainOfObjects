@@ -34,12 +34,33 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         
         while (existentName)
         {
-            name = AnsiConsole.Ask<string>("Please, enter your name > ");
+            //name = AnsiConsole.Ask<string>("Please, enter your name > ");
+            Console.WriteLine("Please enter your name (Press ESC to cancel): ");
+
+            do
+            {
+                var key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    break;
+                }
+                
+                name += key.KeyChar;
+                Console.Write(key.KeyChar);
+                
+            } while (true);
+            
             existentName = _databaseManager.RetrievePlayers().Any(p => p.Name == name);
             
             if (existentName)
             {
-                AnsiConsole.MarkupLine("[red]This name is already taken. Please, choose another one.[/]");
+                AnsiConsole.MarkupLine("\n[red]This name is already taken. Please, choose another one.[/]");
             }
         }
         

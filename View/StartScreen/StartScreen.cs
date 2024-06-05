@@ -33,8 +33,6 @@ public sealed class StartScreen : MenuViewBase<Enum>
     {
         var introTable = _layoutManager.CreateTableLayout(MenuName);
         
-        introTable.ShowFooters = true;
-        
         introTable.AddRow(IntroText);
         
         return introTable;
@@ -44,6 +42,8 @@ public sealed class StartScreen : MenuViewBase<Enum>
     {
         var startScreen = ComposeIntro();
         _layoutManager.SupportWindowIsVisible = false;
+        
+        AddCaption(ref startScreen);
 
         _layoutManager.MainWindow.Update(startScreen);
         _layoutManager.UpdateLayout();

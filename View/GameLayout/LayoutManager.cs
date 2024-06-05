@@ -8,9 +8,9 @@ public sealed class LayoutManager
     private const string SupportNestedBottomName = "Bottom";
 
     private Layout GameLayout { get; }
-    public Layout MainWindow { get; set; }
-    public Layout SupportWindowTop { get; set; }
-    public Layout SupportWindowBottom { get; set; }
+    public Layout MainWindow { get; }
+    public Layout SupportWindowTop { get; }
+    public Layout SupportWindowBottom { get; }
     public bool SupportWindowIsVisible { get; set; }
     
     public LayoutManager()
@@ -58,7 +58,6 @@ public sealed class LayoutManager
         var table = new Table 
         {
             ShowHeaders = false,
-            ShowFooters = false,
             Border = TableBorder.Rounded,
             Expand = true,
             Title = new TableTitle(
@@ -67,9 +66,6 @@ public sealed class LayoutManager
                     foreground: Color.White,
                     decoration: Decoration.Bold
                 )),
-            Caption = new TableTitle(
-                "\nPress any key to continue...", 
-                new Style(foreground: Color.White)),
         };
         
         table.AddColumn(new TableColumn(menuName).Centered());

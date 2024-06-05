@@ -14,13 +14,12 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
         Console.Clear();
         
         var leaderboardTable = CreateLeaderboardTable();
-        leaderboardTable.ShowFooters = true;
         
         AnsiConsole.Write(leaderboardTable);
         Console.ReadKey();
     }
 
-    public Table ShowTopTen()
+    public Table CreateTopTen()
     {
         const int numberOfEntries = 10;
         var topTenTable = CreateLeaderboardTable(numberOfEntries);
@@ -33,6 +32,11 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
     {
         var table = _layoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = CreateInnerTable();
+
+        if (numberOfEntries is null)
+        {
+            AddCaption(ref table);
+        }
         
         if (numberOfEntries is null || numberOfEntries > Players.Count)
         {
@@ -42,12 +46,10 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
         for (int i = 0; i < numberOfEntries; i++)
         {
             var player = Players[i];
-            leaderboardTable.AddRow($"{i + 1} {player.Name}", player.Score.ToString());
+            leaderboardTable.AddRow($"{i + 1} {player.Name}", player.Score.ToString()!);
         }
 
         table.AddRow(leaderboardTable);
-        
-        table.Caption = new TableTitle("[white bold]Press any key to continue...[/]");
         
         return table;
 

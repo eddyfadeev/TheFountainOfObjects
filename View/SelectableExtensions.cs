@@ -30,7 +30,7 @@ public static class SelectableExtensions
                 selected = menuEntries[selectable.SelectedIndex];
                 userMadeChoice = true;
             }
-            else if (key == ConsoleKey.Escape || selected.Value == "To previous menu")
+            else if (selected.Value == "To previous menu")
             {
                 userMadeChoice = true;
             }
@@ -45,13 +45,6 @@ public static class SelectableExtensions
         where TEnum : Enum
     {
         var table = CreateMenuTable(selectable, selectable.MenuName, menuEntries);
-        var updateFullLayout = MenuViewBase<TEnum>._layoutManager.SupportWindowIsVisible;
-
-        if (updateFullLayout)
-        {
-            MenuViewBase<TEnum>._layoutManager.SupportWindowTop.Update(table); 
-            MenuViewBase<TEnum>._layoutManager.SupportWindowBottom.Update(table);
-        }
         
         MenuViewBase<TEnum>._layoutManager.MainWindow.Update(table);
         MenuViewBase<TEnum>._layoutManager.UpdateLayout();
@@ -63,17 +56,16 @@ public static class SelectableExtensions
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var table = MenuViewBase<TEnum>._layoutManager.CreateTableLayout(menuName);
-        table.ShowFooters = false;
+        var menuTable = SelectableMenuViewBase<TEnum>._layoutManager.CreateTableLayout(menuName);
         
         for (int i = 0; i < menuEntries.Count; i++)
         {
-            table.AddRow(i == selectable.SelectedIndex
+            menuTable.AddRow(i == selectable.SelectedIndex
                 ? $"[bold yellow]> {menuEntries[i].Value}[/]"
                 : $"[green]{menuEntries[i].Value}[/]");
         }
 
-        return table;
+        return menuTable;
     }
     
     private static void AddEntryIfDynamicEnum<TEnum>(ref List<KeyValuePair<TEnum, string>> menuEntries)
