@@ -2,7 +2,7 @@
 
 public static class SelectableExtensions
 {
-    internal static TEnum SelectEntry<TEnum>(
+    internal static TEnum? SelectEntry<TEnum>(
         this ISelectable<TEnum> selectable,
         ref List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum

@@ -1,7 +1,4 @@
-﻿using static Utilities.UserInputService;
-using Model.GameObjects;
-
-namespace View.CreatePlayerMenu;
+﻿namespace View.CreatePlayerMenu;
 
 public sealed class CreatePlayerView : SelectableMenuViewBase<CreatePlayerEntries>
 {
@@ -18,30 +15,19 @@ public sealed class CreatePlayerView : SelectableMenuViewBase<CreatePlayerEntrie
         onMenuEntrySelected(selectedEntry);
     }
 
-    // TODO: Finish this guy
-    public static Player CreatePlayer()
+    public string AskForUserName()
     {
-        Console.Clear();
+        Console.CursorVisible = true;
         
-        var existentName = true;
+        var userName = AnsiConsole.Ask<string>("[white]Please enter your name:[/]");
 
-        while (existentName)
-        {
-            AnsiConsole.MarkupLine("[white]Please enter your name (Press ESC to cancel):[/]");
-            
-            var userInput = AskForInput();
-        }
+        Console.CursorVisible = false;
+        
+        return userName;
+    }
 
-        try
-        {
-            Console.CursorVisible = true;
-        }
-        finally
-        {
-            Console.CursorVisible = false;
-        }
-        var userName = Console.ReadLine();
-
-        return new Player("S", 0);
+    public void ShowAlreadyTakenMessage()
+    {
+        AnsiConsole.MarkupLine("[red]This name is already taken. Please, choose another one:[/]");
     }
 }

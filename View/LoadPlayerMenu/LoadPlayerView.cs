@@ -4,7 +4,7 @@ public sealed class LoadPlayerView : SelectableMenuViewBase<Enum>
 {
     public override string MenuName => "Load Player";
 
-    public Enum ShowLoadPlayerMenu(List<KeyValuePair<Enum, string>> enumEntries)
+    public Enum? ShowLoadPlayerMenu(List<KeyValuePair<Enum, string>> enumEntries)
     {
         _layoutManager.SupportWindowIsVisible = false;
         

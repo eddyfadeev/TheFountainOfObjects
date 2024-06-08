@@ -8,7 +8,7 @@ namespace Controller;
 
 public sealed class LoadPlayerController : BaseController<Enum>
 {
-    public Enum ShowLoadPlayerMenu()
+    public Enum? ShowLoadPlayerMenu()
     {
         Console.Clear();
         var loadPlayerView = new LoadPlayerView();

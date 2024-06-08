@@ -7,17 +7,17 @@ namespace Controller;
 
 public class CreatePlayerController : BaseController<CreatePlayerEntries>
 {
-    private DatabaseManager _databaseManager = new();
+    private readonly DatabaseManager _databaseManager = new();
+    private readonly CreatePlayerView _createPlayerView = new();
     private Player? Player { get; set; }
     
     public Player ShowCreatePlayerPrompt()
     {
-        var createPlayerView = new CreatePlayerView();
         bool playerIsCreated = false;
 
         while (!playerIsCreated)
         {
-            createPlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
+            _createPlayerView.ShowCreatePlayerPrompt(OnMenuEntrySelected);
             
             playerIsCreated = Player is not null;
         }
@@ -25,44 +25,24 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         return Player!;
     }
     
-    private void CreatePlayer()
+    public void CreatePlayer()
     {
         Console.Clear();
-
-        var existentName = true;
-        var name = string.Empty;
         
-        while (existentName)
+        bool existentName;
+        string name;
+
+        do
         {
-            //name = AnsiConsole.Ask<string>("Please, enter your name > ");
-            Console.WriteLine("Please enter your name (Press ESC to cancel): ");
-
-            do
-            {
-                var key = Console.ReadKey(true);
-
-                if (key.Key == ConsoleKey.Escape)
-                {
-                    return;
-                }
-
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    break;
-                }
-                
-                name += key.KeyChar;
-                Console.Write(key.KeyChar);
-                
-            } while (true);
-            
+            name = _createPlayerView.AskForUserName();
             existentName = _databaseManager.RetrievePlayers().Any(p => p.Name == name);
             
             if (existentName)
             {
-                AnsiConsole.MarkupLine("\n[red]This name is already taken. Please, choose another one.[/]");
+                _createPlayerView.ShowAlreadyTakenMessage();
             }
-        }
+            
+        } while (existentName);
         
         PreparePlayer(name);
     }
@@ -88,10 +68,10 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         var playerIdToLoad = Convert.ToInt64(selectedEntry);
         var loadedPLayer = _databaseManager.LoadPlayer(playerIdToLoad);
 
-        Player = new Player(loadedPLayer.Name, (int)loadedPLayer.Score!);
-        {
-            Player.Id = (int)loadedPLayer.Id;
-        }
+        Player = new Player(loadedPLayer.Name, (int)loadedPLayer.Score!)
+        { 
+            Id = (int)loadedPLayer.Id
+        };
     }
 
     private void PreparePlayer(string name)

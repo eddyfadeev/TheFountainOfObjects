@@ -12,8 +12,7 @@ public class GameController
     
     public void StartGame()
     {
-        //Console.CursorVisible = false;
-        CreatePlayerView.CreatePlayer();
+        Console.CursorVisible = false;
         _startScreen.ShowStartScreen();
         var player = _createPlayerController.ShowCreatePlayerPrompt();
         _mainMenuController.ShowMainMenu();

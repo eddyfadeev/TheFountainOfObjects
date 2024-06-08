@@ -7,7 +7,7 @@ public abstract class SelectableMenuViewBase<TEnum> : MenuViewBase<TEnum>, ISele
 {
     public int SelectedIndex { get; set; } = 0;
 
-    public TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
+    public TEnum? SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.SelectEntry(this, ref menuEntries);
 
     public void RenderMenu(List<KeyValuePair<TEnum, string>> menuEntries) =>
