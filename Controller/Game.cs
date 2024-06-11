@@ -41,14 +41,9 @@ public class Game
         
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
-        Console.Clear();
         
-        //_player = CreatePLayer();
-
-        Console.Clear();
         while (isRunning)
         {
-            ShowStartMenu();
             input = GameUtils.ProcessInput(mainMenuCommands);
             
             switch (input)
@@ -400,22 +395,6 @@ public class Game
 
         return newMaze;
     }
-
-    /// <summary>
-    /// Displays the start menu with various options.
-    /// </summary>
-    private void ShowStartMenu()
-    {
-        Console.Clear();
-        Console.WriteLine("MENU");
-        Console.WriteLine("----------------------------------");
-        Console.WriteLine("Start game (start)");
-        Console.WriteLine("Show help (help)");
-        Console.WriteLine("Show settings (settings)");
-        Console.WriteLine("Exit game (exit)");
-        Console.WriteLine("----------------------------------");
-    }
-
     /// <summary>
     /// Displays the current game settings and allows the player to modify them.
     /// </summary>

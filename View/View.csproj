@@ -18,4 +18,9 @@
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GameView\" />
+    <Folder Include="SettingsView\" />
+  </ItemGroup>
+
 </Project>
