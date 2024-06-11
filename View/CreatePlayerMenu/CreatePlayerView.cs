@@ -14,4 +14,20 @@ public sealed class CreatePlayerView : SelectableMenuViewBase<CreatePlayerEntrie
         
         onMenuEntrySelected(selectedEntry);
     }
+
+    public string AskForUserName()
+    {
+        Console.CursorVisible = true;
+        
+        var userName = AnsiConsole.Ask<string>("[white]Please enter your name:[/]");
+
+        Console.CursorVisible = false;
+        
+        return userName;
+    }
+
+    public void ShowAlreadyTakenMessage()
+    {
+        AnsiConsole.MarkupLine("[red]This name is already taken. Please, choose another one:[/]");
+    }
 }

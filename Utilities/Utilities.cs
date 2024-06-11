@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Spectre.Console;
 
 namespace Utilities;
 
@@ -46,5 +47,12 @@ public static class Utilities
         {
             Console.WriteLine($"No methods assigned for {entry}.");
         }
+    }
+    
+    public static void AddCaption(ref Table table)
+    {
+        table.Caption = new TableTitle(
+            "\nPress any key to continue...",
+            new Style(foreground: Color.White));
     }
 }
