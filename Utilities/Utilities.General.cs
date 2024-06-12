@@ -4,28 +4,28 @@ using Spectre.Console;
 
 namespace Utilities;
 
-public static class Utilities
+public static partial class Utilities
 {
-    public static List<KeyValuePair<TEnum, string>>
-        GetEnumValuesAndDisplayNames<TEnum>()
-        where TEnum : Enum
+    public static string GetUserInput(string message)
     {
-        return Enum.GetValues(typeof(TEnum))
-            .Cast<TEnum>()
-            .Select(enumValue => new KeyValuePair<TEnum, string>(
-                enumValue,
-                enumValue.GetType()
-                    .GetField(enumValue.ToString())
-                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .Cast<DisplayAttribute>()
-                    .FirstOrDefault()?.Name ?? enumValue.ToString()
-            )).ToList();
+        Console.CursorVisible = true;
+        
+        var userName = AnsiConsole.Ask<string>(message);
+
+        Console.CursorVisible = false;
+        
+        return userName;
+    }
+    
+    public static string ChangeStringColor(string text, Color color)
+    {
+        return $"[{color.ToString().ToLower()}]{text}[/]";
     }
     
     public static void InvokeActionForMenuEntry(Enum entry, object actionInstance)
     {
         var entryFieldInfo = entry.GetType().GetField(entry.ToString());
-        var methodAttribute = entryFieldInfo.GetCustomAttribute<CustomEnumAttributes.MethodAttribute>();
+        var methodAttribute = entryFieldInfo.GetCustomAttribute<MethodAttribute>();
 
         if (methodAttribute != null)
         {

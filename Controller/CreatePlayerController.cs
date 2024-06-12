@@ -9,11 +9,11 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
 {
     private readonly DatabaseManager _databaseManager = new();
     private readonly CreatePlayerView _createPlayerView = new();
-    private Player? Player { get; set; }
+    public Player? Player { get; private set; }
     
-    public Player ShowCreatePlayerPrompt()
+    public override void ShowMenu()
     {
-        bool playerIsCreated = false;
+        var playerIsCreated = false;
 
         while (!playerIsCreated)
         {
@@ -21,8 +21,6 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
             
             playerIsCreated = Player is not null;
         }
-        
-        return Player!;
     }
     
     public void CreatePlayer()
@@ -50,16 +48,13 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     private void LoadPlayer()
     {
         var loadPlayer = new LoadPlayerController();
-
-        var selection = loadPlayer.ShowLoadPlayerMenu();
+        loadPlayer.ShowMenu();
         
-        if (selection is not null)
+        var selectedPlayer = loadPlayer.SelectedPlayer;
+        
+        if (selectedPlayer is not null)
         {
-            PreparePlayer(selection);
-        }
-        else
-        {
-            ShowCreatePlayerPrompt();
+            PreparePlayer(selectedPlayer);
         }
     }
 

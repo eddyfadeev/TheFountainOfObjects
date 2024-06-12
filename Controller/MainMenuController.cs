@@ -4,7 +4,7 @@ namespace Controller;
 
 public class MainMenuController : BaseController<MainMenuEntries>
 {
-    public void ShowMainMenu()
+    public override void ShowMenu()
     {
         var mainMenuView = new MainMenuView();
         

@@ -2,7 +2,7 @@
 
 public static class SelectableExtensions
 {
-    internal static TEnum? SelectEntry<TEnum>(
+    internal static TEnum SelectEntry<TEnum>(
         this ISelectable<TEnum> selectable,
         ref List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
@@ -74,7 +74,7 @@ public static class SelectableExtensions
         var assemblyName = menuEntries[0].Key.GetType().Assembly.GetName().Name;
         if (assemblyName == "DynamicEnum")
         {
-            menuEntries.Add(new KeyValuePair<TEnum, string>(default, "[bold white]To previous menu[/]"));
+            menuEntries.Add(new KeyValuePair<TEnum, string>(default!, "[bold white]To previous menu[/]"));
         }
     }
 }

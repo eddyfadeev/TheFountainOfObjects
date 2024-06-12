@@ -1,43 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+﻿using Controller.Interfaces;
+using Model.DataObjects;
 using Model.Services;
-using Services;
 using View.LoadPlayerMenu;
 
 namespace Controller;
 
-public sealed class LoadPlayerController : BaseController<Enum>
+public sealed class LoadPlayerController : BaseController<Enum>, IGeneratesEnum
 {
-    public Enum? ShowLoadPlayerMenu()
+    public Enum? SelectedPlayer { get; private set; }
+
+    public override void ShowMenu()
     {
-        Console.Clear();
+        const string enumName = "LoadPlayerEnum";
         var loadPlayerView = new LoadPlayerView();
-        var entries = GetEnumEntries(InitializeEnum());
-        var selectedPlayer = loadPlayerView.ShowLoadPlayerMenu(entries);
-
-        return selectedPlayer;
+        var enumData = GetDataForEnum();
+        
+        var entries = PrepareEnum(enumData, enumName);
+        SelectedPlayer = loadPlayerView.ShowLoadPlayerMenu(entries);
     }
 
-    private Type InitializeEnum()
-    {
-        var databaseManager = new DatabaseManager();
-        var enumBuilderService = new EnumBuilderService();
-        var enumData = databaseManager.RetrievePlayers();
-        var loadPlayerEnum = enumBuilderService.CreateEnumType("LoadPlayerEnum", enumData.ToList());
-
-        return loadPlayerEnum;
-    }
-
-    private List<KeyValuePair<Enum, string>> GetEnumEntries(Type dynamicallyCreatedEnum)
-    {
-        var entries = new List<KeyValuePair<Enum, string>>();
-        foreach (var value in Enum.GetValues(dynamicallyCreatedEnum))
-        {
-            var displayName = value.GetType().GetField(value.ToString())
-                .GetCustomAttribute<DisplayAttribute>()?.Name ?? value.ToString();
-            entries.Add(new KeyValuePair<Enum, string>((Enum) value, displayName));
-        }
-
-        return entries;
-    }
+    public IEnumerable<PlayerDTO> GetDataForEnum() => new DatabaseManager().RetrievePlayers();
 }
