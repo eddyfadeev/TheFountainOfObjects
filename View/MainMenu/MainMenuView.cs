@@ -6,26 +6,20 @@ public sealed class MainMenuView : SelectableMenuViewBase<MainMenuEntries>
 {
     private List<KeyValuePair<MainMenuEntries, string>> _mainMenuEntriesList =
         GetEnumValuesAndDisplayNames<MainMenuEntries>();
-
-    private static readonly LeaderboardView _leaderboardView = new();
     public override string MenuName => "Main Menu";
 
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
-        var supportWindowTop = _leaderboardView.CreateTopTen();
+        var leaderboardTopTen = GetLeaderboardTable();
         _layoutManager.SupportWindowIsVisible = true;
-        _layoutManager.SupportWindowTop.Update(supportWindowTop);
+        _layoutManager.SupportWindowTop.Update(leaderboardTopTen);
 
         var selectedEntry = SelectEntry(ref _mainMenuEntriesList);
 
         onMenuEntrySelected(selectedEntry);
     }
 
-    public static void ShowLeaderboard()
-    {
-        _layoutManager.SupportWindowIsVisible = false;
-        _leaderboardView.ShowLeaderboard();
-    }
+    private Table GetLeaderboardTable() => new LeaderboardView().CreateTopTen();
 
     // TODO: Fill up help menu with appropriate information and move to the other class
     // !ShowHelp method should call the appropriate method from the other class to show the help information

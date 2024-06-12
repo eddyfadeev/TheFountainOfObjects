@@ -1,10 +1,11 @@
-﻿using View.MainMenu;
+﻿using View.Leaderboard;
+using View.MainMenu;
 
 namespace Controller;
 
 public class MainMenuController : BaseController<MainMenuEntries>
 {
-    public override void ShowMenu()
+    public void ShowMenu()
     {
         var mainMenuView = new MainMenuView();
         
@@ -13,6 +14,8 @@ public class MainMenuController : BaseController<MainMenuEntries>
     
     public void ShowLeaderboard()
     {
-        MainMenuView.ShowLeaderboard();
+        var leaderboardView = new LeaderboardView();
+
+        leaderboardView.ShowLeaderboard();
     }
 }

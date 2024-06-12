@@ -1,13 +1,11 @@
-﻿using View.GameLayout;
+﻿namespace View;
 
-namespace View;
-
-public abstract class SelectableMenuViewBase<TEnum> : MenuViewBase<TEnum>, ISelectable<TEnum>
+public abstract class SelectableMenuViewBase<TEnum> : MenuViewBase, ISelectable<TEnum>
     where TEnum : Enum
 {
     public int SelectedIndex { get; set; } = 0;
 
-    public TEnum? SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
+    public TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.SelectEntry(this, ref menuEntries);
 
     public void RenderMenu(List<KeyValuePair<TEnum, string>> menuEntries) =>

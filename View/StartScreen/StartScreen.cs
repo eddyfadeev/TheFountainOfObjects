@@ -2,7 +2,7 @@
 
 namespace View.StartScreen;
 
-public sealed class StartScreen : MenuViewBase<Enum>
+public sealed class StartScreen : MenuViewBase
 {
     private const string IntroText = 
         "You enter the Cavern of Objects, a maze of rooms filled " +

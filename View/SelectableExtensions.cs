@@ -46,8 +46,8 @@ public static class SelectableExtensions
     {
         var table = CreateMenuTable(selectable, selectable.MenuName, menuEntries);
         
-        MenuViewBase<TEnum>._layoutManager.MainWindow.Update(table);
-        MenuViewBase<TEnum>._layoutManager.UpdateLayout();
+        MenuViewBase._layoutManager.MainWindow.Update(table);
+        MenuViewBase._layoutManager.UpdateLayout();
     }
 
     internal static Table CreateMenuTable<TEnum>(

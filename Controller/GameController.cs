@@ -1,6 +1,4 @@
-﻿using View.CreatePlayerMenu;
-using View.Leaderboard;
-using View.StartScreen;
+﻿using View.StartScreen;
 
 namespace Controller;
 
@@ -14,7 +12,7 @@ public class GameController
     {
         Console.CursorVisible = false;
         _startScreen.ShowStartScreen();
-        _createPlayerController.ShowMenu();
+        _createPlayerController.ShowCreatePlayerPrompt();
         
         _mainMenuController.ShowMenu();
     }

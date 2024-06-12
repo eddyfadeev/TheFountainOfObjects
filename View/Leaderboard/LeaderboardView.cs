@@ -3,7 +3,7 @@ using Model.Services;
 
 namespace View.Leaderboard;
 
-public sealed class LeaderboardView : MenuViewBase<Enum>
+public sealed class LeaderboardView : MenuViewBase
 {
     private static readonly DatabaseManager _databaseManager = new();
     private List<PlayerDTO> Players { get; } = _databaseManager.RetrievePlayers().ToList();
@@ -12,6 +12,7 @@ public sealed class LeaderboardView : MenuViewBase<Enum>
     public void ShowLeaderboard()
     {
         Console.Clear();
+        _layoutManager.SupportWindowIsVisible = false;
         
         var leaderboardTable = CreateLeaderboardTable();
         

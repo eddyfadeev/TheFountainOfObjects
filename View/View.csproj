@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <Folder Include="GameView\" />
-    <Folder Include="SettingsView\" />
+    <Folder Include="Settings\" />
   </ItemGroup>
 
 </Project>
