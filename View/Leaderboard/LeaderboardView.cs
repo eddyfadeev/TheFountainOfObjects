@@ -5,7 +5,7 @@ namespace View.Leaderboard;
 
 public sealed class LeaderboardView : MenuViewBase
 {
-    private static readonly DatabaseManager _databaseManager = new();
+    private static readonly DatabaseService _databaseManager = new();
     private List<PlayerDTO> Players { get; } = _databaseManager.RetrievePlayers().ToList();
     public override string MenuName => "Leaderboard";
     

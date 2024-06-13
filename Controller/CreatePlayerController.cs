@@ -8,7 +8,7 @@ namespace Controller;
 
 public class CreatePlayerController : BaseController<CreatePlayerEntries>
 {
-    private readonly DatabaseManager _databaseManager = new();
+    private readonly DatabaseService _databaseManager = new();
     private readonly CreatePlayerView _createPlayerView = new();
     private Player? Player { get; set; }
     
@@ -36,7 +36,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         do
         {
             name = _createPlayerView.AskForUserName();
-            existentName = IsNameTaken(name);
+            existentName = name.IsNameTaken();
             
             if (existentName)
             {

@@ -37,7 +37,7 @@ public static class PlayerMapperExtensions
     
     public static bool IsNameTaken(this string name)
     {
-        var databaseManager = new DatabaseManager();
+        var databaseManager = new DatabaseService();
         return databaseManager.RetrievePlayers().Any(p => p.Name == name);
     }
 }

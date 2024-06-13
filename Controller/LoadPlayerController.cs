@@ -19,5 +19,5 @@ public sealed class LoadPlayerController : BaseController<Enum>, IGeneratesEnum
         return selectedPlayer;
     }
 
-    public IEnumerable<PlayerDTO> GetDataForEnum() => new DatabaseManager().RetrievePlayers();
+    public IEnumerable<PlayerDTO> GetDataForEnum() => new DatabaseService().RetrievePlayers();
 }

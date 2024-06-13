@@ -55,10 +55,4 @@ public static partial class Utilities
             "\nPress any key to continue...",
             new Style(foreground: Color.White));
     }
-    
-    public static bool IsNameTaken(string name)
-    {
-        var databaseManager = new DatabaseManager();
-        return databaseManager.RetrievePlayers().Any(p => p.Name == name);
-    }
 }

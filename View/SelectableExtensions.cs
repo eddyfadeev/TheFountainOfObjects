@@ -2,7 +2,7 @@
 
 public static class SelectableExtensions
 {
-    internal static TEnum SelectEntry<TEnum>(
+    public static TEnum SelectEntry<TEnum>(
         this ISelectable<TEnum> selectable,
         ref List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
@@ -39,7 +39,7 @@ public static class SelectableExtensions
         return selected.Key;
     }
 
-    internal static void RenderMenu<TEnum>(
+    public static void RenderMenu<TEnum>(
         this ISelectable<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum

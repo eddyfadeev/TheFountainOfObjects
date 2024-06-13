@@ -5,11 +5,11 @@ using Model.DataObjects;
 
 namespace Model.Services;
 
-public class DatabaseManager
+public class DatabaseService
 {
     private const string ConnectionString = "Data Source=players.db";
     
-    public DatabaseManager()
+    public DatabaseService()
     {
         InitializeDatabase();
     }
@@ -93,6 +93,8 @@ public class DatabaseManager
 
         return connection.Query<PlayerDTO>(getPlayersQuery);
     }
+    
+    
 
     private string BuildUpdateQuery(string? name, int? score)
     {

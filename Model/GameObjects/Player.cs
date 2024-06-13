@@ -1,4 +1,5 @@
 ﻿using Model.Enums;
+using Model.Services;
 
 namespace Model.GameObjects;
 
@@ -27,18 +28,26 @@ public class Player
         get => _name;
         set
         {
-            if (value is null)
+            if (value is not null)
             {
-                int nameSuffix = 1;
-                string newName = "Player" + nameSuffix;
-                bool isRunning = newName.IsNameTaken();
+                _name = value;
+            }
 
-                while (isRunning)
+            int nameSuffix = 1;
+            string newName = $"Player {nameSuffix}";
+            bool isRunning = newName.IsNameTaken();
+
+            while (isRunning)
+            {
+                if (newName.IsNameTaken())
                 {
-                    do
-                    {
-                        ;
-                    } while (isRunning);
+                    nameSuffix++;
+                    newName = $"Player {nameSuffix}";
+                }
+                else
+                {
+                    _name = newName;
+                    isRunning = false;
                 }
             }
         }
@@ -54,7 +63,6 @@ public class Player
 
     public int GetAvailableArrows()
     {
-        IsNameTaken(Name);
         return _availableArrows;
     }
 
