@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using Model.GameObjects;
 using Model.Services;
+using Utilities;
 using View.CreatePlayerMenu;
 
 namespace Controller;
@@ -35,7 +36,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         do
         {
             name = _createPlayerView.AskForUserName();
-            existentName = _databaseManager.RetrievePlayers().Any(p => p.Name == name);
+            existentName = IsNameTaken(name);
             
             if (existentName)
             {
@@ -68,10 +69,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         var playerIdToLoad = Convert.ToInt64(selectedEntry);
         var loadedPLayer = _databaseManager.LoadPlayer(playerIdToLoad);
 
-        Player = new Player(loadedPLayer.Name, (int)loadedPLayer.Score!)
-        { 
-            Id = (int)loadedPLayer.Id
-        };
+        Player = loadedPLayer.ToDomain();
     }
 
     private void PreparePlayer(string name)

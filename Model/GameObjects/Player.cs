@@ -2,31 +2,64 @@
 
 namespace Model.GameObjects;
 
-public class Player : GameObject
+public class Player
 {
-    public int? Id { get; set; }
-    public int Score { get; set; }
+    private int? _id;
+    private string _name;
+    private int _score;
+    
+    private int _availableArrows = 5;
 
+    public long? Id
+    {
+        get => _id;
+        set => _id = value is null ? null : (int)value.Value;
+    }
+    
+    public long? Score
+    {
+        get => _score;
+        set => _score = value is null or < 0 ? 0 : (int)value.Value;
+    }
+    
+    public string? Name
+    {
+        get => _name;
+        set
+        {
+            if (value is null)
+            {
+                int nameSuffix = 1;
+                string newName = "Player" + nameSuffix;
+                bool isRunning = newName.IsNameTaken();
+
+                while (isRunning)
+                {
+                    do
+                    {
+                        ;
+                    } while (isRunning);
+                }
+            }
+        }
+    }
+
+    public Player() { }
+    
     public Player(string name, int score)
     {
         Name = name;
         Score = score;
     }
-    
-    private int _availableArrows = 5;
 
     public int GetAvailableArrows()
     {
+        IsNameTaken(Name);
         return _availableArrows;
     }
 
     public void DecreaseAvailableArrows()
     {
         _availableArrows--;
-    }
-
-    public (int row, int col) Shoot(Direction direction, int fieldSize)
-    {
-        return MakeAnAction(direction, fieldSize, "shoot");
     }
 }

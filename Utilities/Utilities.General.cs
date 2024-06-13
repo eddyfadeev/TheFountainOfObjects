@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection;
+﻿using System.Reflection;
+using Model.Services;
 using Spectre.Console;
 
 namespace Utilities;
@@ -54,5 +54,11 @@ public static partial class Utilities
         table.Caption = new TableTitle(
             "\nPress any key to continue...",
             new Style(foreground: Color.White));
+    }
+    
+    public static bool IsNameTaken(string name)
+    {
+        var databaseManager = new DatabaseManager();
+        return databaseManager.RetrievePlayers().Any(p => p.Name == name);
     }
 }
