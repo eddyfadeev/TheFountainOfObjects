@@ -1,4 +1,5 @@
-﻿using View;
+﻿using Spectre.Console;
+using View;
 
 namespace Services.Extensions;
 
@@ -46,10 +47,11 @@ public static class SelectableExtensions
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
+        var layoutManager = selectable.LayoutManager;
         var table = CreateMenuTable(selectable, selectable.MenuName, menuEntries);
         
-        MenuViewBase._layoutManager.MainWindow.Update(table);
-        MenuViewBase._layoutManager.UpdateLayout();
+        layoutManager.MainWindow.Update(table);
+        layoutManager.UpdateLayout();
     }
 
     public static Table CreateMenuTable<TEnum>(
@@ -58,7 +60,8 @@ public static class SelectableExtensions
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var menuTable = SelectableMenuViewBase<TEnum>._layoutManager.CreateTableLayout(menuName);
+        var layoutManager = selectable.LayoutManager;
+        var menuTable = layoutManager.CreateTableLayout(menuName);
         
         for (int i = 0; i < menuEntries.Count; i++)
         {

@@ -1,6 +1,8 @@
-﻿namespace View.GameLayout;
+﻿using Services.Interfaces;
 
-public sealed class LayoutManager
+namespace View.GameLayout;
+
+public sealed class LayoutManager : ILayoutManager
 {
     private const string MainWindowName = "MainWindow";
     private const string SupportWindowName = "SupportWindow";

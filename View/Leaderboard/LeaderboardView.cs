@@ -9,7 +9,7 @@ public sealed class LeaderboardView : MenuViewBase
     public void ShowLeaderboard()
     {
         Console.Clear();
-        _layoutManager.SupportWindowIsVisible = false;
+        LayoutManager.SupportWindowIsVisible = false;
         
         var leaderboardTable = CreateLeaderboardTable();
         
@@ -28,7 +28,7 @@ public sealed class LeaderboardView : MenuViewBase
 
     private Table CreateLeaderboardTable(int? numberOfEntries = null)
     {
-        var table = _layoutManager.CreateTableLayout(MenuName);
+        var table = LayoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = CreateInnerTable();
 
         if (numberOfEntries is null)

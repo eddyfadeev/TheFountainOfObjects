@@ -11,8 +11,8 @@ public sealed class MainMenuView : SelectableMenuViewBase<MainMenuEntries>
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
     {
         var leaderboardTopTen = GetLeaderboardTable();
-        _layoutManager.SupportWindowIsVisible = true;
-        _layoutManager.SupportWindowTop.Update(leaderboardTopTen);
+        LayoutManager.SupportWindowIsVisible = true;
+        LayoutManager.SupportWindowTop.Update(leaderboardTopTen);
 
         var selectedEntry = SelectEntry(ref _mainMenuEntriesList);
 

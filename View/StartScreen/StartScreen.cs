@@ -31,7 +31,7 @@ public sealed class StartScreen : MenuViewBase
     
     private Table ComposeIntro()
     {
-        var introTable = _layoutManager.CreateTableLayout(MenuName);
+        var introTable = LayoutManager.CreateTableLayout(MenuName);
         
         introTable.AddRow(IntroText);
         
@@ -41,12 +41,12 @@ public sealed class StartScreen : MenuViewBase
     public void ShowStartScreen()
     {
         var startScreen = ComposeIntro();
-        _layoutManager.SupportWindowIsVisible = false;
+        LayoutManager.SupportWindowIsVisible = false;
         
         AddCaption(ref startScreen);
 
-        _layoutManager.MainWindow.Update(startScreen);
-        _layoutManager.UpdateLayout();
+        LayoutManager.MainWindow.Update(startScreen);
+        LayoutManager.UpdateLayout();
         Console.ReadKey();
     }
 }

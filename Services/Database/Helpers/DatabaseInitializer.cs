@@ -3,11 +3,17 @@ using Services.Database.Interfaces;
 
 namespace Services.Database.Helpers;
 
-public class DatabaseInitializer(IConnectionProvider connectionProvider) : IDatabaseInitializer
+public class DatabaseInitializer : IDatabaseInitializer
 {
+    private readonly IConnectionProvider _connectionProvider;
+    
+    public DatabaseInitializer(IConnectionProvider connectionProvider)
+    {
+        _connectionProvider = connectionProvider;
+    }
     public void InitializeDatabase()
     {
-        using var connection = connectionProvider.GetConnection();
+        using var connection = _connectionProvider.GetConnection();
 
         const string createTableQuery = 
             """

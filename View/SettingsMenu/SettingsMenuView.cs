@@ -8,7 +8,7 @@ public class SettingsMenuView : SelectableMenuViewBase<SettingsMenuEntries>
     {
         Console.Clear();
         
-        _layoutManager.SupportWindowIsVisible = false;
+        LayoutManager.SupportWindowIsVisible = false;
         
         var selectedEntry = SelectEntry(ref settingsMenuEntries);
 

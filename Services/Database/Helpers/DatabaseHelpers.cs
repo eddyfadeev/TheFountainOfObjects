@@ -5,7 +5,7 @@ namespace Services.Database.Helpers;
 
 public static class DatabaseHelpers
 {
-    internal static string BuildUpdateQuery(PlayerDTO player)
+    public static string BuildUpdateQuery(PlayerDTO player)
     {
         var queryBuilder = new StringBuilder("UPDATE Players SET ");
         const string setName = "Name = @Name";
@@ -30,7 +30,7 @@ public static class DatabaseHelpers
         return queryBuilder.ToString();
     }
 
-    internal static object PrepareUpdateParameters(PlayerDTO player)
+    public static object PrepareUpdateParameters(PlayerDTO player)
     {
         return player switch
         {
