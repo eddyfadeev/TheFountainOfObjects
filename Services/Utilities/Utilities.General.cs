@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
-using Model.Services;
 using Spectre.Console;
 
-namespace Utilities;
+namespace Services.Utilities;
 
 public static partial class Utilities
 {
@@ -25,7 +24,7 @@ public static partial class Utilities
     public static void InvokeActionForMenuEntry(Enum entry, object actionInstance)
     {
         var entryFieldInfo = entry.GetType().GetField(entry.ToString());
-        var methodAttribute = entryFieldInfo.GetCustomAttribute<MethodAttribute>();
+        var methodAttribute = entryFieldInfo.GetCustomAttribute<Services.Utilities.Utilities.MethodAttribute>();
 
         if (methodAttribute != null)
         {

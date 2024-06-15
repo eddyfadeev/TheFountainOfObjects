@@ -1,4 +1,4 @@
-﻿namespace Model.DataObjects;
+﻿namespace DataObjects.Player;
 
 public record PlayerDTO
 {

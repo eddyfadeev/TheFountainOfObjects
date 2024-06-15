@@ -1,7 +1,4 @@
-﻿using Model.DataObjects;
-using Model.Services;
-
-namespace View.Leaderboard;
+﻿namespace View.Leaderboard;
 
 public sealed class LeaderboardView : MenuViewBase
 {

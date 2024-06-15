@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Utilities;
+namespace Services.Utilities;
 
 public static partial class Utilities
 {

@@ -1,4 +1,5 @@
-﻿using Model.GameObjects;
+﻿using DataObjects.Player;
+using Model.GameObjects;
 using Model.GameObjects.Rooms;
 
 namespace Controller;

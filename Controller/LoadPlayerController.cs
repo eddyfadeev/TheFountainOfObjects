@@ -1,12 +1,14 @@
 ﻿using Controller.Interfaces;
-using Model.DataObjects;
-using Model.Services;
+using DataObjects.Player;
+using Services.Database.Interfaces;
 using View.LoadPlayerMenu;
 
 namespace Controller;
 
 public sealed class LoadPlayerController : BaseController<Enum>, IGeneratesEnum
 {
+    private IDatabaseService _databaseService;
+    
     public Enum? ShowLoadPlayerMenu()
     {
         const string enumName = "LoadPlayerEnum";
@@ -19,5 +21,5 @@ public sealed class LoadPlayerController : BaseController<Enum>, IGeneratesEnum
         return selectedPlayer;
     }
 
-    public IEnumerable<PlayerDTO> GetDataForEnum() => new DatabaseService().RetrievePlayers();
+    public IEnumerable<PlayerDTO> GetDataForEnum() => _databaseService.RetrievePlayers();
 }

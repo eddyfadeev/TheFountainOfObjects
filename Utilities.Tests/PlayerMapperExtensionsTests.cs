@@ -1,5 +1,5 @@
-using Model.DataObjects;
-using Model.GameObjects;
+using DataObjects.Player;
+using Services.Extensions;
 
 namespace Utilities.Tests;
 

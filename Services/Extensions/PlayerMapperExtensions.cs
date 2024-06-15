@@ -1,8 +1,7 @@
-﻿using Model.DataObjects;
-using Model.GameObjects;
-using Model.Services;
+﻿using Services.Database.Interfaces;
+using DataObjects.Player;
 
-namespace Utilities;
+namespace Services.Extensions;
 
 /// <summary>
 /// Extension methods for mapping between Player and PlayerDTO.
@@ -15,7 +14,7 @@ public static class PlayerMapperExtensions
     /// <param name="dto">The PlayerDTO object to convert.</param>
     /// <returns>The converted Player object.</returns>
     public static Player ToDomain(this PlayerDTO dto) => 
-        new Player
+        new()
         {
             Id = dto.Id,
             Name = dto.Name,
@@ -35,9 +34,8 @@ public static class PlayerMapperExtensions
             Score = player.Score
         };
     
-    public static bool IsNameTaken(this string name)
+    public static bool IsNameTaken(this string name, IDatabaseService databaseService)
     {
-        var databaseManager = new DatabaseService();
-        return databaseManager.RetrievePlayers().Any(p => p.Name == name);
+        return databaseService.RetrievePlayers().Any(p => p.Name == name);
     }
 }

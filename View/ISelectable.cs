@@ -1,7 +1,7 @@
 ﻿namespace View;
 
 public interface ISelectable<TEnum> : IUpdatesLayout
-where TEnum : Enum
+    where TEnum : Enum
 {
     int SelectedIndex { get; set; }
     

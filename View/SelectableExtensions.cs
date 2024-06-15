@@ -1,4 +1,6 @@
-﻿namespace View;
+﻿using View;
+
+namespace Services.Extensions;
 
 public static class SelectableExtensions
 {
@@ -50,7 +52,7 @@ public static class SelectableExtensions
         MenuViewBase._layoutManager.UpdateLayout();
     }
 
-    internal static Table CreateMenuTable<TEnum>(
+    public static Table CreateMenuTable<TEnum>(
         this ISelectable<TEnum> selectable,
         string menuName,
         List<KeyValuePair<TEnum, string>> menuEntries)

@@ -1,4 +1,4 @@
-﻿global using static Utilities.Utilities;
+﻿global using static Services.Utilities.Utilities;
 
 namespace Controller;
 

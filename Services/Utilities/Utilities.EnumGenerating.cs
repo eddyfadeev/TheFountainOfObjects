@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Reflection.Emit;
-using Model.DataObjects;
+using DataObjects.Player;
 
-namespace Utilities;
+namespace Services.Utilities;
 
 public static partial class Utilities
 {

@@ -1,4 +1,6 @@
-﻿namespace View;
+﻿using Services.Extensions;
+
+namespace View;
 
 public abstract class SelectableMenuViewBase<TEnum> : MenuViewBase, ISelectable<TEnum>
     where TEnum : Enum
