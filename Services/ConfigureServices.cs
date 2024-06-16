@@ -15,6 +15,6 @@ public static class ConfigureServices
         services.AddSingleton<IDatabaseInitializer, DatabaseInitializer>();
         services.AddSingleton<IPlayerRepository, PlayerRepository>();
         services.AddSingleton<IDatabaseService, DatabaseService>();
-        services.AddSingleton<PlayerInitializer>();
+        services.AddTransient<PlayerInitializer>();
     }
 }

@@ -1,6 +1,6 @@
-﻿using Extensions;
-using DataObjects.Player;
+﻿using DataObjects.Player;
 using Services.Database.Interfaces;
+using Services.Extensions;
 
 namespace Services.PlayerObject;
 
@@ -11,7 +11,7 @@ public class PlayerInitializer(IDatabaseService databaseService)
         var nameSuffix = 1;
         var newName = baseName;
         
-        while (newName.IsNameTaken(databaseService))
+        while (StringExtensions.IsNameTaken(newName, databaseService))
         {
             nameSuffix++;
             newName = $"{baseName} {nameSuffix}";

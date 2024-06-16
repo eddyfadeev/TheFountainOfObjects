@@ -1,7 +1,7 @@
 using DataObjects.Player;
 using Services.Extensions;
 
-namespace Utilities.Tests;
+namespace Utilities.Tests.Extensions;
 
 public class PlayerMapperExtensionsTests
 {

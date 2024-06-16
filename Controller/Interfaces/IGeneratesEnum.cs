@@ -1,4 +1,4 @@
-﻿using Model.DataObjects;
+﻿using DataObjects.Player;
 
 namespace Controller.Interfaces;
 

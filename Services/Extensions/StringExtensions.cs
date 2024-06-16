@@ -1,6 +1,6 @@
 ﻿using Services.Database.Interfaces;
 
-namespace Extensions;
+namespace Services.Extensions;
 
 public static class StringExtensions
 {

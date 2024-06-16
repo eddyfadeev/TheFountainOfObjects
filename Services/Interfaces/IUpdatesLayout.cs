@@ -1,6 +1,4 @@
-﻿using Services.Interfaces;
-
-namespace View;
+﻿namespace Services.Interfaces;
 
 public interface IUpdatesLayout
 {

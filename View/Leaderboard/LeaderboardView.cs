@@ -1,9 +1,11 @@
-﻿namespace View.Leaderboard;
+﻿using DataObjects.Player;
 
-public sealed class LeaderboardView : MenuViewBase
+namespace View.Leaderboard;
+
+public sealed class LeaderboardView(List<PlayerDTO> players) : MenuViewBase
 {
-    private static readonly DatabaseService _databaseManager = new();
-    private List<PlayerDTO> Players { get; } = _databaseManager.RetrievePlayers().ToList();
+    private List<PlayerDTO> Players { get; } = players;
+
     public override string MenuName => "Leaderboard";
     
     public void ShowLeaderboard()
@@ -30,37 +32,39 @@ public sealed class LeaderboardView : MenuViewBase
     {
         var table = LayoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = CreateInnerTable();
+        
+        var numberOfEntriesToAdd = numberOfEntries is null || numberOfEntries > Players.Count ? Players.Count : numberOfEntries.Value;
 
         if (numberOfEntries is null)
         {
             AddCaption(ref table);
         }
         
-        if (numberOfEntries is null || numberOfEntries > Players.Count)
-        {
-            numberOfEntries = Players.Count;
-        }
-
-        for (int i = 0; i < numberOfEntries; i++)
-        {
-            var player = Players[i];
-            leaderboardTable.AddRow($"{i + 1} {player.Name}", player.Score.ToString()!);
-        }
+        AddPlayersToTable(ref leaderboardTable, numberOfEntriesToAdd);
 
         table.AddRow(leaderboardTable);
         
         return table;
+    }
 
-        Table CreateInnerTable()
+    private void AddPlayersToTable(ref Table table, int numberOfEntries)
+    {
+        for (int i = 0; i < numberOfEntries; i++)
         {
-            var innerTable = new Table()
-            {
-                Border = TableBorder.None,
-            };
-        
-            innerTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]").Centered();
-        
-            return innerTable;
+            var player = Players[i];
+            table.AddRow($"{i + 1} {player.Name}", player.Score.ToString() ?? string.Empty);
         }
+    }
+    
+    private Table CreateInnerTable()
+    {
+        var innerTable = new Table()
+        {
+            Border = TableBorder.None,
+        };
+        
+        innerTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]").Centered();
+        
+        return innerTable;
     }
 }

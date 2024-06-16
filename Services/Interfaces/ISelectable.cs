@@ -1,7 +1,6 @@
-﻿using Services.Interfaces;
-using Spectre.Console;
+﻿using Spectre.Console;
 
-namespace View;
+namespace Services.Interfaces;
 
 public interface ISelectable<TEnum> : IUpdatesLayout
     where TEnum : Enum
