@@ -1,11 +1,12 @@
-﻿using View.Leaderboard;
+﻿using Services;
+using Services.Database.Interfaces;
+using View.Leaderboard;
 
 namespace View.MainMenu;
 
-public sealed class MainMenuView : SelectableMenuViewBase<MainMenuEntries>
+public sealed class MainMenuView(LeaderboardService leaderboardService) : SelectableMenuViewBase<MainMenuEntries>
 {
-    private List<KeyValuePair<MainMenuEntries, string>> _mainMenuEntriesList =
-        GetEnumValuesAndDisplayNames<MainMenuEntries>();
+    private List<KeyValuePair<MainMenuEntries, string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
     public override string MenuName => "Main Menu";
 
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
@@ -19,7 +20,7 @@ public sealed class MainMenuView : SelectableMenuViewBase<MainMenuEntries>
         onMenuEntrySelected(selectedEntry);
     }
 
-    private Table GetLeaderboardTable() => new LeaderboardView().CreateTopTen();
+    private Table GetLeaderboardTable() => new LeaderboardView(leaderboardService).CreateTopTen();
 
     // TODO: Fill up help menu with appropriate information and move to the other class
     // !ShowHelp method should call the appropriate method from the other class to show the help information

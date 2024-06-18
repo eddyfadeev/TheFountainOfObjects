@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controller", "Controller\Co
 		{A8BEE5E5-0C14-4B87-B09D-F700D6352DB3} = {A8BEE5E5-0C14-4B87-B09D-F700D6352DB3}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{A8BEE5E5-0C14-4B87-B09D-F700D6352DB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.Outdated", "Model.Outdated\Model.Outdated.csproj", "{A8BEE5E5-0C14-4B87-B09D-F700D6352DB3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View", "View\View.csproj", "{8B233112-D988-4980-9349-099DF0757CAD}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Tests", "Services.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{9AE45473-179D-4295-BD9A-416EE5342014}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataObjects", "DataObjects\DataObjects.csproj", "{A9BFCC7D-0532-45E3-89BC-3C629F17F0D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{A9BFCC7D-0532-45E3-89BC-3C629F17F0D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

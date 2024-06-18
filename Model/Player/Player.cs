@@ -1,4 +1,4 @@
-﻿namespace DataObjects.Player;
+﻿namespace Model.Player;
 
 public class Player
 {

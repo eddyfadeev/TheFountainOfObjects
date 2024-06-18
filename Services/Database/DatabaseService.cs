@@ -1,4 +1,4 @@
-﻿using DataObjects.Player;
+﻿using Model.Player;
 using Services.Database.Interfaces;
 
 namespace Services.Database;
@@ -41,7 +41,10 @@ public class DatabaseService : IDatabaseService
             });
     }
 
-    public PlayerDTO LoadPlayer(long playerId) => _playerRepository.GetPlayerById(playerId);
+    public PlayerDTO LoadPlayer(long playerId) => 
+        _playerRepository.GetPlayerById(playerId) ?? 
+        throw new ArgumentException("Player not found.");
 
-    public IEnumerable<PlayerDTO> RetrievePlayers() => _playerRepository.GetAllPlayers();
+    public List<PlayerDTO> GetAllPlayers() => 
+        _playerRepository.GetAllPlayers().ToList();
 }

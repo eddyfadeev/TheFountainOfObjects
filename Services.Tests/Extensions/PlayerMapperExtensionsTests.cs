@@ -1,4 +1,4 @@
-using DataObjects.Player;
+using Model.Player;
 using Services.Extensions;
 
 namespace Utilities.Tests.Extensions;

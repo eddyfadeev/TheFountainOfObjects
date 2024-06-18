@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using DataObjects.Player;
+using Model.Player;
 
 namespace Services.Database.Helpers;
 

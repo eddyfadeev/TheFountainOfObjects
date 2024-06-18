@@ -1,4 +1,4 @@
-﻿using DataObjects.Player;
+﻿using Model.Player;
 using Services.Database.Helpers;
 
 namespace Utilities.Tests.Database.Helpers;

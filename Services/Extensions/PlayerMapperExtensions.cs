@@ -1,5 +1,5 @@
 ﻿using Services.Database.Interfaces;
-using DataObjects.Player;
+using Model.Player;
 
 namespace Services.Extensions;
 
@@ -33,9 +33,15 @@ public static class PlayerMapperExtensions
             Name = player.Name,
             Score = player.Score
         };
-    
+
+    /// <summary>
+    /// Determines if a name is taken by any player in the database.
+    /// </summary>
+    /// <param name="name">The name to check.</param>
+    /// <param name="databaseService"> The database service to retrieve player information.</param>
+    /// <returns> True if the name is taken, otherwise false.</returns>
     public static bool IsNameTaken(this string name, IDatabaseService databaseService)
     {
-        return databaseService.RetrievePlayers().Any(p => p.Name == name);
+        return databaseService.GetAllPlayers().Any(p => p.Name == name);
     }
 }

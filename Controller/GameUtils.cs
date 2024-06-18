@@ -1,6 +1,5 @@
-﻿using DataObjects.Player;
-using Model.GameObjects;
-using Model.GameObjects.Rooms;
+﻿using Model.GameObjects.Rooms;
+using Model.Player;
 
 namespace Controller;
 
@@ -9,36 +8,6 @@ namespace Controller;
 /// </summary>
 static class GameUtils
 {
-    /// <summary>
-    /// Processes the user input by reading commands from the console.
-    /// </summary>
-    /// <param name="commands">The list of valid commands.</param>
-    /// <returns>A user provides the input command.</returns>
-    internal static string ProcessInput(List<string> commands)
-    {
-        while (true)
-        {
-            var input = Console.ReadLine().ToLower().Trim();
-            
-            if (string.IsNullOrEmpty(input))
-            {
-                Console.WriteLine("Please enter a command.");
-            }
-            else if (input.Equals("exit") || input.Equals("quit"))
-            {
-                Environment.Exit(0);
-            }
-            else if (commands.Exists(command => command == input) || input.Equals("help"))
-            {
-                return input;
-            }
-            else
-            {
-                Console.WriteLine("Please enter a valid command.");
-            }
-        }
-    }
-
     /// <summary>
     /// Prints the rooms of a field.
     /// </summary>

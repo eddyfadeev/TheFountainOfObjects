@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Services;
-using Services.PlayerObject;
+using Services.Database.Interfaces;
+using View.StartScreen;
 
 namespace Controller;
 class Program
@@ -17,8 +18,16 @@ class Program
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         // Example usage
-        var playerInitializer = serviceProvider.GetRequiredService<PlayerInitializer>();
-        var newPlayer = playerInitializer.InitializePlayer("Player", 100);
-        Console.WriteLine($"Created player: {newPlayer.Name} with score {newPlayer.Score}");
+        var databaseService = serviceProvider.GetRequiredService<IDatabaseService>();
+        var leaderboardService = serviceProvider.GetRequiredService<LeaderboardService>();
+        
+        var startScreen = new StartScreen();
+        var createPlayerController = new CreatePlayerController(databaseService);
+        var mainMenuController = new MainMenuController(leaderboardService);
+        
+        Console.CursorVisible = false;
+        startScreen.ShowStartScreen();
+        createPlayerController.ShowCreatePlayerPrompt();
+        mainMenuController.ShowMenu();
     }
 }

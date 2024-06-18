@@ -1,8 +1,8 @@
-﻿using DataObjects.Player;
+﻿using Model.Player;
 
 namespace Controller.Interfaces;
 
 public interface IGeneratesEnum
 {
-    protected IEnumerable<PlayerDTO> GetDataForEnum();
+    protected List<PlayerDTO> GetDataForEnum();
 }

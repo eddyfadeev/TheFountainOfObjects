@@ -1,14 +1,12 @@
-﻿using Spectre.Console;
-using Model.GameObjects;
-using Model.Services;
-using Utilities;
+﻿using Model.Player;
+using Services.Database.Interfaces;
+using Services.Extensions;
 using View.CreatePlayerMenu;
 
 namespace Controller;
 
-public class CreatePlayerController : BaseController<CreatePlayerEntries>
+public class CreatePlayerController(IDatabaseService databaseService) : BaseController<CreatePlayerEntries>
 {
-    private readonly DatabaseService _databaseManager = new();
     private readonly CreatePlayerView _createPlayerView = new();
     private Player? Player { get; set; }
     
@@ -36,7 +34,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         do
         {
             name = _createPlayerView.AskForUserName();
-            existentName = name.IsNameTaken();
+            existentName = name.IsNameTaken(databaseService);
             
             if (existentName)
             {
@@ -50,7 +48,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     
     private void LoadPlayer()
     {
-        var loadPlayer = new LoadPlayerController();
+        var loadPlayer = new LoadPlayerController(databaseService);
 
         var selection = loadPlayer.ShowLoadPlayerMenu();
         
@@ -67,7 +65,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     private void PreparePlayer(Enum selectedEntry)
     {
         var playerIdToLoad = Convert.ToInt64(selectedEntry);
-        var loadedPLayer = _databaseManager.LoadPlayer(playerIdToLoad);
+        var loadedPLayer = databaseService.LoadPlayer(playerIdToLoad);
 
         Player = loadedPLayer.ToDomain();
     }

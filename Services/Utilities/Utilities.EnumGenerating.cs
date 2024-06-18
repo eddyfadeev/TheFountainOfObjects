@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Reflection.Emit;
-using DataObjects.Player;
+using Model.Player;
 
 namespace Services.Utilities;
 

@@ -1,12 +1,12 @@
-﻿using DataObjects.Player;
+﻿using Model.Player;
+using Services;
 
 namespace View.Leaderboard;
 
-public sealed class LeaderboardView(List<PlayerDTO> players) : MenuViewBase
+public sealed class LeaderboardView(LeaderboardService leaderboardService) : MenuViewBase
 {
-    private List<PlayerDTO> Players { get; } = players;
-
     public override string MenuName => "Leaderboard";
+    private List<PlayerDTO> _players = leaderboardService.GetPlayers();
     
     public void ShowLeaderboard()
     {
@@ -33,7 +33,7 @@ public sealed class LeaderboardView(List<PlayerDTO> players) : MenuViewBase
         var table = LayoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = CreateInnerTable();
         
-        var numberOfEntriesToAdd = numberOfEntries is null || numberOfEntries > Players.Count ? Players.Count : numberOfEntries.Value;
+        var numberOfEntriesToAdd = numberOfEntries is null || numberOfEntries > _players.Count ? _players.Count : numberOfEntries.Value;
 
         if (numberOfEntries is null)
         {
@@ -51,7 +51,7 @@ public sealed class LeaderboardView(List<PlayerDTO> players) : MenuViewBase
     {
         for (int i = 0; i < numberOfEntries; i++)
         {
-            var player = Players[i];
+            var player = _players[i];
             table.AddRow($"{i + 1} {player.Name}", player.Score.ToString() ?? string.Empty);
         }
     }
