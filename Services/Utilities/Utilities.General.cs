@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using Spectre.Console;
 
 namespace Services.Utilities;
@@ -24,7 +25,7 @@ public static partial class Utilities
     public static void InvokeActionForMenuEntry(Enum entry, object actionInstance)
     {
         var entryFieldInfo = entry.GetType().GetField(entry.ToString());
-        var methodAttribute = entryFieldInfo.GetCustomAttribute<Services.Utilities.Utilities.MethodAttribute>();
+        var methodAttribute = entryFieldInfo.GetCustomAttribute<MethodAttribute>();
 
         if (methodAttribute != null)
         {
@@ -46,6 +47,22 @@ public static partial class Utilities
         {
             Console.WriteLine($"No methods assigned for {entry}.");
         }
+    }
+    
+    public static List<KeyValuePair<TEnum, string>>
+        GetEnumValuesAndDisplayNames<TEnum>()
+        where TEnum : Enum
+    {
+        return Enum.GetValues(typeof(TEnum))
+            .Cast<TEnum>()
+            .Select(enumValue => new KeyValuePair<TEnum, string>(
+                enumValue,
+                enumValue.GetType()
+                    .GetField(enumValue.ToString())
+                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .Cast<DisplayAttribute>()
+                    .FirstOrDefault()?.Name ?? enumValue.ToString()
+            )).ToList();
     }
     
     public static void AddCaption(ref Table table)
