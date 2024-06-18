@@ -74,6 +74,10 @@ public class CreatePlayerController(IDatabaseService databaseService) : BaseCont
     {
         const int defaultScore = 0;
         
-        Player = new Player(name, defaultScore);
+        Player = new Player
+        {
+            Name = name,
+            Score = defaultScore
+        };
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Model.Player;
+﻿using Model.Interfaces;
 
-public class Player
+namespace Model.Player;
+
+public class Player : IPositionable
 {
     private int? _id;
     private int _score;
@@ -19,11 +21,7 @@ public class Player
     
     public string? Name { get; set; }
 
-    public Player() { }
-    
-    public Player(string name, int score)
-    {
-        Name = name;
-        Score = score;
-    }
+    public int Arrows { get; private set; }
+    public int X { get; set; }
+    public int Y { get; set; }
 }
