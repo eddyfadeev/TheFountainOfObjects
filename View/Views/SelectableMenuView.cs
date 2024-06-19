@@ -1,9 +1,9 @@
-﻿using Services.Extensions;
-using Services.Interfaces;
+﻿using View.Extensions;
+using View.Interfaces;
 
-namespace View;
+namespace View.Views;
 
-public abstract class SelectableMenuViewBase<TEnum> : MenuViewBase, ISelectable<TEnum>
+public abstract class SelectableMenuView<TEnum> : MenuView, ISelectableMenu<TEnum>
     where TEnum : Enum
 {
     public int SelectedIndex { get; set; } = 0;

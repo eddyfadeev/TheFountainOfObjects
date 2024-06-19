@@ -1,14 +1,17 @@
 ﻿using Model.Player;
-using Services;
+using Services.Database.Interfaces;
+using View.Interfaces;
 
-namespace View.Leaderboard;
+namespace View.Views.Leaderboard;
 
-public sealed class LeaderboardView(LeaderboardService leaderboardService) : MenuViewBase
+public sealed class LeaderboardView(IDatabaseService databaseService, IMediator mediator, ILayoutManager layoutManager)
+    : MenuView(mediator, layoutManager)
 {
     public override string MenuName => "Leaderboard";
-    private List<PlayerDTO> _players = leaderboardService.GetPlayers();
+
+    private readonly List<PlayerDTO> _players = databaseService.GetAllPlayers();
     
-    public void ShowLeaderboard()
+    public override void Display()
     {
         Console.Clear();
         LayoutManager.SupportWindowIsVisible = false;

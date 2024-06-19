@@ -1,6 +1,7 @@
-﻿using Services.Interfaces;
+﻿using View.Interfaces;
+using Spectre.Console;
 
-namespace View.GameLayout;
+namespace View.Layout;
 
 public sealed class LayoutManager : ILayoutManager
 {
@@ -9,21 +10,21 @@ public sealed class LayoutManager : ILayoutManager
     private const string SupportNestedTopName = "Top";
     private const string SupportNestedBottomName = "Bottom";
 
-    private Layout GameLayout { get; }
-    public Layout MainWindow { get; }
-    public Layout SupportWindowTop { get; }
-    public Layout SupportWindowBottom { get; }
+    private Spectre.Console.Layout GameLayout { get; }
+    public Spectre.Console.Layout MainWindow { get; }
+    public Spectre.Console.Layout SupportWindowTop { get; }
+    public Spectre.Console.Layout SupportWindowBottom { get; }
     public bool SupportWindowIsVisible { get; set; }
     
     public LayoutManager()
     {
-        GameLayout = new Layout("Root")
+        GameLayout = new Spectre.Console.Layout("Root")
             .SplitColumns(
-                new Layout(MainWindowName),
-                new Layout(SupportWindowName)
+                new Spectre.Console.Layout(MainWindowName),
+                new Spectre.Console.Layout(SupportWindowName)
                     .SplitRows(
-                        new Layout(SupportNestedTopName),
-                        new Layout(SupportNestedBottomName)
+                        new Spectre.Console.Layout(SupportNestedTopName),
+                        new Spectre.Console.Layout(SupportNestedBottomName)
                     )
             );
 
@@ -44,17 +45,6 @@ public sealed class LayoutManager : ILayoutManager
         AnsiConsole.Write(GameLayout);
     }
     
-    private void SetDefaultSize()
-    {
-        const int mainWindowSize = 70;
-        const int supportWindowSize = 30;
-        
-        GameLayout[MainWindowName].Size(mainWindowSize);
-        GameLayout[MainWindowName].MinimumSize(mainWindowSize);
-        GameLayout[SupportWindowName].Size(supportWindowSize);
-        GameLayout[SupportWindowName].MinimumSize(supportWindowSize);
-    }
-    
     public Table CreateTableLayout(string menuName)
     {
         var table = new Table 
@@ -73,5 +63,16 @@ public sealed class LayoutManager : ILayoutManager
         table.AddColumn(new TableColumn(menuName).Centered());
 
         return table;
+    }
+    
+    private void SetDefaultSize()
+    {
+        const int mainWindowSize = 70;
+        const int supportWindowSize = 30;
+        
+        GameLayout[MainWindowName].Size(mainWindowSize);
+        GameLayout[MainWindowName].MinimumSize(mainWindowSize);
+        GameLayout[SupportWindowName].Size(supportWindowSize);
+        GameLayout[SupportWindowName].MinimumSize(supportWindowSize);
     }
 }

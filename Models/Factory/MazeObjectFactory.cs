@@ -23,17 +23,17 @@ public static class MazeObjectFactory
 
         return room;
     }
-    public static IPositionable CreateObject(ObjectType objectType, int x, int y)
-    {
-        return objectType switch
+
+    public static IPositionable CreateObject(ObjectType objectType, int x, int y) =>
+        objectType switch
         {
             ObjectType.Fountain => new Fountain { X = x, Y = y },
             ObjectType.Entrance => new Entrance { X = x, Y = y },
             ObjectType.Amarok => new Amarok { X = x, Y = y },
             ObjectType.Pit => new Pit { X = x, Y = y },
             ObjectType.Maelstrom => new Maelstrom { X = x, Y = y },
-            ObjectType.Player => (Player ?? throw new InvalidOperationException("Player is not initialized")).SetPosition(x, y),
+            ObjectType.Player => (Player ?? throw new InvalidOperationException("Player is not initialized"))
+                .SetPosition(x, y),
             _ => throw new ArgumentException("Invalid object type.")
         };
-    }
 }

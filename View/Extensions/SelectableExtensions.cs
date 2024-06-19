@@ -1,12 +1,11 @@
-﻿using Services.Interfaces;
-using Spectre.Console;
+﻿using View.Interfaces;
 
-namespace Services.Extensions;
+namespace View.Extensions;
 
 public static class SelectableExtensions
 {
     public static TEnum SelectEntry<TEnum>(
-        this ISelectable<TEnum> selectable,
+        this ISelectableMenu<TEnum> selectable,
         ref List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
@@ -43,7 +42,7 @@ public static class SelectableExtensions
     }
 
     public static void RenderMenu<TEnum>(
-        this ISelectable<TEnum> selectable,
+        this ISelectableMenu<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
@@ -55,7 +54,7 @@ public static class SelectableExtensions
     }
 
     public static Table CreateMenuTable<TEnum>(
-        this ISelectable<TEnum> selectable,
+        this ISelectableMenu<TEnum> selectable,
         string menuName,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum

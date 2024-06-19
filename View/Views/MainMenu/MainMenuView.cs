@@ -1,12 +1,14 @@
-﻿using Services;
+﻿using System.Windows.Input;
+using Services;
 using Services.Database.Interfaces;
-using View.Leaderboard;
+using View.Views;
+using View.Views.Leaderboard;
 
 namespace View.MainMenu;
 
-public sealed class MainMenuView(LeaderboardService leaderboardService) : SelectableMenuViewBase<MainMenuEntries>
+public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
 {
-    private List<KeyValuePair<MainMenuEntries, string>> _mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
+    private readonly Dictionary<MainMenuEntries, ICommand> _commands;
     public override string MenuName => "Main Menu";
 
     public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)

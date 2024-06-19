@@ -1,8 +1,6 @@
-﻿using Spectre.Console;
+﻿namespace View.Interfaces;
 
-namespace Services.Interfaces;
-
-public interface ISelectable<TEnum> : IUpdatesLayout
+public interface ISelectableMenu<TEnum> : IMenuView
     where TEnum : Enum
 {
     int SelectedIndex { get; set; }

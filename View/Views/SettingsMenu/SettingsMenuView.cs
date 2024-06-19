@@ -1,6 +1,8 @@
-﻿namespace View.SettingsMenu;
+﻿using View.Views;
 
-public class SettingsMenuView : SelectableMenuViewBase<SettingsMenuEntries>
+namespace View.SettingsMenu;
+
+public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
 {
     public override string MenuName => "Settings";
     

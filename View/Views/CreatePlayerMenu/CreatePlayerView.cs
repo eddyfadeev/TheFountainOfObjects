@@ -1,6 +1,8 @@
-﻿namespace View.CreatePlayerMenu;
+﻿using View.Views;
 
-public sealed class CreatePlayerView : SelectableMenuViewBase<CreatePlayerEntries>
+namespace View.CreatePlayerMenu;
+
+public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
 {
     private List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries
         = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();

@@ -1,6 +1,6 @@
-﻿namespace Services.Interfaces;
+﻿namespace View.Interfaces;
 
-public interface IUpdatesLayout
+public interface IMenuView
 {
     public ILayoutManager LayoutManager { get; }
     string MenuName { get; }

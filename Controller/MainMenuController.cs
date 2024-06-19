@@ -1,7 +1,7 @@
 ﻿using Services;
 using Services.Database.Interfaces;
-using View.Leaderboard;
 using View.MainMenu;
+using View.Views.Leaderboard;
 
 namespace Controller;
 

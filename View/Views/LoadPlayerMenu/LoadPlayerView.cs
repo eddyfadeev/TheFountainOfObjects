@@ -1,6 +1,8 @@
-﻿namespace View.LoadPlayerMenu;
+﻿using View.Views;
 
-public sealed class LoadPlayerView : SelectableMenuViewBase<Enum>
+namespace View.LoadPlayerMenu;
+
+public sealed class LoadPlayerView : SelectableMenuView<Enum>
 {
     public override string MenuName => "Load Player";
 

@@ -1,8 +1,8 @@
-﻿using View.GameLayout;
+﻿using View.Views;
 
 namespace View.StartScreen;
 
-public sealed class StartScreen : MenuViewBase
+public sealed class StartScreen : MenuView
 {
     private const string IntroText = 
         "You enter the Cavern of Objects, a maze of rooms filled " +

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GameView\" />
+    <Folder Include="Views\GameView\" />
   </ItemGroup>
 
   <ItemGroup>
