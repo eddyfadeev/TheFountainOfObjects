@@ -3,10 +3,14 @@ using View.Interfaces;
 
 namespace View.Views;
 
-public abstract class SelectableMenuView<TEnum> : MenuView, ISelectableMenu<TEnum>
+public abstract class SelectableMenuView<TEnum>(ILayoutManager layoutManager)
+    : ISelectableMenu<TEnum>
     where TEnum : Enum
 {
+    public abstract string MenuName { get; }
     public int SelectedIndex { get; set; } = 0;
+
+    public abstract TEnum DisplaySelectable();
 
     public TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.SelectEntry(this, ref menuEntries);
@@ -16,4 +20,5 @@ public abstract class SelectableMenuView<TEnum> : MenuView, ISelectableMenu<TEnu
 
     public Table CreateMenuTable(string menuName, List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.CreateMenuTable(this, menuName, menuEntries);
+
 }

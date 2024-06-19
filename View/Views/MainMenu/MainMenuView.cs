@@ -1,28 +1,33 @@
-﻿using System.Windows.Input;
-using Services;
-using Services.Database.Interfaces;
-using View.Views;
+﻿using Services.Database.Interfaces;
+using View.Interfaces;
+using View.MainMenu;
 using View.Views.Leaderboard;
 
-namespace View.MainMenu;
+namespace View.Views.MainMenu;
 
 public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
 {
-    private readonly Dictionary<MainMenuEntries, ICommand> _commands;
+    private readonly ILayoutManager _layoutManager;
+    private readonly IPlayerRepository _playerRepository;
     public override string MenuName => "Main Menu";
 
-    public void ShowMainMenu(Action<MainMenuEntries> onMenuEntrySelected)
+    public MainMenuView(IPlayerRepository playerRepository, ILayoutManager layoutManager) : base(layoutManager)
     {
+        _layoutManager = layoutManager;
+        _playerRepository = playerRepository;
+    }
+    
+    public override MainMenuEntries DisplaySelectable()
+    {
+        var mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
         var leaderboardTopTen = GetLeaderboardTable();
-        LayoutManager.SupportWindowIsVisible = true;
-        LayoutManager.SupportWindowTop.Update(leaderboardTopTen);
+        _layoutManager.SupportWindowIsVisible = true;
+        _layoutManager.SupportWindowTop.Update(leaderboardTopTen);
 
-        var selectedEntry = SelectEntry(ref _mainMenuEntriesList);
-
-        onMenuEntrySelected(selectedEntry);
+        return SelectEntry(ref mainMenuEntriesList);
     }
 
-    private Table GetLeaderboardTable() => new LeaderboardView(leaderboardService).CreateTopTen();
+    private Table GetLeaderboardTable() => new LeaderboardView(_playerRepository, _layoutManager).CreateTopTen();
 
     // TODO: Fill up help menu with appropriate information and move to the other class
     // !ShowHelp method should call the appropriate method from the other class to show the help information

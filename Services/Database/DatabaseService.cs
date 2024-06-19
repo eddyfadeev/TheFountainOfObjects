@@ -1,50 +1,51 @@
-﻿using Model.Player;
+﻿using Dapper;
+using Model.Player;
+using Services.Database.Helpers;
 using Services.Database.Interfaces;
 
 namespace Services.Database;
 
 public class DatabaseService : IDatabaseService
 {
-    private readonly IPlayerRepository _playerRepository;
+    private readonly IConnectionProvider _connectionProvider;
     
-    public DatabaseService(IPlayerRepository playerRepository, IDatabaseInitializer initializer)
+    public DatabaseService(IConnectionProvider connectionProvider, IDatabaseInitializer initializer)
     {
-        _playerRepository = playerRepository;
+        _connectionProvider = connectionProvider;
         initializer.InitializeDatabase();
     }
-
-    public int AddPlayer(string name, int score)
+    
+    public List<PlayerDTO> GetAllPlayers()
     {
-        var player = new PlayerDTO
-        {
-            Name = name,
-            Score = score
-        };
+        using var connection = _connectionProvider.GetConnection();
+        const string query = "SELECT * FROM Players ORDER BY Score DESC";
         
-        return _playerRepository.AddPlayer(player);
+        return connection.Query<PlayerDTO>(query).ToList();
     }
 
-    public int UpdatePlayer(int playerId, string? name = null, int? score = null)
+    public PlayerDTO? GetPlayerById(long playerId)
     {
-        var player = _playerRepository.GetPlayerById(playerId);
+        using var connection = _connectionProvider.GetConnection();
+        const string query = "SELECT * FROM Players WHERE Id = @Id";
         
-        if (player is null)
-        {
-            throw new ArgumentException("Player not found.");
-        }
-        
-        return _playerRepository.UpdatePlayer(
-            player with
-            {
-                Name = name ?? player.Name, 
-                Score = score ?? player.Score
-            });
+        return connection.QueryFirstOrDefault<PlayerDTO>(query, new { Id = playerId });
     }
 
-    public PlayerDTO LoadPlayer(long playerId) => 
-        _playerRepository.GetPlayerById(playerId) ?? 
-        throw new ArgumentException("Player not found.");
+    public int AddPlayer(PlayerDTO player)
+    {
+        using var connection = _connectionProvider.GetConnection();
+        const string query = "INSERT INTO Players (Name, Score) VALUES (@Name, @Score);";
+        
+        return connection.Execute(query, new { Name = player.Name, Score = player.Score });
+    }
 
-    public List<PlayerDTO> GetAllPlayers() => 
-        _playerRepository.GetAllPlayers().ToList();
+    public int UpdatePlayer(PlayerDTO player)
+    {
+        using var connection = _connectionProvider.GetConnection();
+
+        var query = DatabaseHelpers.BuildUpdateQuery(player);
+        var parameters = DatabaseHelpers.PrepareUpdateParameters(player);
+
+        return connection.Execute(query, parameters);
+    }
 }

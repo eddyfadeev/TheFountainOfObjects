@@ -4,17 +4,17 @@ using View.Interfaces;
 
 namespace View.Views.Leaderboard;
 
-public sealed class LeaderboardView(IDatabaseService databaseService, IMediator mediator, ILayoutManager layoutManager)
-    : MenuView(mediator, layoutManager)
+public sealed class LeaderboardView(IPlayerRepository playerRepository, ILayoutManager layoutManager)
+    : MenuView(layoutManager)
 {
     public override string MenuName => "Leaderboard";
 
-    private readonly List<PlayerDTO> _players = databaseService.GetAllPlayers();
+    private readonly List<PlayerDTO> _players = playerRepository.GetAllPlayers();
     
     public override void Display()
     {
         Console.Clear();
-        LayoutManager.SupportWindowIsVisible = false;
+        layoutManager.SupportWindowIsVisible = false;
         
         var leaderboardTable = CreateLeaderboardTable();
         
@@ -33,7 +33,7 @@ public sealed class LeaderboardView(IDatabaseService databaseService, IMediator 
 
     private Table CreateLeaderboardTable(int? numberOfEntries = null)
     {
-        var table = LayoutManager.CreateTableLayout(MenuName);
+        var table = layoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = CreateInnerTable();
         
         var numberOfEntriesToAdd = numberOfEntries is null || numberOfEntries > _players.Count ? _players.Count : numberOfEntries.Value;

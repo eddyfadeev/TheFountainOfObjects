@@ -1,4 +1,5 @@
 ﻿using View.Views;
+using View.Views.SettingsMenu;
 
 namespace View.SettingsMenu;
 

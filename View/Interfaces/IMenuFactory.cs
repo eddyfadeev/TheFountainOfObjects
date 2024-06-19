@@ -1,8 +1,9 @@
-﻿using View.Views;
+﻿using View.Enums;
+using View.Views;
 
 namespace View.Interfaces;
 
 public interface IMenuFactory
 {
-    MenuView CreateMenu(string menuName);
+    MenuView CreateMenu(MenuType menuType);
 }

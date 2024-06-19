@@ -1,9 +1,11 @@
 ﻿namespace View.Interfaces;
 
-public interface ISelectableMenu<TEnum> : IMenuView
+public interface ISelectableMenu<TEnum> : INameable
     where TEnum : Enum
 {
     int SelectedIndex { get; set; }
+
+    TEnum DisplaySelectable(); 
     
     TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries);
     

@@ -4,8 +4,8 @@ namespace Services.Database.Interfaces;
 
 public interface IPlayerRepository
 {
-    IEnumerable<PlayerDTO> GetAllPlayers();
-    PlayerDTO? GetPlayerById(long playerId);
-    int AddPlayer(PlayerDTO player);
-    int UpdatePlayer(PlayerDTO player);
+    int AddPlayer(string name, int score);
+    int UpdatePlayer(int playerId, string? name = null, int? score = null);
+    PlayerDTO LoadPlayer(long playerId);
+    List<PlayerDTO> GetAllPlayers();
 }

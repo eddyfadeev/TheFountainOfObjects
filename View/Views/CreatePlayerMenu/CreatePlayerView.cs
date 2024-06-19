@@ -1,12 +1,14 @@
-﻿using View.Views;
+﻿using View.Interfaces;
+using View.Views;
 
 namespace View.CreatePlayerMenu;
 
-public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
+public sealed class CreatePlayerView(IMediator mediator, ILayoutManager layoutManager) : SelectableMenuView<CreatePlayerEntries>(mediator, layoutManager)
 {
     private List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries
         = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();
     public override string MenuName => "Create Player";
+    public override void Display() => throw new NotImplementedException();
 
     public void ShowCreatePlayerPrompt(Action<CreatePlayerEntries> onMenuEntrySelected)
     {

@@ -1,8 +1,7 @@
-﻿namespace View.SettingsMenu;
+﻿namespace View.Views.SettingsMenu;
 
 public enum SettingsMenuEntries
 {
-    
     ChangePlayerName,
     FieldSize,
     Pits,

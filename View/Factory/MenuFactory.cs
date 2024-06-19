@@ -1,4 +1,5 @@
 ﻿using Services.Database.Interfaces;
+using Services.Database.Repository;
 using View.CreatePlayerMenu;
 using View.Enums;
 using View.Interfaces;
@@ -7,31 +8,22 @@ using View.MainMenu;
 using View.SettingsMenu;
 using View.Views;
 using View.Views.Leaderboard;
+using View.Views.MainMenu;
 
 namespace View.Factory;
 
-public class MenuFactory : IMenuFactory
+public class MenuFactory(IMediator mediator, ILayoutManager layoutManager, PlayerRepository playerRepository)
+    : IMenuFactory
 {
-    private readonly IMediator _mediator;
-    private readonly ILayoutManager _layoutManager;
-    private readonly IDatabaseService _databaseService;
-    
-    public MenuFactory(IMediator mediator, ILayoutManager layoutManager, IDatabaseService databaseService)
-    {
-        _mediator = mediator;
-        _layoutManager = layoutManager;
-        _databaseService = databaseService;
-    }
-
     public MenuView CreateMenu(MenuType menuType) => 
         menuType switch
         {
-            MenuType.MainMenu => new MainMenuView(_mediator, _layoutManager),
-            MenuType.CreatePlayerMenu => new CreatePlayerView(_mediator, _layoutManager),
-            MenuType.LeaderboardMenu => new LeaderboardView(_databaseService,_mediator, _layoutManager),
-            MenuType.LoadPlayerMenu => new LoadPlayerView(_mediator, _layoutManager),
-            MenuType.SettingsMenu => new SettingsMenuView(_mediator, _layoutManager),
-            MenuType.StartScreen => new StartScreen.StartScreen(_mediator, _layoutManager),
+            MenuType.MainMenu => new MainMenuView(mediator, layoutManager),
+            MenuType.CreatePlayerMenu => new CreatePlayerView(mediator, layoutManager),
+            MenuType.LeaderboardMenu => new LeaderboardView(playerRepository,mediator, layoutManager),
+            MenuType.LoadPlayerMenu => new LoadPlayerView(mediator, layoutManager),
+            MenuType.SettingsMenu => new SettingsMenuView(mediator, layoutManager),
+            MenuType.StartScreen => new StartScreen.StartScreen(mediator, layoutManager),
             _ => throw new ArgumentException("Invalid menu type.")
         };
 }
