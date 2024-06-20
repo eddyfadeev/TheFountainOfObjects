@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Services;
-using Services.Database.Interfaces;
 using View.Enums;
 using View.Interfaces;
-using View.Views.StartScreen;
 
 namespace Controller;
 class Program
