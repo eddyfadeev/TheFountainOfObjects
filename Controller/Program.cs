@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Services;
 using Services.Database.Interfaces;
-using View.StartScreen;
+using View.Enums;
+using View.Interfaces;
+using View.Views.StartScreen;
 
 namespace Controller;
 class Program
@@ -18,16 +20,9 @@ class Program
         var serviceProvider = serviceCollection.BuildServiceProvider();
 
         // Example usage
-        var databaseService = serviceProvider.GetRequiredService<IDatabaseService>();
-        var leaderboardService = serviceProvider.GetRequiredService<LeaderboardService>();
-        
-        var startScreen = new StartScreen();
-        var createPlayerController = new CreatePlayerController(databaseService);
-        var mainMenuController = new MainMenuController(leaderboardService);
-        
-        Console.CursorVisible = false;
-        startScreen.ShowStartScreen();
-        createPlayerController.ShowCreatePlayerPrompt();
-        mainMenuController.ShowMenu();
+        var commandFactory = serviceProvider.GetRequiredService<IMenuCommandFactory>();
+
+        var mainMenuCommand = commandFactory.Create(MenuType.MainMenu);
+        mainMenuCommand.Execute();
     }
 }

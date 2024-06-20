@@ -1,4 +1,4 @@
-﻿using Services;
+﻿/*using Services;
 using Services.Database.Interfaces;
 using View.MainMenu;
 using View.Views.Leaderboard;
@@ -21,4 +21,4 @@ public class MainMenuController(LeaderboardService leaderboardService) : BaseCon
 
         leaderboardView.ShowLeaderboard();
     }
-}
+}*/

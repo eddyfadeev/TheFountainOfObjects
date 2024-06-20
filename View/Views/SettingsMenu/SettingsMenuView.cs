@@ -1,20 +1,24 @@
-﻿using View.Views;
-using View.Views.SettingsMenu;
+﻿using View.Interfaces;
 
-namespace View.SettingsMenu;
+namespace View.Views.SettingsMenu;
 
 public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
 {
-    public override string MenuName => "Settings";
-    
-    public SettingsMenuEntries ShowSettingsMenu(List<KeyValuePair<SettingsMenuEntries, string>> settingsMenuEntries)
+    public override string MenuName { get; }
+    public override ILayoutManager LayoutManager { get; }
+
+    public SettingsMenuView(ILayoutManager layoutManager)
+    {
+        LayoutManager = layoutManager;
+        MenuName = "Settings";
+    }
+
+    public override SettingsMenuEntries DisplaySelectable()
     {
         Console.Clear();
-        
+        var settingsMenuEntries = GetEnumValuesAndDisplayNames<SettingsMenuEntries>();
         LayoutManager.SupportWindowIsVisible = false;
-        
-        var selectedEntry = SelectEntry(ref settingsMenuEntries);
 
-        return selectedEntry;
+        return SelectEntry(ref settingsMenuEntries);
     }
 }

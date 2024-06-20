@@ -1,6 +1,8 @@
-﻿namespace View.Interfaces;
+﻿using View.Enums;
+
+namespace View.Interfaces;
 
 public interface IMenuCommandFactory
 {
-    ICommand Create(string menuName);
+    ICommand Create(MenuType menuType);
 }

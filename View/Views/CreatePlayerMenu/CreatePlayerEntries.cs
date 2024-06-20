@@ -1,9 +1,9 @@
-﻿namespace View.CreatePlayerMenu;
+﻿namespace View.Views.CreatePlayerMenu;
 
 public enum CreatePlayerEntries
 {
-    [Display(Name = "Create Player"), Method("CreatePlayer")]
+    [Display(Name = "Create Player")]
     CreatePlayer,
-    [Display(Name = "Load Player"), Method("LoadPlayer")]
+    [Display(Name = "Load Player")]
     LoadPlayer
 }

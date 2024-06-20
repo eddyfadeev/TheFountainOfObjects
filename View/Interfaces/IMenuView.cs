@@ -1,6 +1,6 @@
 ﻿namespace View.Interfaces;
 
-public interface IMenuView : INameable
+public interface IMenuView : IDisplayable
 {
     void Display();
 }

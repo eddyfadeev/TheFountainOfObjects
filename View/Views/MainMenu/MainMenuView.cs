@@ -7,27 +7,28 @@ namespace View.Views.MainMenu;
 
 public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
 {
-    private readonly ILayoutManager _layoutManager;
     private readonly IPlayerRepository _playerRepository;
-    public override string MenuName => "Main Menu";
+    public override string MenuName { get; }
+    public override ILayoutManager LayoutManager { get; }
 
-    public MainMenuView(IPlayerRepository playerRepository, ILayoutManager layoutManager) : base(layoutManager)
+    public MainMenuView(IPlayerRepository playerRepository, ILayoutManager layoutManager)
     {
-        _layoutManager = layoutManager;
+        LayoutManager = layoutManager;
         _playerRepository = playerRepository;
+        MenuName = "Main Menu";
     }
     
     public override MainMenuEntries DisplaySelectable()
     {
         var mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
         var leaderboardTopTen = GetLeaderboardTable();
-        _layoutManager.SupportWindowIsVisible = true;
-        _layoutManager.SupportWindowTop.Update(leaderboardTopTen);
+        LayoutManager.SupportWindowIsVisible = true;
+        LayoutManager.SupportWindowTop.Update(leaderboardTopTen);
 
         return SelectEntry(ref mainMenuEntriesList);
     }
 
-    private Table GetLeaderboardTable() => new LeaderboardView(_playerRepository, _layoutManager).CreateTopTen();
+    private Table GetLeaderboardTable() => new LeaderboardView(_playerRepository, LayoutManager).CreateTopTen();
 
     // TODO: Fill up help menu with appropriate information and move to the other class
     // !ShowHelp method should call the appropriate method from the other class to show the help information

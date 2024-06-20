@@ -1,9 +1,11 @@
-﻿using View.Views;
+﻿using View.Interfaces;
 
-namespace View.StartScreen;
+namespace View.Views.StartScreen;
 
 public sealed class StartScreen : MenuView
 {
+    public override ILayoutManager LayoutManager { get; }
+
     private const string IntroText = 
         "You enter the Cavern of Objects, a maze of rooms filled " +
         "with dangerous pits in search of the Fountain of Objects. " +
@@ -25,20 +27,15 @@ public sealed class StartScreen : MenuView
         // "but you can smell their rotten stench in nearby rooms."
         ;
 
-    //public static LayoutManager _layoutManager { get; } = new();
+    public override string MenuName { get; }
     
-    public override string MenuName => "The Fountain of Objects";
-    
-    private Table ComposeIntro()
+    public StartScreen(ILayoutManager layoutManager)
     {
-        var introTable = LayoutManager.CreateTableLayout(MenuName);
-        
-        introTable.AddRow(IntroText);
-        
-        return introTable;
+        LayoutManager = layoutManager;
+        MenuName = "The Fountain of Objects";
     }
     
-    public void ShowStartScreen()
+    public override void Display()
     {
         var startScreen = ComposeIntro();
         LayoutManager.SupportWindowIsVisible = false;
@@ -48,5 +45,14 @@ public sealed class StartScreen : MenuView
         LayoutManager.MainWindow.Update(startScreen);
         LayoutManager.UpdateLayout();
         Console.ReadKey();
+    }
+    
+    private Table ComposeIntro()
+    {
+        var introTable = LayoutManager.CreateTableLayout(MenuName);
+        
+        introTable.AddRow(IntroText);
+        
+        return introTable;
     }
 }

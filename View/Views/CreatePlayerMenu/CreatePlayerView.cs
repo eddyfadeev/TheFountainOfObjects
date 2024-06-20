@@ -1,22 +1,25 @@
 ﻿using View.Interfaces;
-using View.Views;
 
-namespace View.CreatePlayerMenu;
+namespace View.Views.CreatePlayerMenu;
 
-public sealed class CreatePlayerView(IMediator mediator, ILayoutManager layoutManager) : SelectableMenuView<CreatePlayerEntries>(mediator, layoutManager)
+public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
 {
-    private List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries
-        = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();
-    public override string MenuName => "Create Player";
-    public override void Display() => throw new NotImplementedException();
-
-    public void ShowCreatePlayerPrompt(Action<CreatePlayerEntries> onMenuEntrySelected)
+    public override string MenuName { get; }
+    public override ILayoutManager LayoutManager { get; }
+    private List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries;
+    
+    public CreatePlayerView(ILayoutManager layoutManager)
+    {
+        LayoutManager = layoutManager;
+        _createPlayerMenuEntries = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();
+        MenuName = "Create Player";
+    }
+    
+    public override CreatePlayerEntries DisplaySelectable()
     {
         LayoutManager.SupportWindowIsVisible = false;
         
-        var selectedEntry = SelectEntry(ref _createPlayerMenuEntries);
-        
-        onMenuEntrySelected(selectedEntry);
+        return SelectEntry(ref _createPlayerMenuEntries);
     }
 
     public string AskForUserName()

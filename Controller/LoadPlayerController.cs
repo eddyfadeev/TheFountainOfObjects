@@ -1,17 +1,17 @@
-﻿using Controller.Interfaces;
+﻿/*using Controller.Interfaces;
 using Model.Player;
 using Services.Database.Interfaces;
-using View.LoadPlayerMenu;
+using View.Views.LoadPlayerMenu;
 
 namespace Controller;
 
-public sealed class LoadPlayerController(IDatabaseService databaseService) : BaseController<Enum>, IGeneratesEnum
+public sealed class LoadPlayerController(IPlayerRepository playerRepository) : BaseController<Enum>, IGeneratesEnum
 {
     public Enum? ShowLoadPlayerMenu()
     {
+        var loadPlayerView = new LoadPlayerView(playerRepository);
         const string enumName = "LoadPlayerEnum";
-        var loadPlayerView = new LoadPlayerView();
-        var enumData = GetDataForEnum();
+        var enumData = playerRepository.GetAllPlayers();
         
         var entries = PrepareEnum(enumData, enumName);
         var selectedPlayer = loadPlayerView.ShowLoadPlayerMenu(entries);
@@ -19,5 +19,5 @@ public sealed class LoadPlayerController(IDatabaseService databaseService) : Bas
         return selectedPlayer;
     }
 
-    public List<PlayerDTO> GetDataForEnum() => databaseService.GetAllPlayers();
-}
+    public List<PlayerDTO> GetDataForEnum() => playerRepository.GetAllPlayers();
+}*/

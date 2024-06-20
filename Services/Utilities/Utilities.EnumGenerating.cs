@@ -14,13 +14,9 @@ public static partial class Utilities
 
         return preparedData;
     }
-    
-    private static Type InitializeEnum(IEnumerable<PlayerDTO> enumData, string enumName)
-    {
-        var loadPlayerEnum = BuildEnum(enumData, enumName);
 
-        return loadPlayerEnum;
-    }
+    private static Type InitializeEnum(IEnumerable<PlayerDTO> enumData, string enumName) =>
+        BuildEnum(enumData, enumName);
 
     private static List<KeyValuePair<Enum, string>> GetEnumEntries(Type dynamicallyCreatedEnum)
     {

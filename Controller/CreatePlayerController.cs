@@ -1,7 +1,7 @@
-﻿using Model.Player;
+﻿/*using Model.Player;
 using Services.Database.Interfaces;
 using Services.Extensions;
-using View.CreatePlayerMenu;
+using View.Views.CreatePlayerMenu;
 
 namespace Controller;
 
@@ -80,4 +80,4 @@ public class CreatePlayerController(IDatabaseService databaseService) : BaseCont
             Score = defaultScore
         };
     }
-}
+}*/
