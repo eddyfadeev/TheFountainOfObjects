@@ -1,6 +1,4 @@
-﻿using View.Enums;
-
-namespace View.Interfaces;
+﻿namespace View.Interfaces;
 
 public interface IMenuCommandFactory
 {

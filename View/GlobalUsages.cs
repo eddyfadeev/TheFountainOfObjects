@@ -6,3 +6,4 @@ global using System.ComponentModel.DataAnnotations;
 global using Spectre.Console;
 global using View.Interfaces;
 global using Services.Database.Interfaces;
+global using View.Enums;

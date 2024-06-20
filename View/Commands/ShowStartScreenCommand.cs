@@ -1,5 +1,4 @@
-﻿using View.Interfaces;
-using View.Views.StartScreen;
+﻿using View.Views.StartScreen;
 
 namespace View.Commands;
 

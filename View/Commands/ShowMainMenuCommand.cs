@@ -1,6 +1,4 @@
-﻿using Services.Database.Interfaces;
-using View.Interfaces;
-using View.Views.MainMenu;
+﻿using View.Views.MainMenu;
 
 namespace View.Commands;
 

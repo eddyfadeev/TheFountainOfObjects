@@ -1,7 +1,4 @@
-﻿using View.Interfaces;
-using Spectre.Console;
-
-namespace View.Layout;
+﻿namespace View.Layout;
 
 public sealed class LayoutManager : ILayoutManager
 {

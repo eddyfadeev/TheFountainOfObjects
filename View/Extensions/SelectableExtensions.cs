@@ -1,6 +1,4 @@
-﻿using View.Interfaces;
-
-namespace View.Extensions;
+﻿namespace View.Extensions;
 
 public static class SelectableExtensions
 {
