@@ -1,12 +1,17 @@
-﻿using Model.Interfaces;
-
-namespace Model.Objects;
+﻿namespace Model.Objects;
 
 public class Fountain : IPositionable, IActivable
 {
-    public int X { get; set; }
+    public Position Position { get; set; }
 
-    public int Y { get; set; }
+    public Fountain(int x, int y)
+    {
+        Position = new Position
+        {
+            X = x,
+            Y = y
+        };
+    }
 
-    public void Activate() => throw new NotImplementedException();
+    public static void Activate() => throw new NotImplementedException();
 }

@@ -1,6 +1,4 @@
-﻿using Model.Interfaces;
-
-namespace Model.Player;
+﻿namespace Model.Player;
 
 public class Player : IPositionable
 {
@@ -21,7 +19,10 @@ public class Player : IPositionable
     
     public string? Name { get; set; }
 
-    public int Arrows { get; private set; }
-    public int X { get; set; }
-    public int Y { get; set; }
+    public int Arrows { get; private set; } = 5;
+    public Position Position { get; set; } = new()
+    {
+        X = 0,
+        Y = 0
+    };
 }

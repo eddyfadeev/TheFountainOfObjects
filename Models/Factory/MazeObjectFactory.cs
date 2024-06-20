@@ -1,17 +1,16 @@
 ﻿using Model.Creatures;
 using Model.Enums;
 using Model.Extensions;
-using Model.Interfaces;
 using Model.Objects;
 using Model.Objects.Dangerous;
 
 namespace Model.Factory;
 
-public static class MazeObjectFactory
+public class MazeObjectFactory
 {
-    private static Player.Player? Player { get; set; }
+    private Player.Player? _player;
 
-    public static Room.Room CreateRoom(int x, int y, params (ObjectType, int, int)[] objects)
+    public Room.Room CreateRoom(int x, int y, params (ObjectType, int, int)[] objects)
     {
         var room = new Room.Room(x, y);
 
@@ -24,15 +23,15 @@ public static class MazeObjectFactory
         return room;
     }
 
-    public static IPositionable CreateObject(ObjectType objectType, int x, int y) =>
+    public IPositionable CreateObject(ObjectType objectType, int x, int y) =>
         objectType switch
         {
-            ObjectType.Fountain => new Fountain { X = x, Y = y },
-            ObjectType.Entrance => new Entrance { X = x, Y = y },
-            ObjectType.Amarok => new Amarok { X = x, Y = y },
-            ObjectType.Pit => new Pit { X = x, Y = y },
-            ObjectType.Maelstrom => new Maelstrom { X = x, Y = y },
-            ObjectType.Player => (Player ?? throw new InvalidOperationException("Player is not initialized"))
+            ObjectType.Fountain => new Fountain(x, y),
+            ObjectType.Entrance => new Entrance(x, y),
+            ObjectType.Amarok => new Amarok(x, y),
+            ObjectType.Pit => new Pit(x, y),
+            ObjectType.Maelstrom => new Maelstrom(x, y),
+            ObjectType.Player => (_player ?? throw new InvalidOperationException("Player is not initialized"))
                 .SetPosition(x, y),
             _ => throw new ArgumentException("Invalid object type.")
         };

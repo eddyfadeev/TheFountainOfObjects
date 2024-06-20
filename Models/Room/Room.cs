@@ -1,18 +1,15 @@
-﻿using Model.Interfaces;
-
-namespace Model.Room;
+﻿namespace Model.Room;
 
 public class Room : IPositionable
 {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public Position Position { get; set; }
 
     private List<IPositionable> Objects { get; set; }
     
     public Room(int x, int y)
     {
-        X = x;
-        Y = y;
+        Position.X = x;
+        Position.Y = y;
         Objects = new List<IPositionable>();
     }
     

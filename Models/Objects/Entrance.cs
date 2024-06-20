@@ -1,12 +1,17 @@
-﻿using Model.Interfaces;
-
-namespace Model.Objects;
+﻿namespace Model.Objects;
 
 public class Entrance : IPositionable, IActivable
 {
-    public int X { get; set; }
+    public Position Position { get; set; }
+    
+    public Entrance(int x, int y)
+    {
+        Position = new Position
+        {
+            X = x,
+            Y = y
+        };
+    }
 
-    public int Y { get; set; }
-
-    public void Activate() => throw new NotImplementedException();
+    public static void Activate() => throw new NotImplementedException();
 }

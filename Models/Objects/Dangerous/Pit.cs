@@ -1,12 +1,17 @@
-﻿using Model.Interfaces;
-
-namespace Model.Objects.Dangerous;
+﻿namespace Model.Objects.Dangerous;
 
 public class Pit : IPositionable, IInteractable
 {
-    public int X { get; set; }
-
-    public int Y { get; set; }
+    public Position Position { get; set; }
+    
+    public Pit(int x, int y)
+    {
+        Position = new Position
+        {
+            X = x,
+            Y = y
+        };
+    }
 
     public void Interact(Player.Player player) => throw new NotImplementedException();
 }
