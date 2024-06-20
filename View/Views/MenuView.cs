@@ -1,7 +1,4 @@
-﻿using Services.Database.Interfaces;
-using View.Interfaces;
-
-namespace View.Views;
+﻿namespace View.Views;
 
 public abstract class MenuView : IMenuView
 {

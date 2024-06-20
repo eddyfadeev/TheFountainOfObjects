@@ -40,7 +40,7 @@ public class DatabaseHelpersTests
     [Fact]
     public void build_update_query_handles_null_player_input_gracefully()
     {
-        PlayerDTO player = null;
+        PlayerDTO? player = null;
         Assert.Throws<ArgumentNullException>(() => DatabaseHelpers.BuildUpdateQuery(player));
     }
 

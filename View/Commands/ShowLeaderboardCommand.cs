@@ -4,12 +4,12 @@ using View.Views.Leaderboard;
 
 namespace View.Commands;
 
-public class DisplayLeaderboardCommand : ICommand
+public class ShowLeaderboardCommand : ICommand
 {
     private readonly ILayoutManager _layoutManager;
     private readonly IPlayerRepository _playerRepository;
     
-    public DisplayLeaderboardCommand(ILayoutManager layoutManager, IPlayerRepository playerRepository)
+    public ShowLeaderboardCommand(ILayoutManager layoutManager, IPlayerRepository playerRepository)
     {
         _layoutManager = layoutManager;
         _playerRepository = playerRepository;

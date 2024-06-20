@@ -1,14 +1,14 @@
-﻿namespace View.MainMenu;
+﻿namespace View.Views.MainMenu;
 
 public enum MainMenuEntries
 {
-    [Display(Name = "Start Game"), Method("StartGame")]
+    [Display(Name = "Start Game")]
     StartGame,
-    [Display(Name = "Settings"), Method("ShowSettings")]
+    [Display(Name = "Settings")]
     Settings,
-    [Display(Name = "Help"), Method("ShowHelp")]
+    [Display(Name = "Help")]
     Help,
-    [Display(Name = "Leaderboard"), Method("ShowLeaderboard")]
+    [Display(Name = "Leaderboard")]
     Leaderboard,
     [Display(Name = "Exit")]
     Exit

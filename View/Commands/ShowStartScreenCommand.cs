@@ -3,11 +3,11 @@ using View.Views.StartScreen;
 
 namespace View.Commands;
 
-public class DisplayStartScreenCommand : ICommand
+public class ShowStartScreenCommand : ICommand
 {
     private readonly ILayoutManager _layoutManager;
         
-    public DisplayStartScreenCommand(ILayoutManager layoutManager)
+    public ShowStartScreenCommand(ILayoutManager layoutManager)
     {
         _layoutManager = layoutManager;
     }

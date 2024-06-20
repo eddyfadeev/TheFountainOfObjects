@@ -1,6 +1,4 @@
-﻿using View.Interfaces;
-
-namespace View.Views.SettingsMenu;
+﻿namespace View.Views.SettingsMenu;
 
 public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
 {

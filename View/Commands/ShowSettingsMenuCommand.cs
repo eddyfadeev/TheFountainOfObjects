@@ -3,11 +3,11 @@ using View.Views.SettingsMenu;
 
 namespace View.Commands;
 
-public class DisplaySettingsMenuCommand : ICommand
+public class ShowSettingsMenuCommand : ICommand
 {
     private readonly ILayoutManager _layoutManager;
         
-    public DisplaySettingsMenuCommand(ILayoutManager layoutManager)
+    public ShowSettingsMenuCommand(ILayoutManager layoutManager)
     {
         _layoutManager = layoutManager;
     }

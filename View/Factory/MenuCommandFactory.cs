@@ -19,12 +19,12 @@ public class MenuCommandFactory : IMenuCommandFactory
     public ICommand Create(MenuType menuType) => 
         menuType switch
         {
-            MenuType.MainMenu => new DisplayMainMenuCommand(_layoutManager, _playerRepository),
-            MenuType.CreatePlayerMenu => new DisplayCreatePlayerMenuCommand(_layoutManager),
-            MenuType.LeaderboardMenu => new DisplayLeaderboardCommand(_layoutManager, _playerRepository),
-            MenuType.LoadPlayerMenu => new DisplayLoadPlayerMenuCommand(_layoutManager, _playerRepository),
-            MenuType.SettingsMenu => new DisplaySettingsMenuCommand(_layoutManager),
-            MenuType.StartScreen => new DisplayStartScreenCommand(_layoutManager),
+            MenuType.MainMenu => new ShowMainMenuCommand(_layoutManager, _playerRepository),
+            MenuType.CreatePlayerMenu => new ShowCreatePlayerMenuCommand(_layoutManager),
+            MenuType.LeaderboardMenu => new ShowLeaderboardCommand(_layoutManager, _playerRepository),
+            MenuType.LoadPlayerMenu => new ShowLoadPlayerMenuCommand(_layoutManager, _playerRepository),
+            MenuType.SettingsMenu => new ShowSettingsMenuCommand(_layoutManager),
+            MenuType.StartScreen => new ShowStartScreenCommand(_layoutManager),
             _ => throw new ArgumentException("Invalid menu type.")
         };
 }

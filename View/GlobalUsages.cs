@@ -3,6 +3,6 @@
 global using System;
 global using System.Collections.Generic;
 global using System.ComponentModel.DataAnnotations;
-global using Microsoft.Extensions.DependencyInjection;
 global using Spectre.Console;
-
+global using View.Interfaces;
+global using Services.Database.Interfaces;

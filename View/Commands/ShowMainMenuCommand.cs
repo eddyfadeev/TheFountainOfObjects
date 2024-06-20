@@ -4,12 +4,12 @@ using View.Views.MainMenu;
 
 namespace View.Commands;
 
-public class DisplayMainMenuCommand : ICommand
+public class ShowMainMenuCommand : ICommand
 {
     private readonly ILayoutManager _layoutManager;
     private readonly IPlayerRepository _playerRepository;
     
-    public DisplayMainMenuCommand(ILayoutManager layoutManager, IPlayerRepository playerRepository)
+    public ShowMainMenuCommand(ILayoutManager layoutManager, IPlayerRepository playerRepository)
     {
         _layoutManager = layoutManager;
         _playerRepository = playerRepository;

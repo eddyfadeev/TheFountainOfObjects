@@ -1,6 +1,4 @@
 ﻿using Model.Player;
-using Services.Database.Interfaces;
-using View.Interfaces;
 
 namespace View.Views.Leaderboard;
 

@@ -3,11 +3,11 @@ using View.Views.CreatePlayerMenu;
 
 namespace View.Commands;
 
-public class DisplayCreatePlayerMenuCommand : ICommand
+public class ShowCreatePlayerMenuCommand : ICommand
 {
     private readonly ILayoutManager _layoutManager;
     
-    public DisplayCreatePlayerMenuCommand(ILayoutManager layoutManager)
+    public ShowCreatePlayerMenuCommand(ILayoutManager layoutManager)
     {
         _layoutManager = layoutManager;
     }

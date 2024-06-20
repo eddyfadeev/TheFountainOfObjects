@@ -1,7 +1,4 @@
-﻿using Model.Player;
-using Services.Database.Interfaces;
-using View.Extensions;
-using View.Interfaces;
+﻿using Services.Database.Interfaces;
 
 namespace View.Views.LoadPlayerMenu;
 
@@ -40,8 +37,8 @@ public sealed class LoadPlayerView : SelectableMenuView<Enum>
     private List<KeyValuePair<Enum, string>>? PrepareData()
     {
         var playerData = _playerRepository.GetAllPlayers();
-        var enumName = "LoadPlayerEnum";
+        const string enumName = "LoadPlayerEnum";
         
-        return playerData.ConvertToSelectableDataList(_playerRepository, enumName);
+        return PrepareEnum(playerData, enumName);
     }
 }
