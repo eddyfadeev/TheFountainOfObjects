@@ -11,7 +11,7 @@ public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
         MenuName = "Settings";
     }
 
-    public override SettingsMenuEntries DisplaySelectable()
+    public override SettingsMenuEntries Display()
     {
         Console.Clear();
         var settingsMenuEntries = GetEnumValuesAndDisplayNames<SettingsMenuEntries>();

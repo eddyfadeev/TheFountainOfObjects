@@ -8,7 +8,12 @@ namespace Model.Factory;
 
 public class MazeObjectFactory
 {
-    private Player.Player? _player;
+    private readonly Player.Player? _player;
+    
+    public MazeObjectFactory(Player.Player player)
+    {
+        _player = player;
+    }
 
     public Room.Room CreateRoom(int x, int y, params (ObjectType, int, int)[] objects)
     {
@@ -23,7 +28,7 @@ public class MazeObjectFactory
         return room;
     }
 
-    public IPositionable CreateObject(ObjectType objectType, int x, int y) =>
+    private IPositionable CreateObject(ObjectType objectType, int x, int y) =>
         objectType switch
         {
             ObjectType.Fountain => new Fountain(x, y),

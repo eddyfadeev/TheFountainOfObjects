@@ -17,6 +17,6 @@ public class ShowMainMenuCommand : ICommand
     {
         var mainMenuView = new MainMenuView(_playerRepository, _layoutManager);
 
-        return mainMenuView.DisplaySelectable();
+        return mainMenuView.Display();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Model;
 
-public class Position
+public class Location
 {
     internal int X { get; set; }
     internal int Y { get; set; }

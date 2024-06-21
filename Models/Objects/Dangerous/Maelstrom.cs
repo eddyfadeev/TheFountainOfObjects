@@ -2,11 +2,11 @@
 
 public class Maelstrom : IPositionable, IInteractable
 {
-    public Position Position { get; set; }
+    public Location Location { get; set; }
     
     public Maelstrom(int x, int y)
     {
-        Position = new Position
+        Location = new Location
         {
             X = x,
             Y = y

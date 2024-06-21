@@ -15,7 +15,7 @@ public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
         MenuName = "Main Menu";
     }
     
-    public override MainMenuEntries DisplaySelectable()
+    public override MainMenuEntries Display()
     {
         var mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
         var leaderboardTopTen = GetLeaderboardTable();

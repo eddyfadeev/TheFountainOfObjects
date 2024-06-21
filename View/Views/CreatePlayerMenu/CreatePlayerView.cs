@@ -15,7 +15,7 @@ public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
         MenuName = "Create Player";
     }
     
-    public override CreatePlayerEntries DisplaySelectable()
+    public override CreatePlayerEntries Display()
     {
         LayoutManager.SupportWindowIsVisible = false;
         

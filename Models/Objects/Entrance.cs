@@ -2,11 +2,11 @@
 
 public class Entrance : IPositionable, IActivable
 {
-    public Position Position { get; set; }
+    public Location Location { get; set; }
     
     public Entrance(int x, int y)
     {
-        Position = new Position
+        Location = new Location
         {
             X = x,
             Y = y

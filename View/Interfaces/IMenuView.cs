@@ -1,6 +1,7 @@
 ﻿namespace View.Interfaces;
 
-public interface IMenuView : IDisplayable
+public interface IMenuView
 {
-    void Display();
+    string MenuName { get; }
+    ILayoutManager LayoutManager { get; }
 }

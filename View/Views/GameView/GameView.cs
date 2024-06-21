@@ -1,6 +1,8 @@
-﻿namespace View.Views.GameView;
+﻿using Model;
 
-public class GameView : IDisplayable
+namespace View.Views.GameView;
+
+public class GameView
 {
     public string MenuName { get; }
 
@@ -12,3 +14,4 @@ public class GameView : IDisplayable
         LayoutManager = layoutManager;
     }
 }
+

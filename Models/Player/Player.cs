@@ -20,7 +20,7 @@ public class Player : IPositionable
     public string? Name { get; set; }
 
     public int Arrows { get; private set; } = 5;
-    public Position Position { get; set; } = new()
+    public Location Location { get; set; } = new()
     {
         X = 0,
         Y = 0

@@ -16,7 +16,7 @@ public sealed class LoadPlayerView : SelectableMenuView<Enum>
         _playerRepository = playerRepository;
     }
 
-    public override Enum? DisplaySelectable()
+    public override Enum? Display()
     {
         Console.Clear();
         

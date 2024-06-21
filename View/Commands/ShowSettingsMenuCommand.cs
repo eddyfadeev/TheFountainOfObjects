@@ -14,6 +14,6 @@ public class ShowSettingsMenuCommand : ICommand
     public Enum Execute()
     {
         var settingsMenuView = new SettingsMenuView(_layoutManager);
-        return settingsMenuView.DisplaySelectable();
+        return settingsMenuView.Display();
     }
 }

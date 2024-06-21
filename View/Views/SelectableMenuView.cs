@@ -10,8 +10,8 @@ public abstract class SelectableMenuView<TEnum>
     public abstract ILayoutManager LayoutManager { get; }
     public int SelectedIndex { get; set; } = 0;
 
-    public abstract TEnum? DisplaySelectable();
-
+    public abstract TEnum? Display();
+    
     public TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.SelectEntry(this, ref menuEntries);
 
@@ -20,5 +20,4 @@ public abstract class SelectableMenuView<TEnum>
 
     public Table CreateMenuTable(string menuName, List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.CreateMenuTable(this, menuName, menuEntries);
-
 }
