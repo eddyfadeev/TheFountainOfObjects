@@ -7,7 +7,6 @@ public interface IRoom : IPositionable
     bool IsVisited { get; }
     bool IsOccupied { get; }
     Color RoomColor { get; }
-    static abstract IRoom CreateRoom(int x, int y);
     void AddObject(IPositionable obj);
     T? GetObject<T>() where T : IPositionable;
     bool RemoveObject(IPositionable obj);

@@ -24,8 +24,6 @@ public class Room : IRoom
         IsVisited = false;
     }
 
-    public static IRoom CreateRoom(int x, int y) => new Room(x, y);
-
     public void AddObject(IPositionable obj) => Occupants.Add(obj);
     
     public T? GetObject<T>() where T : IPositionable => Occupants.OfType<T>().FirstOrDefault();

@@ -1,6 +1,7 @@
 ﻿using Model;
 using Model.Creatures;
 using Model.Factory;
+using Model.Interfaces;
 using Model.Room;
 using Services.GameSettingsRepository;
 using Spectre.Console.Rendering;
@@ -68,96 +69,78 @@ public class MazeGeneratorService
     {
         
     }
+}
+
+public interface IRoomService
+{
+    Room[,] MazeRooms { get; }
+}
+
+public class RoomService : IRoomService
+{
+    private IRoomView _roomView;
+    private IGameSettingsRepository _gameSettingsRepository;
+    public Room[,] MazeRooms { get; }
     
-    private RoomBase[,] CreateMaze(int size)
+    public RoomService(IGameSettingsRepository gameSettingsRepository, IRoomView roomView)
     {
-        Random random = new Random();
-        var newMaze = new RoomBase[size, size];
-        int objectsCount = size switch { 4 => 1, 6 => 2, 8 => 4, _ => 1 };
-        List<Tuple<int, int>> pitPositionsList = new List<Tuple<int, int>>(objectsCount);
-        List<Tuple<int, int>> maelstromPositionsList = new List<Tuple<int, int>>(objectsCount);
-        List<Tuple<int, int>> amarokPositionsList = new List<Tuple<int, int>>(objectsCount);
-
-        while (_entrancePosition == _fountainPosition)
-        {
-            _entrancePosition = (random.Next(0, size), random.Next(0, size/2 - 1));
-            _fountainPosition = (random.Next(0, size), random.Next(size / 2, size - 1));
-        }
+        _gameSettingsRepository = gameSettingsRepository;
+        _roomView = roomView;
         
-        for (int i = 0; i < objectsCount; i++)
-        {
-            (int row, int col) pitPosition = (random.Next(0, size), random.Next(0, size));
-            (int row, int col) maelstormPosition = (random.Next(0, size), random.Next(0, size));
-            (int row, int col) amarokPosition = (random.Next(0, size), random.Next(0, size));
-            
-            bool samePositions = pitPosition == maelstormPosition || pitPosition == amarokPosition || maelstormPosition == amarokPosition;
-
-            while (samePositions)
-            {
-                pitPosition = (random.Next(0, size), random.Next(0, size));
-                maelstormPosition = (random.Next(0, size), random.Next(0, size));
-                amarokPosition = (random.Next(0, size), random.Next(0, size));
-                
-                samePositions = pitPosition == maelstormPosition || pitPosition == amarokPosition || maelstormPosition == amarokPosition;
-            }
-            
-            
-            // TODO: Big statement is looking for possible refactoring
-            if (pitPosition == _entrancePosition || pitPosition == _fountainPosition || maelstormPosition == _entrancePosition || 
-                maelstormPosition == _fountainPosition|| amarokPosition == _entrancePosition || amarokPosition == _fountainPosition ||
-                
-                pitPositionsList.Any(
-                    position => 
-                        position.Equals(pitPosition) || position.Equals(maelstormPosition) || position.Equals(amarokPosition)) || 
-                
-                maelstromPositionsList.Any(
-                    position => 
-                        position.Equals(maelstormPosition) || position.Equals(pitPosition) || position.Equals(amarokPosition)) ||
-                
-                amarokPositionsList.Any(
-                    position => 
-                        position.Equals(amarokPosition) || position.Equals(pitPosition) || position.Equals(maelstormPosition)))
-            {
-                i--;
-                continue;
-            }
-            pitPositionsList.Add(new Tuple<int, int>(pitPosition.row, pitPosition.col));
-            maelstromPositionsList.Add(new Tuple<int, int>(maelstormPosition.row, maelstormPosition.col));
-            amarokPositionsList.Add(new Tuple<int, int>(amarokPosition.row, amarokPosition.col));
-        }
-        
-        newMaze[_entrancePosition.row, _entrancePosition.col] = new EntranceRoom(_entrancePosition);
-        newMaze[_fountainPosition.row, _fountainPosition.col] = new FountainRoom(_fountainPosition);
-        
-        foreach (var position in pitPositionsList)
-        {
-            newMaze[position.Item1, position.Item2] = new PitRoomBase((position.Item1, position.Item2));
-        }
-        
-        for (int row = 0; row < size; row++)
-        {
-            for (int col = 0; col < size; col++) 
-            {
-                if ((row == _entrancePosition.row && col == _entrancePosition.col) || 
-                    (row == _fountainPosition.row && col == _fountainPosition.col) ||
-                    pitPositionsList.Any(p => p.Item1 == row && p.Item2 == col))
-                    continue;
-                
-                newMaze[row, col] = new EmptyRoom((row, col));
-            }
-        }
-        
-        // Should be a better way to do this
-        foreach (var position in maelstromPositionsList)
-        {
-            newMaze[position.Item1, position.Item2].AddGameObject(new Maelstorm((position.Item1, position.Item2)));
-        }
-
-        foreach (var position in amarokPositionsList)
-        {
-            newMaze[position.Item1, position.Item2].AddGameObject(new Amarok((position.Item1, position.Item2)));
-        }
-
-        return newMaze;
+        var mazeSize = (int)_gameSettingsRepository.MazeSize;
+        MazeRooms = new Room[mazeSize, mazeSize];
     }
+    
+    
+    
+}
+
+public interface IRoomView
+{
+    Canvas RoomColor { get; }
+    
+}
+
+public class RoomView : Renderable, IRoomView
+{
+    private readonly IRoomService _roomService;
+    private readonly IRoom _room;
+    
+    public Canvas RoomColor => GetColor(_room., _room.Location.Y);
+    
+    public RoomView(IRoomService roomService, IRoom room)
+    {
+        _roomService = roomService;
+        _room = room;
+    }
+    
+    private Canvas GetColor(Location roomLocation)
+    {
+        var row = roomLocation.X;
+        var col = roomLocation.Y;
+        var room = _roomService.MazeRooms[row, col];
+        
+        
+        
+        
+        // var cellWidth = _gameSettingsRepository.CellSize;
+        // var cellHeight = cellWidth;
+        // var roomColor = _room.RoomColor;
+        //
+        // var roomCanvas = new Canvas(cellWidth, cellHeight);
+        
+        // for (int i = 0; i < cellHeight; i++)
+        // {
+        //     for (int j = 0; j < cellWidth; j++)
+        //     {
+        //         roomCanvas.SetPixel(j, i, roomColor);
+        //     }
+        // }
+        //
+        // return roomCanvas;
+    }
+
+    [Obsolete("Dummy method for interface implementation")]
+    protected override IEnumerable<Segment> Render(RenderOptions options, int maxWidth) => 
+        new List<Segment>();
 }

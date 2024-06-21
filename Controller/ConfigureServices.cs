@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Model.Interfaces;
+using Model.Room;
 using Services.Database;
 using Services.Database.Helpers;
 using Services.Database.Interfaces;
@@ -21,5 +23,6 @@ public static class ConfigureServices
         services.AddSingleton<IDatabaseService, DatabaseService>();
         services.AddSingleton<IMenuCommandFactory, MenuCommandFactory>();
         services.AddSingleton<IGameSettingsRepository, GameSettingsRepository>();
+        services.AddTransient<IRoom, Room>();
     }
 }
