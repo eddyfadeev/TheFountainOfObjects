@@ -2,6 +2,6 @@
 
 public class Location
 {
-    internal int X { get; set; }
-    internal int Y { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
 }

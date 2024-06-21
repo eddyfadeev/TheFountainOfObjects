@@ -22,15 +22,19 @@ public class MazeGeneratorService
 {
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly MazeObjectFactory _mazeObjectFactory;
+    private readonly IRoomService _roomService;
     private Room[,] _maze;
     private Location _entranceLocation { get; }
     private Location _fountainLocation { get; }
     
 
-    public MazeGeneratorService(IGameSettingsRepository gameSettingsRepository, MazeObjectFactory mazeObjectFactory)
+    public MazeGeneratorService(
+        IRoomService roomService, IGameSettingsRepository gameSettingsRepository, MazeObjectFactory mazeObjectFactory)
     {
+        _roomService = roomService;
         _gameSettingsRepository = gameSettingsRepository;
         _mazeObjectFactory = mazeObjectFactory;
+        
         var mazeSize = (int)_gameSettingsRepository.MazeSize;
         _maze = new Room[mazeSize, mazeSize];
     }
@@ -73,32 +77,49 @@ public class MazeGeneratorService
 
 public interface IRoomService
 {
-    Room[,] MazeRooms { get; }
+    IRoom[,] MazeRooms { get; }
+    Canvas SetRoomColor();
 }
 
 public class RoomService : IRoomService
 {
-    private IRoomView _roomView;
-    private IGameSettingsRepository _gameSettingsRepository;
-    public Room[,] MazeRooms { get; }
+    private readonly IRoomView _roomView;
+    private readonly IRoom _room;
+    private readonly IGameSettingsRepository _gameSettingsRepository;
+    public IRoom[,] MazeRooms { get; }
     
-    public RoomService(IGameSettingsRepository gameSettingsRepository, IRoomView roomView)
+    public RoomService(IGameSettingsRepository gameSettingsRepository, IRoom room, IRoomView roomView)
     {
         _gameSettingsRepository = gameSettingsRepository;
+        _room = room;
         _roomView = roomView;
         
         var mazeSize = (int)_gameSettingsRepository.MazeSize;
-        MazeRooms = new Room[mazeSize, mazeSize];
+        MazeRooms = new IRoom[mazeSize, mazeSize];
     }
-    
-    
-    
+
+    public Canvas SetRoomColor()
+    {
+        int cellWidth, cellHeight = cellWidth = _gameSettingsRepository.CellSize;
+        var roomColor = _room.RoomColor;
+        
+        var roomCanvas = new Canvas(cellWidth, cellHeight);
+        
+        for (int i = 0; i < cellHeight; i++)
+        {
+            for (int j = 0; j < cellWidth; j++)
+            {
+                roomCanvas.SetPixel(j, i, roomColor);
+            }
+        }
+
+        return roomCanvas;
+    }
 }
 
 public interface IRoomView
 {
-    Canvas RoomColor { get; }
-    
+    Canvas RoomCanvas { get; }
 }
 
 public class RoomView : Renderable, IRoomView
@@ -106,7 +127,7 @@ public class RoomView : Renderable, IRoomView
     private readonly IRoomService _roomService;
     private readonly IRoom _room;
     
-    public Canvas RoomColor => GetColor(_room., _room.Location.Y);
+    public Canvas RoomCanvas => GetColor(_room.Location);
     
     public RoomView(IRoomService roomService, IRoom room)
     {
@@ -118,26 +139,10 @@ public class RoomView : Renderable, IRoomView
     {
         var row = roomLocation.X;
         var col = roomLocation.Y;
+        
         var room = _roomService.MazeRooms[row, col];
-        
-        
-        
-        
-        // var cellWidth = _gameSettingsRepository.CellSize;
-        // var cellHeight = cellWidth;
-        // var roomColor = _room.RoomColor;
-        //
-        // var roomCanvas = new Canvas(cellWidth, cellHeight);
-        
-        // for (int i = 0; i < cellHeight; i++)
-        // {
-        //     for (int j = 0; j < cellWidth; j++)
-        //     {
-        //         roomCanvas.SetPixel(j, i, roomColor);
-        //     }
-        // }
-        //
-        // return roomCanvas;
+
+        return _roomService.SetRoomColor();
     }
 
     [Obsolete("Dummy method for interface implementation")]
