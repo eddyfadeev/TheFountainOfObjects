@@ -1,6 +1,5 @@
 ﻿using Model.Creatures;
 using Model.Enums;
-using Model.Extensions;
 using Model.Objects;
 using Model.Objects.Dangerous;
 
@@ -8,36 +7,29 @@ namespace Model.Factory;
 
 public class MazeObjectFactory
 {
-    private readonly Player.Player? _player;
+    public IPositionable CreateEntrance(Location location) =>
+        CreateObject(ObjectType.Entrance, location);
     
-    public MazeObjectFactory(Player.Player player)
-    {
-        _player = player;
-    }
+    public IPositionable CreateFountain(Location location) =>
+        CreateObject(ObjectType.Fountain, location);
+    
+    public IPositionable CreateAmarok(Location location) =>
+        CreateObject(ObjectType.Amarok, location);
+    
+    public IPositionable CreatePit(Location location) =>
+        CreateObject(ObjectType.Pit, location);
+    
+    public IPositionable CreateMaelstrom(Location location) =>
+        CreateObject(ObjectType.Maelstrom, location);
 
-    public Room.Room CreateRoom(int x, int y, params (ObjectType, int, int)[] objects)
-    {
-        var room = new Room.Room(x, y);
-
-        foreach (var (objectType, objX, objY) in objects)
-        {
-            var obj = CreateObject(objectType, objX, objY);
-            room.AddObject(obj);
-        }
-
-        return room;
-    }
-
-    private IPositionable CreateObject(ObjectType objectType, int x, int y) =>
+    private IPositionable CreateObject(ObjectType objectType, Location location) =>
         objectType switch
         {
-            ObjectType.Fountain => new Fountain(x, y),
-            ObjectType.Entrance => new Entrance(x, y),
-            ObjectType.Amarok => new Amarok(x, y),
-            ObjectType.Pit => new Pit(x, y),
-            ObjectType.Maelstrom => new Maelstrom(x, y),
-            ObjectType.Player => (_player ?? throw new InvalidOperationException("Player is not initialized"))
-                .SetPosition(x, y),
+            ObjectType.Fountain => new Fountain(location.X, location.Y),
+            ObjectType.Entrance => new Entrance(location.X, location.Y),
+            ObjectType.Amarok => new Amarok(location.X, location.Y),
+            ObjectType.Pit => new Pit(location.X, location.Y),
+            ObjectType.Maelstrom => new Maelstrom(location.X, location.Y),
             _ => throw new ArgumentException("Invalid object type.")
         };
 }

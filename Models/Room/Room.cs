@@ -23,6 +23,8 @@ public class Room : IRoom
         };
         IsVisited = false;
     }
+    
+    public Room() {}
 
     public void AddObject(IPositionable obj) => Occupants.Add(obj);
     

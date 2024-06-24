@@ -6,6 +6,5 @@ public enum ObjectType
     Entrance,
     Amarok,
     Pit,
-    Maelstrom,
-    Player
+    Maelstrom
 }
