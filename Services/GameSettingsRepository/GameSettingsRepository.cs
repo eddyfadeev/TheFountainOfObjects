@@ -1,14 +1,15 @@
 ﻿using Model.Player;
+using Spectre.Console;
 
 namespace Services.GameSettingsRepository;
 
 public class GameSettingsRepository : IGameSettingsRepository
 {
     private MazeSize _mazeSize;
-    private int _pits;
-    private int _maelstroms;
-    private int _amaroks;
-    private int _arrows;
+    private int _pitsCount;
+    private int _maelstromsCount;
+    private int _amaroksCount;
+    private int _arrowsCount;
     private int _cellSize;
     
     public GameSettingsRepository(Player preparedPlayer)
@@ -28,58 +29,39 @@ public class GameSettingsRepository : IGameSettingsRepository
         get => _mazeSize;
         set
         {
-            if (IsMazeSizeCorrect(value))
+            if (!IsMazeSizeCorrect(value))
             {
-                Console.WriteLine("Invalid maze size. Defaulting to small (4x4).");
+                AnsiConsole.WriteLine("Invalid maze size. Defaulting to small (4x4).");
                 value = MazeSize.Small;
             }
             
             _mazeSize = value;
+            CellSize = SetCellSize(_mazeSize);
         }
     }
     
-    public int Pits
+    public int PitsCount
     {
-        get => _pits;
-        set
-        {
-            value = CheckObjectNum(value);
-            
-            _pits = value;
-        }
+        get => _pitsCount;
+        set => _pitsCount = CheckObjectNum(value);
     }
     
-    public int Maelstroms
+    public int MaelstromsCount
     {
-        get => _maelstroms;
-        set
-        {
-            value = CheckObjectNum(value);
-            
-            _maelstroms = value;
-        }
+        get => _maelstromsCount;
+        set => _maelstromsCount = CheckObjectNum(value);
     }
     
-    public int Amaroks
+    public int AmaroksCount
     {
-        get => _amaroks;
-        set
-        {
-            value = CheckObjectNum(value);
-            
-            _amaroks = value;
-        }
+        get => _amaroksCount;
+        set => _amaroksCount = CheckObjectNum(value);
     }
     
-    public int Arrows
+    public int ArrowsCount
     {
-        get => _arrows;
-        set
-        {
-            value = CheckArrowsNumber(value);
-            
-            _arrows = value;
-        }
+        get => _arrowsCount;
+        set => _arrowsCount = CheckArrowsNumber(value);
     }
     
     public int CellSize
@@ -87,7 +69,11 @@ public class GameSettingsRepository : IGameSettingsRepository
         get => _cellSize;
         set
         {
-            value = SetCellSize(_mazeSize);
+            if (value < 1)
+            {
+                AnsiConsole.WriteLine("Invalid cell size. Defaulting to 3.");
+                value = 3;
+            }
             
             _cellSize = value;
         }
@@ -96,10 +82,10 @@ public class GameSettingsRepository : IGameSettingsRepository
     private void SetDefaultSettings()
     {
         MazeSize = MazeSize.Small;
-        Pits = 1;
-        Maelstroms = 1;
-        Amaroks = 1;
-        Arrows = 3;
+        PitsCount = 1;
+        MaelstromsCount = 1;
+        AmaroksCount = 1;
+        ArrowsCount = 3;
     }
     
     private int SetCellSize(MazeSize mazeSize) => 
@@ -111,17 +97,15 @@ public class GameSettingsRepository : IGameSettingsRepository
             _ => 3
         };
     
-    private static bool IsMazeSizeCorrect(MazeSize value)
-    {
-        return value is 
+    private static bool IsMazeSizeCorrect(MazeSize value) => 
+        value is 
             MazeSize.Small or
             MazeSize.Medium or
             MazeSize.Large;
-    }
 
     private int CheckObjectNum(int objectsNumber)
     {
-        const int objectNumber = 1;
+        const int defaultObjectNumber = 1;
         if (objectsNumber is >= 0 and <= 3)
         {
             return objectsNumber;
@@ -129,7 +113,7 @@ public class GameSettingsRepository : IGameSettingsRepository
 
         Console.WriteLine("Invalid number of objects. Defaulting to 1.");
 
-        return objectNumber;
+        return defaultObjectNumber;
     }
 
     private int CheckArrowsNumber(int arrowsNum)

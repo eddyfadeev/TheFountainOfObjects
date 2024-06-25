@@ -7,6 +7,7 @@ using Services.Database.Helpers;
 using Services.Database.Interfaces;
 using Services.Database.Repository;
 using Services.GameSettingsRepository;
+using Services.RoomService;
 using View.Factory;
 using View.Interfaces;
 using View.Layout;

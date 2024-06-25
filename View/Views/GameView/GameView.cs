@@ -1,6 +1,4 @@
-﻿using Model;
-
-namespace View.Views.GameView;
+﻿namespace View.Views.GameView;
 
 public class GameView
 {

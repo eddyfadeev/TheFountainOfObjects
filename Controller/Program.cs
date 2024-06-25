@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Model.Factory;
 using Services.GameSettingsRepository;
+using Services.RoomService;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 using View.Enums;
 using View.Interfaces;
+using View.MazeGenerator;
 using View.Views.GameView;
 
 namespace Controller;
@@ -82,8 +84,9 @@ class Program
         var roomService = serviceProvider.GetRequiredService<IRoomService>();
         var mazeObjectFactory = serviceProvider.GetRequiredService<MazeObjectFactory>();
         MazeGeneratorService mazeGeneratorService = new (roomService, settings, mazeObjectFactory);
-        var grid = mazeGeneratorService.CreateGrid();
+        var table = mazeGeneratorService.CreateTable();
         
-        AnsiConsole.Write(grid);
+        
+        AnsiConsole.Write(table);
     }
 }
