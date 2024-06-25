@@ -1,18 +1,24 @@
-﻿using View.MainMenu;
+﻿/*using Services;
+using Services.Database.Interfaces;
+using View.MainMenu;
+using View.Views.Leaderboard;
+using View.Views.MainMenu;
 
 namespace Controller;
 
-public class MainMenuController : BaseController<MainMenuEntries>
+public class MainMenuController(LeaderboardService leaderboardService) : BaseController<MainMenuEntries>
 {
-    public void ShowMainMenu()
+    public void ShowMenu()
     {
-        var mainMenuView = new MainMenuView();
+        var mainMenuView = new MainMenuView(leaderboardService);
         
         mainMenuView.ShowMainMenu(OnMenuEntrySelected);
     }
     
     public void ShowLeaderboard()
     {
-        MainMenuView.ShowLeaderboard();
+        var leaderboardView = new LeaderboardView(leaderboardService);
+
+        leaderboardView.ShowLeaderboard();
     }
-}
+}*/

@@ -1,13 +1,12 @@
-﻿using Spectre.Console;
-using Model.GameObjects;
-using Model.Services;
-using View.CreatePlayerMenu;
+﻿/*using Model.Player;
+using Services.Database.Interfaces;
+using Services.Extensions;
+using View.Views.CreatePlayerMenu;
 
 namespace Controller;
 
-public class CreatePlayerController : BaseController<CreatePlayerEntries>
+public class CreatePlayerController(IDatabaseService databaseService) : BaseController<CreatePlayerEntries>
 {
-    private readonly DatabaseManager _databaseManager = new();
     private readonly CreatePlayerView _createPlayerView = new();
     private Player? Player { get; set; }
     
@@ -35,7 +34,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
         do
         {
             name = _createPlayerView.AskForUserName();
-            existentName = _databaseManager.RetrievePlayers().Any(p => p.Name == name);
+            existentName = name.IsNameTaken(databaseService);
             
             if (existentName)
             {
@@ -49,7 +48,7 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     
     private void LoadPlayer()
     {
-        var loadPlayer = new LoadPlayerController();
+        var loadPlayer = new LoadPlayerController(databaseService);
 
         var selection = loadPlayer.ShowLoadPlayerMenu();
         
@@ -66,18 +65,19 @@ public class CreatePlayerController : BaseController<CreatePlayerEntries>
     private void PreparePlayer(Enum selectedEntry)
     {
         var playerIdToLoad = Convert.ToInt64(selectedEntry);
-        var loadedPLayer = _databaseManager.LoadPlayer(playerIdToLoad);
+        var loadedPLayer = databaseService.LoadPlayer(playerIdToLoad);
 
-        Player = new Player(loadedPLayer.Name, (int)loadedPLayer.Score!)
-        { 
-            Id = (int)loadedPLayer.Id
-        };
+        Player = loadedPLayer.ToDomain();
     }
 
     private void PreparePlayer(string name)
     {
         const int defaultScore = 0;
         
-        Player = new Player(name, defaultScore);
+        Player = new Player
+        {
+            Name = name,
+            Score = defaultScore
+        };
     }
-}
+}*/
