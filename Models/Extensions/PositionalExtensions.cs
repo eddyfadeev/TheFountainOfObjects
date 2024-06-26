@@ -2,12 +2,12 @@
 
 public static class PositionalExtensions
 {
-    public static IPositionable SetPosition(this IPositionable obj, int x, int y)
+    public static IPositionable SetPosition(this IPositionable obj, Location location)
     {
         obj.Location = new Location
         {
-            X = x,
-            Y = y
+            X = location.X,
+            Y = location.Y
         };
 
         return obj;
