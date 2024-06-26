@@ -1,7 +1,7 @@
 ﻿using View.MazeGenerator;
-using View.Views.HelpView;
+using View.Views.Help;
 
-namespace View.Views.GameView;
+namespace View.Views.Game;
 
 public class GameView : INonSelectableMenu, IGameVIew
 {
@@ -18,7 +18,7 @@ public class GameView : INonSelectableMenu, IGameVIew
     
     public void Display()
     {
-        var helpView = new HelpView.HelpView(LayoutManager);
+        var helpView = new HelpView(LayoutManager);
         var helpWindow = helpView.CreateHelpWindow(HelpType.GameSideWindow);
         
         LayoutManager.SupportWindowIsVisible = true;

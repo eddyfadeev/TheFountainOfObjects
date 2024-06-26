@@ -66,7 +66,7 @@ public sealed class LeaderboardView : MenuView
     
     private Table CreateInnerTable()
     {
-        var innerTable = new Table()
+        var innerTable = new Table
         {
             Border = TableBorder.None,
         };

@@ -1,4 +1,4 @@
-﻿using View.Views.HelpView;
+﻿using View.Views.Help;
 using View.Views.Leaderboard;
 
 namespace View.Views.MainMenu;
@@ -31,7 +31,7 @@ public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
 
     private Panel GetHelpWindow()
     {
-        var helpView = new HelpView.HelpView(LayoutManager);
+        var helpView = new HelpView(LayoutManager);
         
         return helpView.CreateHelpWindow(HelpType.MenuSideWindow);
     }

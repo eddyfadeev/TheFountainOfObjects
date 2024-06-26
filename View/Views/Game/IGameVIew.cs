@@ -1,4 +1,4 @@
-﻿namespace View.Views.GameView;
+﻿namespace View.Views.Game;
 
 public interface IGameVIew
 {

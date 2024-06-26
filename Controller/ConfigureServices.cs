@@ -6,7 +6,7 @@ using Services.Database.Interfaces;
 using Services.Database.Repository;
 using View.Factory;
 using View.Layout;
-using View.Views.GameView;
+using View.Views.Game;
 
 namespace Controller;
 

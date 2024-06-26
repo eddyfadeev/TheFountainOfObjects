@@ -1,7 +1,7 @@
 ﻿using Model.Interfaces;
 using Services.RoomService;
 
-namespace View.Views.RoomView;
+namespace View.Views.Room;
 
 public class RoomView : IRoomView
 {

@@ -6,7 +6,7 @@ public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
 {
     public override string MenuName { get; }
     public override ILayoutManager LayoutManager { get; }
-    private List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries;
+    private readonly List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries;
     
     public CreatePlayerView(ILayoutManager layoutManager)
     {

@@ -6,6 +6,7 @@ using Model.Room;
 using Services.GameSettingsRepository;
 using Services.RoomService;
 using Spectre.Console.Rendering;
+using View.Views.Room;
 
 namespace View.MazeGenerator;
 
@@ -70,7 +71,7 @@ public class MazeGeneratorService : IMazeGeneratorService
 
             for (int col = 0; col < cols; col++)
             {
-                var roomView = new Views.RoomView.RoomView(_roomService, _roomService.MazeRooms[row, col]);
+                var roomView = new RoomView(_roomService, _roomService.MazeRooms[row, col]);
                 rowCells[col] = roomView.RoomCanvas;
             }
             
