@@ -45,17 +45,17 @@ public sealed class LeaderboardView : MenuView
 
         if (numberOfEntries is null)
         {
-            AddCaption(ref table);
+            AddCaption(table);
         }
         
-        AddPlayersToTable(ref leaderboardTable, numberOfEntriesToAdd);
+        AddPlayersToTable(leaderboardTable, numberOfEntriesToAdd);
 
         table.AddRow(leaderboardTable);
         
         return table;
     }
 
-    private void AddPlayersToTable(ref Table table, int numberOfEntries)
+    private void AddPlayersToTable(Table table, int numberOfEntries)
     {
         for (int i = 0; i < numberOfEntries; i++)
         {

@@ -10,7 +10,7 @@ public class ShowStartScreenCommand : ICommand
     {
         _layoutManager = layoutManager;
     }
-        
+    
     public Enum? Execute()
     {
         var startScreen = new StartScreen(_layoutManager);

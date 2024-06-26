@@ -62,6 +62,8 @@ public sealed class LayoutManager : ILayoutManager
         return table;
     }
     
+    
+    
     private void SetDefaultSize()
     {
         const int mainWindowSize = 70;

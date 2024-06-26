@@ -9,7 +9,7 @@ using Spectre.Console.Rendering;
 
 namespace View.MazeGenerator;
 
-public class MazeGeneratorService
+public class MazeGeneratorService : IMazeGeneratorService
 {
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly MazeObjectFactory _mazeObjectFactory;

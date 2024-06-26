@@ -19,7 +19,7 @@ public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
     {
         LayoutManager.SupportWindowIsVisible = false;
         
-        return SelectEntry(ref _createPlayerMenuEntries);
+        return SelectEntry(_createPlayerMenuEntries);
     }
 
     public string AskForUserName()

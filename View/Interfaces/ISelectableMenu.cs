@@ -7,7 +7,7 @@ public interface ISelectableMenu<TEnum> : IMenuView
     
     TEnum? Display();
     
-    TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries);
+    TEnum SelectEntry(List<KeyValuePair<TEnum, string>> menuEntries);
     
     void RenderMenu(List<KeyValuePair<TEnum, string>> menuEntries);
     

@@ -17,6 +17,6 @@ public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
         var settingsMenuEntries = GetEnumValuesAndDisplayNames<SettingsMenuEntries>();
         LayoutManager.SupportWindowIsVisible = false;
 
-        return SelectEntry(ref settingsMenuEntries);
+        return SelectEntry(settingsMenuEntries);
     }
 }

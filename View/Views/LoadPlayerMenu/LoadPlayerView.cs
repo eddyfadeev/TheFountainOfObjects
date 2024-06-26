@@ -29,7 +29,7 @@ public sealed class LoadPlayerView : SelectableMenuView<Enum>
             return null;
         }
         
-        var selectedEntry = SelectEntry(ref entries);
+        var selectedEntry = SelectEntry(entries);
 
         return selectedEntry;
     }
