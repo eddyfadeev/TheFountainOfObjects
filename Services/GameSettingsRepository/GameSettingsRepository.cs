@@ -12,16 +12,9 @@ public class GameSettingsRepository : IGameSettingsRepository
     private int _arrowsCount;
     private int _cellSize;
     
-    public GameSettingsRepository(Player preparedPlayer)
+    public GameSettingsRepository()
     {
-        Player = preparedPlayer;
-        
         SetDefaultSettings();
-    }
-    
-    public Player Player
-    {
-        get;
     }
 
     public MazeSize MazeSize

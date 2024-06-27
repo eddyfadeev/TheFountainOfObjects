@@ -13,15 +13,17 @@ namespace View.MazeGenerator;
 public class MazeGeneratorService : IMazeGeneratorService
 {
     private readonly IGameSettingsRepository _gameSettingsRepository;
+    private readonly IPlayerRepository _playerRepository;
     private readonly MazeObjectFactory _mazeObjectFactory;
     private readonly IRoomService _roomService;
     
     public MazeGeneratorService(
-        IRoomService roomService, IGameSettingsRepository gameSettingsRepository, MazeObjectFactory mazeObjectFactory)
+        IGameSettingsRepository gameSettingsRepository, IPlayerRepository playerRepository, MazeObjectFactory mazeObjectFactory, IRoomService roomService)
     {
-        _roomService = roomService;
         _gameSettingsRepository = gameSettingsRepository;
+        _playerRepository = playerRepository;
         _mazeObjectFactory = mazeObjectFactory;
+        _roomService = roomService;
     }
     
     public Table CreateTable()
@@ -105,7 +107,7 @@ public class MazeGeneratorService : IMazeGeneratorService
         var fountainLocation = new Location(random.Next(0, mazeSize), random.Next(mazeSize / 2 + 1, mazeSize));
         
         AddObjectToRoom(entranceLocation, maze, ObjectType.Entrance);
-        AddObjectToRoom(entranceLocation, maze, _gameSettingsRepository.Player);
+        AddObjectToRoom(entranceLocation, maze, _playerRepository.Player);
         AddObjectToRoom(fountainLocation, maze, ObjectType.Fountain);
         AddDangerousObjects(maze);
     }

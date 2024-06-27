@@ -1,9 +1,9 @@
 ﻿using View.MazeGenerator;
-using View.Views.Help;
+using View.Views.HelpScreen;
 
 namespace View.Views.Game;
 
-public class GameView : INonSelectableMenu, IGameVIew
+public class GameView : IGameVIew
 {
     public Table Maze { get; private set; }
     public string MenuName { get; }

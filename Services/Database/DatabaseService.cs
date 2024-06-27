@@ -30,6 +30,14 @@ public class DatabaseService : IDatabaseService
         
         return connection.QueryFirstOrDefault<PlayerDTO>(query, new { Id = playerId });
     }
+    
+    public PlayerDTO? GetPlayerByName(string playerName)
+    {
+        using var connection = _connectionProvider.GetConnection();
+        const string query = "SELECT * FROM Players WHERE Name = @Name";
+        
+        return connection.QueryFirstOrDefault<PlayerDTO>(query, new { Name = playerName });
+    }
 
     public int AddPlayer(PlayerDTO player)
     {

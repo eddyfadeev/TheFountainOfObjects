@@ -2,13 +2,13 @@
 
 namespace View.Views.CreatePlayerMenu;
 
-public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
+public sealed class CreatePlayerMenuView : SelectableMenuView<CreatePlayerEntries>
 {
     public override string MenuName { get; }
     public override ILayoutManager LayoutManager { get; }
     private readonly List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries;
     
-    public CreatePlayerView(ILayoutManager layoutManager)
+    public CreatePlayerMenuView(ILayoutManager layoutManager)
     {
         LayoutManager = layoutManager;
         _createPlayerMenuEntries = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();
@@ -20,20 +20,5 @@ public sealed class CreatePlayerView : SelectableMenuView<CreatePlayerEntries>
         LayoutManager.SupportWindowIsVisible = false;
         
         return SelectEntry(_createPlayerMenuEntries);
-    }
-
-    public string AskForUserName()
-    {
-        const string message = "Please enter your name:";
-        var userName = GetUserInput(ChangeStringColor(message, Color.White));
-        
-        return userName;
-    }
-
-    public void ShowAlreadyTakenMessage()
-    {
-        const string message = "This name is already taken. Please, choose another one:";
-        
-        AnsiConsole.MarkupLine(ChangeStringColor(message, Color.Red));
     }
 }

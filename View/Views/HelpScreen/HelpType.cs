@@ -1,4 +1,4 @@
-﻿namespace View.Views.Help;
+﻿namespace View.Views.HelpScreen;
 
 public enum HelpType
 {

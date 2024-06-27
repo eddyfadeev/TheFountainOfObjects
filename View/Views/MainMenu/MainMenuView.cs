@@ -1,4 +1,4 @@
-﻿using View.Views.Help;
+﻿using View.Views.HelpScreen;
 using View.Views.Leaderboard;
 
 namespace View.Views.MainMenu;

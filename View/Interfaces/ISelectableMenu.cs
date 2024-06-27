@@ -5,7 +5,7 @@ public interface ISelectableMenu<TEnum> : IMenuView
 {
     int SelectedIndex { get; set; }
     
-    TEnum? Display();
+    TEnum Display();
     
     TEnum SelectEntry(List<KeyValuePair<TEnum, string>> menuEntries);
     
