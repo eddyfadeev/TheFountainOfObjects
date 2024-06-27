@@ -8,4 +8,5 @@ public interface ILayoutManager
     public bool SupportWindowIsVisible { get; set; }
     void UpdateLayout();
     Table CreateTableLayout(string menuName);
+    Table CreateInnerTable();
 }

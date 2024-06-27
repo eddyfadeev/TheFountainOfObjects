@@ -14,7 +14,7 @@ public class HelpView : MenuView
 
     public override void Display()
     {
-        var helpScreen = CreateHelpWindow(HelpType.MainMenu);
+        var helpScreen = CreateHelpTable(HelpType.MainMenu);
         LayoutManager.SupportWindowIsVisible = false;
         
         LayoutManager.MainWindow.Update(helpScreen);
@@ -22,25 +22,24 @@ public class HelpView : MenuView
         Console.ReadKey();
     }
 
-    public Panel CreateHelpWindow(HelpType helpType)
+    public Table CreateHelpTable(HelpType helpType)
     {
-        const VerticalAlignment alignment = VerticalAlignment.Top;
-        var panelText = SetPanelText(helpType);
-
-        var panel = new Panel(
-            Align.Left(
-                panelText,
-                alignment));
+        var table = LayoutManager.CreateTableLayout(MenuName);
+        var helpTable = LayoutManager.CreateInnerTable();
         
-        ConfigureHelpPanel(panel);
+        helpTable.AddColumn("[white bold]Help[/]").Centered();
+        var tableText = SetPanelText(helpType);
         
-        return panel;
-    }
+        helpTable.AddRow(tableText);
 
-    private void ConfigureHelpPanel(Panel panel)
-    {
-        panel.Border = BoxBorder.Rounded;
-        panel.Expand();
+        if (helpType is HelpType.MainMenu)
+        {
+            AddCaption(table);
+        }
+
+        table.AddRow(helpTable);
+        
+        return table;
     }
 
     private Markup SetPanelText(HelpType helpType)
@@ -58,21 +57,20 @@ public class HelpView : MenuView
             "but you can smell their rotten stench in nearby rooms.\n\n";
         const string inGameInfo =
             "[white]On the map[/]: " +
-            "\nYour position is [green]green,[/] visited rooms are [white]white[/]," +
-            "entrance is [gold3_1]gold[/], and the fountain is [blue]blue[/]." +
+            "\nYour position is [green]green[/]," +
+            "entrance is [gold3_1]gold[/]." +
             "\n\n[white]Movement and actions[/]:" +
             "\n[white]Move[/] with the arrow keys or WASD. " +
-            "\nTo [white]Shoot[/], press the space bar and then use arrow keys " +
-            "or WASD to choose a direction you want to shoot." +
-            "\n[white]Interact[/] with the fountain by standing on it and pressing E or enter.\n\n";
+            "\nTo [white]Shoot[/], press the space bar and arrow keys " +
+            "or WASD in a direction you want to shoot." +
+            "\nTo [white]Interact[/] press E or enter.";
         const string inMenuInfo =
             "[white]In menu controls[/]:" +
             "\nArrow keys to navigate, enter to select.\n\n";
-        const string continueMessage = "[white]Press any key to continue...[/]";
         
         return helpType switch
         {
-            HelpType.MainMenu => new Markup(mainInfo + inGameInfo + inMenuInfo + continueMessage),
+            HelpType.MainMenu => new Markup(inMenuInfo + mainInfo + inGameInfo),
             HelpType.GameSideWindow => new Markup(inGameInfo),
             HelpType.MenuSideWindow => new Markup(inMenuInfo),
             _ => throw new ArgumentException("Invalid help type.")

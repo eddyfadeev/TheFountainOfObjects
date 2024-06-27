@@ -5,6 +5,7 @@ namespace View.Views.Game;
 
 public class GameView : IGameVIew
 {
+    private IMazeGeneratorService _mazeGeneratorService;
     public Table Maze { get; private set; }
     public string MenuName { get; }
     public ILayoutManager LayoutManager { get; }
@@ -13,13 +14,14 @@ public class GameView : IGameVIew
     {
         LayoutManager = layoutManager;
         MenuName = "Game";
-        Maze = mazeGeneratorService.CreateTable();
+        _mazeGeneratorService = mazeGeneratorService;
+        Maze = CreateMazeTable();
     }
     
     public void Display()
     {
         var helpView = new HelpView(LayoutManager);
-        var helpWindow = helpView.CreateHelpWindow(HelpType.GameSideWindow);
+        var helpWindow = helpView.CreateHelpTable(HelpType.GameSideWindow);
         
         LayoutManager.SupportWindowIsVisible = true;
         LayoutManager.MainWindow.Update(Maze);
@@ -34,6 +36,21 @@ public class GameView : IGameVIew
         LayoutManager.MainWindow.Update(Maze);
         
         LayoutManager.UpdateLayout();
+    }
+
+    private Table CreateMazeTable()
+    {
+        var table = LayoutManager.CreateTableLayout(MenuName);
+        var mazeTable = LayoutManager.CreateInnerTable();
+        
+        mazeTable.AddColumn("Game").Centered();
+        var maze = _mazeGeneratorService.CreateTable();
+        
+        mazeTable.AddRow(maze);
+
+        table.AddRow(mazeTable);
+
+        return table;
     }
 }
 

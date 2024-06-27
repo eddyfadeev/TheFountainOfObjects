@@ -29,11 +29,11 @@ public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
         return SelectEntry(mainMenuEntriesList);
     }
 
-    private Panel GetHelpWindow()
+    private Table GetHelpWindow()
     {
         var helpView = new HelpView(LayoutManager);
         
-        return helpView.CreateHelpWindow(HelpType.MenuSideWindow);
+        return helpView.CreateHelpTable(HelpType.MenuSideWindow);
     }
 
     private Table GetLeaderboardTable()

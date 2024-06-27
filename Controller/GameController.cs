@@ -60,8 +60,11 @@ public class GameController
     {
         var player = _playerRepository.Player;
         var gameView = _serviceProvider.GetRequiredService<IGameVIew>();
-        gameView.Display();
-        
-        
+
+        do
+        {
+            gameView.Display();
+            Console.ReadKey();
+        } while (true);
     }
 }
