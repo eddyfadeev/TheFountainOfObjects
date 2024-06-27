@@ -56,10 +56,7 @@ public class HelpView : MenuView
             "\n[red]Amaroks[/] roam the caverns. Encountering one is certain death, " +
             "but you can smell their rotten stench in nearby rooms.\n\n";
         const string inGameInfo =
-            "[white]On the map[/]: " +
-            "\nYour position is [green]green[/]," +
-            "entrance is [gold3_1]gold[/]." +
-            "\n\n[white]Movement and actions[/]:" +
+            "[white]Movement and actions[/]:" +
             "\n[white]Move[/] with the arrow keys or WASD. " +
             "\nTo [white]Shoot[/], press the space bar and arrow keys " +
             "or WASD in a direction you want to shoot." +

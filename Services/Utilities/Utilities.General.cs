@@ -7,8 +7,6 @@ public static partial class Utilities
 {
     public static string GetUserInput(string message)
     {
-        Console.Clear();
-        
         Console.CursorVisible = true;
         
         var userName = AnsiConsole.Ask<string>(message);
@@ -20,8 +18,6 @@ public static partial class Utilities
     
     public static int GetUserInput(string message, int max)
     {
-        Console.Clear();
-        
         Console.CursorVisible = true;
         
         var number = AnsiConsole.Ask<int>(message);
@@ -38,8 +34,6 @@ public static partial class Utilities
     
     public static int GetUserInput(string message, int min, int max)
     {
-        Console.Clear();
-        
         Console.CursorVisible = true;
         
         var number = AnsiConsole.Ask<int>(message);

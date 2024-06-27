@@ -13,7 +13,7 @@ public class GameView : IGameVIew
     public GameView(ILayoutManager layoutManager, IMazeGeneratorService mazeGeneratorService)
     {
         LayoutManager = layoutManager;
-        MenuName = "Game";
+        MenuName = "The Fountain of Objects";
         _mazeGeneratorService = mazeGeneratorService;
         Maze = CreateMazeTable();
     }
@@ -44,6 +44,7 @@ public class GameView : IGameVIew
         var mazeTable = LayoutManager.CreateInnerTable();
         
         mazeTable.AddColumn("Game").Centered();
+        mazeTable.ShowFooters();
         var maze = _mazeGeneratorService.CreateTable();
         
         mazeTable.AddRow(maze);

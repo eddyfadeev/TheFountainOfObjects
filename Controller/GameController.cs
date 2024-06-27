@@ -26,6 +26,7 @@ public class GameController
     public void LaunchGame()
     {
         Console.CursorVisible = false;
+        //Console.SetWindowSize(120, 35); 
         
         _menuHandler.ShowStartScreen();
         _menuHandler.ShowCreatePlayerMenu();
