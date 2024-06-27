@@ -1,4 +1,6 @@
-﻿namespace View.Views.SettingsMenu;
+﻿using Services.GameSettingsRepository;
+
+namespace View.Views.SettingsMenu;
 
 public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
 {
@@ -19,4 +21,22 @@ public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
 
         return SelectEntry(settingsMenuEntries);
     }
+
+    public static MazeSize AskForMazeSize()
+    {
+        Console.Clear();
+        
+        return AnsiConsole.Prompt(GetMazeSizePrompt());
+    }
+
+    private static SelectionPrompt<MazeSize> GetMazeSizePrompt() =>
+        new SelectionPrompt<MazeSize>()
+            .Title("Select maze size")
+            .PageSize(10)
+            .AddChoices([
+                MazeSize.Small,
+                MazeSize.Medium,
+                MazeSize.Large
+            ]);
+    
 }

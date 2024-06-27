@@ -19,11 +19,14 @@ public class GameController
         _serviceProvider = serviceProvider;
         var menuCommandFactory = _serviceProvider.GetRequiredService<IMenuCommandFactory>();
         _playerRepository = _serviceProvider.GetRequiredService<IPlayerRepository>();
-        _menuHandler = new MenuHandler(menuCommandFactory, _playerRepository);
+        _gameSettingsRepository = _serviceProvider.GetRequiredService<IGameSettingsRepository>();
+        _menuHandler = new MenuHandler(menuCommandFactory, _playerRepository, _gameSettingsRepository);
     }
 
     public void LaunchGame()
     {
+        Console.CursorVisible = false;
+        
         _menuHandler.ShowStartScreen();
         _menuHandler.ShowCreatePlayerMenu();
 

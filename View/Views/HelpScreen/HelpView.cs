@@ -24,11 +24,11 @@ public class HelpView : MenuView
 
     public Panel CreateHelpWindow(HelpType helpType)
     {
-        const VerticalAlignment alignment = VerticalAlignment.Middle;
+        const VerticalAlignment alignment = VerticalAlignment.Top;
         var panelText = SetPanelText(helpType);
 
         var panel = new Panel(
-            Align.Center(
+            Align.Left(
                 panelText,
                 alignment));
         
@@ -39,7 +39,7 @@ public class HelpView : MenuView
 
     private void ConfigureHelpPanel(Panel panel)
     {
-        panel.Border = BoxBorder.None;
+        panel.Border = BoxBorder.Rounded;
         panel.Expand();
     }
 
@@ -58,17 +58,17 @@ public class HelpView : MenuView
             "but you can smell their rotten stench in nearby rooms.\n\n";
         const string inGameInfo =
             "[white]On the map[/]: " +
-            "\nYour position is [green]green[/], visited rooms are [white]white[/]," +
+            "\nYour position is [green]green,[/] visited rooms are [white]white[/]," +
             "entrance is [gold3_1]gold[/], and the fountain is [blue]blue[/]." +
             "\n\n[white]Movement and actions[/]:" +
             "\n[white]Move[/] with the arrow keys or WASD. " +
-            "\n[white]Shoot[/] with the space bar. Press the space bar and then use arrow keys " +
+            "\nTo [white]Shoot[/], press the space bar and then use arrow keys " +
             "or WASD to choose a direction you want to shoot." +
             "\n[white]Interact[/] with the fountain by standing on it and pressing E or enter.\n\n";
         const string inMenuInfo =
             "[white]In menu controls[/]:" +
-            "Arrow keys to navigate, enter to select.\n\n";
-        const string continueMessage = "Press any key to continue...";
+            "\nArrow keys to navigate, enter to select.\n\n";
+        const string continueMessage = "[white]Press any key to continue...[/]";
         
         return helpType switch
         {

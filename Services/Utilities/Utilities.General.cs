@@ -7,6 +7,8 @@ public static partial class Utilities
 {
     public static string GetUserInput(string message)
     {
+        Console.Clear();
+        
         Console.CursorVisible = true;
         
         var userName = AnsiConsole.Ask<string>(message);
@@ -14,6 +16,42 @@ public static partial class Utilities
         Console.CursorVisible = false;
         
         return userName;
+    }
+    
+    public static int GetUserInput(string message, int max)
+    {
+        Console.Clear();
+        
+        Console.CursorVisible = true;
+        
+        var number = AnsiConsole.Ask<int>(message);
+
+        while (number < 0 || number > max)
+        {
+            number = AnsiConsole.Ask<int>(message);
+        }
+
+        Console.CursorVisible = false;
+        
+        return number;
+    }
+    
+    public static int GetUserInput(string message, int min, int max)
+    {
+        Console.Clear();
+        
+        Console.CursorVisible = true;
+        
+        var number = AnsiConsole.Ask<int>(message);
+
+        while (number < min || number > max)
+        {
+            number = AnsiConsole.Ask<int>(message);
+        }
+
+        Console.CursorVisible = false;
+        
+        return number;
     }
     
     public static string ChangeStringColor(string text, Color color)

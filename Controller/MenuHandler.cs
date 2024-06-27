@@ -6,6 +6,7 @@ using Spectre.Console;
 using View.Enums;
 using View.Views.CreatePlayerMenu;
 using View.Views.CreatePlayerScreen;
+using View.Views.SettingsMenu;
 
 namespace Controller;
 
@@ -13,11 +14,13 @@ internal class MenuHandler
 {
     private readonly IMenuCommandFactory _menuCommandFactory;
     private readonly IPlayerRepository _playerRepository;
+    private readonly IGameSettingsRepository _gameSettingsRepository;
 
-    public MenuHandler(IMenuCommandFactory menuCommandFactory, IPlayerRepository playerRepository)
+    public MenuHandler(IMenuCommandFactory menuCommandFactory, IPlayerRepository playerRepository, IGameSettingsRepository gameSettingsRepository)
     {
         _menuCommandFactory = menuCommandFactory;
         _playerRepository = playerRepository;
+        _gameSettingsRepository = gameSettingsRepository;
     }
 
     public void ShowStartScreen() => ShowMenu(MenuType.StartScreen);
@@ -44,43 +47,100 @@ internal class MenuHandler
     
     public Enum? ShowMainMenu() => ShowMenu(MenuType.MainMenu);
     
-    public void ShowSettingsMenu() => ShowMenu(MenuType.SettingsMenu);
-    
+    public void ShowSettingsMenu()
+    {
+        const int maxDangerous = 3;
+        const int maxArrows = 5;
+
+        do
+        {
+            var userChoice = ShowMenu(MenuType.SettingsMenu);
+            
+            if (userChoice is SettingsMenuEntries.Back)
+            {
+                break;
+            }
+
+            switch (userChoice)
+            {
+                case SettingsMenuEntries.Amaroks:
+                    _gameSettingsRepository.AmaroksCount = GetUserInput("Enter the number of Amaroks (0-3): ", maxDangerous);
+                    break;
+                case SettingsMenuEntries.Pits:
+                    _gameSettingsRepository.PitsCount = GetUserInput("Enter the number of Pits (0-3): ", maxDangerous);
+                    break;
+                case SettingsMenuEntries.Maelstroms:
+                    _gameSettingsRepository.MaelstromsCount = GetUserInput("Enter the number of Maelstroms (0-3): ", maxDangerous);
+                    break;
+                case SettingsMenuEntries.Arrows:
+                    _gameSettingsRepository.ArrowsCount = GetUserInput("Enter the number of Arrows (0-5): ", maxArrows);
+                    break;
+                case SettingsMenuEntries.FieldSize:
+                    _gameSettingsRepository.MazeSize = SettingsMenuView.AskForMazeSize();
+                    break;
+                case SettingsMenuEntries.ChangePlayerName:
+                    _playerRepository.Player!.Name = ProcessUserNameInput();
+                    break;
+            }
+
+            userChoice = null;
+        } while (true);
+    }
+
     public void ShowLeaderboardMenu() => ShowMenu(MenuType.LeaderboardMenu);
     
     public void ShowHelpMenu() => ShowMenu(MenuType.HelpMenu);
 
-    private bool CreatePlayerScreen()
+    private bool CheckIfPlayerExists(string player)
     {
-        var createPlayerScreen = new CreatePlayerScreen();
-        
+        try
+        {
+            _playerRepository.LoadPlayer(player);
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private string ProcessUserNameInput()
+    {
         Console.Clear();
+        
+        var createPlayerScreen = new CreatePlayerScreen();
         
         do
         {
-            var player = createPlayerScreen.AskForUserName();
+            var playerName = createPlayerScreen.AskForUserName();
 
-            try
+            if (CheckIfPlayerExists(playerName))
             {
-                _playerRepository.LoadPlayer(player);
+                createPlayerScreen.ShowAlreadyExistsMessage();
             }
-            catch (ArgumentException)
+            else
             {
-                _playerRepository.Player = 
-                    new Player
-                {
-                    Name = player,
-                    Score = 0,
-                    Location = new Location()
-                };
-                
                 createPlayerScreen.ShowPlayerCreatedMessage();
 
-                return true;
+                return playerName;
             }
-            createPlayerScreen.ShowAlreadyExistsMessage();
-
         } while (true);
+    }
+    
+    private bool CreatePlayerScreen()
+    {
+        var playerName = ProcessUserNameInput();
+        
+        _playerRepository.Player = 
+            new Player
+            {
+                Name = playerName,
+                Score = 0,
+                Location = new Location()
+            };
+        
+        return true;
     }
 
     private bool TryLoadPlayer()
@@ -119,6 +179,4 @@ internal class MenuHandler
             return MenuType.Back;
         }
     }
-    
-    
 }

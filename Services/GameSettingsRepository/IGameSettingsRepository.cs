@@ -4,7 +4,7 @@ namespace Services.GameSettingsRepository;
 
 public interface IGameSettingsRepository
 {
-    MazeSize MazeSize { get; }
+    MazeSize MazeSize { get; set; }
     int PitsCount { get; set; }
     int MaelstromsCount { get; set; }
     int AmaroksCount { get; set; }

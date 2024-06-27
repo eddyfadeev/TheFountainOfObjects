@@ -4,7 +4,7 @@ public enum SettingsMenuEntries
 {
     [Display(Name = "Change Player Name")]
     ChangePlayerName,
-    [Display(Name = "Field size")]
+    [Display(Name = "Maze size")]
     FieldSize,
     [Display(Name = "Pits")]
     Pits,
