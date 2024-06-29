@@ -1,13 +1,12 @@
-﻿using Model.Player;
+﻿using Model.Enums;
 
-namespace Services.GameSettingsRepository;
+namespace Model.GameSettings;
 
 public interface IGameSettingsRepository
 {
-    MazeSize MazeSize { get; set; }
     int PitsCount { get; set; }
     int MaelstromsCount { get; set; }
     int AmaroksCount { get; set; }
     int ArrowsCount { get; set; }
-    int CellSize { get; }
+    void SetMazeSize(MazeSize mazeSize);
 }

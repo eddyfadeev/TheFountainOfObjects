@@ -1,4 +1,4 @@
-﻿using Services.GameSettingsRepository;
+﻿using Model.Enums;
 
 namespace View.Views.SettingsMenu;
 

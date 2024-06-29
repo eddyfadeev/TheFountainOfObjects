@@ -1,18 +1,15 @@
-﻿using Model.Interfaces;
-using Services.RoomService;
+﻿using Model.Enums;
+using Model.Interfaces;
+using Model.RoomService;
 
 namespace View.Views.Room;
 
 public class RoomView : IRoomView
 {
-    private readonly IRoomService _roomService;
-    private readonly IRoom _room;
-
-    public Canvas RoomCanvas => _roomService.SetRoomColor(_room);
+    public Canvas RoomCanvas { get; }
     
-    public RoomView(IRoomService roomService, IRoom room)
+    public RoomView(IRoom room, MazeSize mazeSize)
     {
-        _roomService = roomService;
-        _room = room;
+        RoomCanvas = room.SetRoomColor(mazeSize);
     }
 }

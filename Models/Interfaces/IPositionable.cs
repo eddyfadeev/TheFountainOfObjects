@@ -2,5 +2,5 @@
 
 public interface IPositionable
 {
-    public Location Location { get; set; }
+    Location Location { get; set; }
 }

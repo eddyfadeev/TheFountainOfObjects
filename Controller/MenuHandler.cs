@@ -1,8 +1,9 @@
 ﻿using Model;
+using Model.GameSettings;
+using Model.Interfaces;
 using Model.Player;
 using Services.Database.Interfaces;
 using Services.Extensions;
-using Spectre.Console;
 using View.Enums;
 using View.Views.CreatePlayerMenu;
 using View.Views.CreatePlayerScreen;
@@ -16,7 +17,11 @@ internal class MenuHandler
     private readonly IPlayerRepository _playerRepository;
     private readonly IGameSettingsRepository _gameSettingsRepository;
 
-    public MenuHandler(IMenuCommandFactory menuCommandFactory, IPlayerRepository playerRepository, IGameSettingsRepository gameSettingsRepository)
+    public MenuHandler(
+        IMenuCommandFactory menuCommandFactory, 
+        IPlayerRepository playerRepository, 
+        IGameSettingsRepository gameSettingsRepository
+        )
     {
         _menuCommandFactory = menuCommandFactory;
         _playerRepository = playerRepository;
@@ -76,7 +81,8 @@ internal class MenuHandler
                     _gameSettingsRepository.ArrowsCount = GetUserInput("Enter the number of Arrows (0-5): ", maxArrows);
                     break;
                 case SettingsMenuEntries.FieldSize:
-                    _gameSettingsRepository.MazeSize = SettingsMenuView.AskForMazeSize();
+                    var newMazeSize = SettingsMenuView.AskForMazeSize();
+                    _gameSettingsRepository.SetMazeSize(newMazeSize);
                     break;
                 case SettingsMenuEntries.ChangePlayerName:
                     _playerRepository.Player!.Name = ProcessUserNameInput();

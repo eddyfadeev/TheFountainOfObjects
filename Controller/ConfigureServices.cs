@@ -1,5 +1,9 @@
-﻿using Model.Interfaces;
+﻿using Model.GameSettings;
+using Model.Interfaces;
+using Model.Maze;
+using Model.Player;
 using Model.Room;
+using Model.RoomService;
 using Services.Database;
 using Services.Database.Helpers;
 using Services.Database.Interfaces;
@@ -19,9 +23,9 @@ public static class ConfigureServices
         services.AddSingleton<IDatabaseService, DatabaseService>();
         services.AddSingleton<IMenuCommandFactory, MenuCommandFactory>();
         services.AddSingleton<IGameSettingsRepository, GameSettingsRepository>();
-        services.AddSingleton<IRoomService, RoomService>();
+        services.AddSingleton<IMaze<IRoom>, Maze>();
         services.AddSingleton<MazeObjectFactory, MazeObjectFactory>();
-        services.AddSingleton<Model.Player.Player>();
+        services.AddSingleton<IPlayer, Player>();
         services.AddSingleton<IGameVIew, GameView>();
         
         services.AddTransient<IConnectionProvider, ConnectionProvider>();

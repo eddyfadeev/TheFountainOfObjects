@@ -1,10 +1,10 @@
 ﻿using Model;
 using Model.Enums;
 using Model.Factory;
+using Model.GameSettings;
 using Model.Interfaces;
 using Model.Room;
-using Services.GameSettingsRepository;
-using Services.RoomService;
+using Model.RoomService;
 using Spectre.Console.Rendering;
 using View.Views.Room;
 
@@ -15,20 +15,23 @@ public class MazeGeneratorService : IMazeGeneratorService
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly IPlayerRepository _playerRepository;
     private readonly MazeObjectFactory _mazeObjectFactory;
-    private readonly IRoomService _roomService;
+    private readonly IMaze<IRoom> _mazeService;
     
     public MazeGeneratorService(
-        IGameSettingsRepository gameSettingsRepository, IPlayerRepository playerRepository, MazeObjectFactory mazeObjectFactory, IRoomService roomService)
+        IGameSettingsRepository gameSettingsRepository, 
+        IPlayerRepository playerRepository, 
+        MazeObjectFactory mazeObjectFactory, 
+        IMaze<IRoom> mazeService)
     {
         _gameSettingsRepository = gameSettingsRepository;
         _playerRepository = playerRepository;
         _mazeObjectFactory = mazeObjectFactory;
-        _roomService = roomService;
+        _mazeService = mazeService;
     }
     
     public Table CreateTable()
     {
-        var fieldSize = (int)_gameSettingsRepository.MazeSize;
+        var fieldSize = (int)_mazeService.MazeSize;
         
         var table = InitializeTable();
         PopulateTable(table, fieldSize);
@@ -73,7 +76,7 @@ public class MazeGeneratorService : IMazeGeneratorService
 
             for (int col = 0; col < cols; col++)
             {
-                var roomView = new RoomView(_roomService, _roomService.MazeRooms[row, col]);
+                var roomView = new RoomView(_mazeService.MazeRooms[row, col], _mazeService.MazeSize);
                 rowCells[col] = roomView.RoomCanvas;
             }
             
@@ -83,7 +86,7 @@ public class MazeGeneratorService : IMazeGeneratorService
 
     private void GenerateRooms()
     {
-        var mazeSize = (int)_gameSettingsRepository.MazeSize;
+        var mazeSize = (int)_mazeService.MazeSize;
         var maze = new IRoom[mazeSize, mazeSize];
         
         for (int i = 0; i < mazeSize; i++)
@@ -94,14 +97,14 @@ public class MazeGeneratorService : IMazeGeneratorService
             }
         }
         
-        _roomService.MazeRooms = maze;
+        _mazeService.MazeRooms = maze;
     }
 
     private void SetRoomOccupants()
     {
         var random = new Random();
-        var mazeSize = (int)_gameSettingsRepository.MazeSize;
-        var maze = _roomService.MazeRooms;
+        var mazeSize = (int)_mazeService.MazeSize;
+        var maze = _mazeService.MazeRooms;
 
         var entranceLocation = new Location(random.Next(0, mazeSize), random.Next(0, mazeSize / 2 - 1));
         var fountainLocation = new Location(random.Next(0, mazeSize), random.Next(mazeSize / 2 + 1, mazeSize));
@@ -147,7 +150,7 @@ public class MazeGeneratorService : IMazeGeneratorService
 
     private List<Location> GetAllPositions()
     {
-        var mazeSize = (int)_gameSettingsRepository.MazeSize;
+        var mazeSize = (int)_mazeService.MazeSize;
         var random = new Random();
         
         return Enumerable.Range(0, mazeSize)

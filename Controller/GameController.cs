@@ -1,4 +1,5 @@
-﻿using Model.Player;
+﻿using Model.GameSettings;
+using Model.Player;
 using Services.Database.Interfaces;
 using View.Enums;
 using View.Views.CreatePlayerMenu;

@@ -10,21 +10,7 @@
 //     /// Starts the game and handles the game logic.
 //     /// </summary>
 //     private void StartGame()
-//     {
-//         List<string> inGameCommands =
-//         [
-//             "move west",
-//             "move east",
-//             "move north",
-//             "move south",
-//             "enable fountain",
-//             "shoot west",
-//             "shoot east",
-//             "shoot north",
-//             "shoot south",
-//         ];
-//         bool _gameStarted = true;
-//         
+//     {     
 //         while (_gameStarted)
 //         {
 //             Console.Clear();

@@ -18,7 +18,7 @@ public static class PlayerMapperExtensions
         {
             Id = dto.Id,
             Name = dto.Name,
-            Score = dto.Score ?? 0
+            Score = (int?)dto.Score ?? 0
         };
 
     /// <summary>
