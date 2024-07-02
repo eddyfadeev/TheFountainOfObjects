@@ -1,6 +1,6 @@
 ﻿namespace Model.Creatures;
 
-public class Amarok : IPositionable, IInteractable
+public class Amarok : IEnemy
 {
     public Location Location { get; set; }
     
@@ -15,4 +15,5 @@ public class Amarok : IPositionable, IInteractable
 
 
     public void Interact(Player.Player player) => throw new NotImplementedException();
+    public void Attack(Player.Player player) => throw new NotImplementedException();
 }

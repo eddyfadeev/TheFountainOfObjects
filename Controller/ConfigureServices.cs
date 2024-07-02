@@ -23,14 +23,15 @@ public static class ConfigureServices
         services.AddSingleton<IDatabaseService, DatabaseService>();
         services.AddSingleton<IMenuCommandFactory, MenuCommandFactory>();
         services.AddSingleton<IGameSettingsRepository, GameSettingsRepository>();
-        services.AddSingleton<IMaze<IRoom>, Maze>();
-        services.AddSingleton<MazeObjectFactory, MazeObjectFactory>();
+        services.AddSingleton<IMazeService<IRoom>, MazeService>();
+        services.AddSingleton<IMazeObjectFactory, MazeObjectFactory>();
         services.AddSingleton<IPlayer, Player>();
-        services.AddSingleton<IGameVIew, GameView>();
+        services.AddSingleton<IGameView, GameView>();
         
         services.AddTransient<IConnectionProvider, ConnectionProvider>();
         services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
         services.AddTransient<IMazeGeneratorService, MazeGeneratorService>();
         services.AddTransient<IRoom, Room>();
+        services.AddTransient<IRoomPopulator, RoomPopulator>();
     }
 }

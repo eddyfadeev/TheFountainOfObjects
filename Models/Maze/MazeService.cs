@@ -3,7 +3,7 @@ using Spectre.Console;
 
 namespace Model.Maze;
 
-public class Maze : IMaze<IRoom>
+public class MazeService : IMazeService<IRoom>
 {
     private MazeSize _mazeSize;
     
@@ -31,7 +31,7 @@ public class Maze : IMaze<IRoom>
         set => MazeRooms[location.X, location.Y] = value;
     }
 
-    public Maze()
+    public MazeService()
     {
         _mazeSize = MazeSize.Small;
         

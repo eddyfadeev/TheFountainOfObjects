@@ -5,7 +5,7 @@ using Model.Objects.Dangerous;
 
 namespace Model.Factory;
 
-public class MazeObjectFactory
+public class MazeObjectFactory : IMazeObjectFactory
 {
     public IPositionable CreateObject(ObjectType objectType, Location location) =>
         objectType switch

@@ -4,16 +4,16 @@ namespace Model.GameSettings;
 
 public class GameSettingsRepository : IGameSettingsRepository
 {
-    private readonly IMaze<IRoom> _maze;
+    private readonly IMazeService<IRoom> _mazeService;
     
     private int _pitsCount;
     private int _maelstromsCount;
     private int _amaroksCount;
     private int _arrowsCount;
     
-    public GameSettingsRepository(IMaze<IRoom> maze)
+    public GameSettingsRepository(IMazeService<IRoom> mazeService)
     {
-        _maze = maze;
+        _mazeService = mazeService;
         SetDefaultSettings();
     }
     
@@ -43,13 +43,13 @@ public class GameSettingsRepository : IGameSettingsRepository
     
     public void SetMazeSize(MazeSize mazeSize)
     {
-        _maze.SetMazeSize(mazeSize);
+        _mazeService.SetMazeSize(mazeSize);
     }
     
     private void SetDefaultSettings()
     {
         
-        _maze.SetMazeSize(MazeSize.Small);
+        _mazeService.SetMazeSize(MazeSize.Small);
         PitsCount = 1;
         MaelstromsCount = 1;
         AmaroksCount = 1;

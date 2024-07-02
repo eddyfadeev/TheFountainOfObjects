@@ -1,4 +1,6 @@
-﻿using Model.GameSettings;
+﻿using Model.Enums;
+using Model.GameSettings;
+using Model.Interfaces;
 using Model.Player;
 using Services.Database.Interfaces;
 using View.Enums;
@@ -14,6 +16,8 @@ public class GameController
     private readonly IPlayerRepository _playerRepository;
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly MenuHandler _menuHandler;
+    private readonly IMazeService<IRoom> _mazeService;
+    private readonly IGameView _gameView;
     
     public GameController(IServiceProvider serviceProvider)
     {
@@ -22,6 +26,8 @@ public class GameController
         _playerRepository = _serviceProvider.GetRequiredService<IPlayerRepository>();
         _gameSettingsRepository = _serviceProvider.GetRequiredService<IGameSettingsRepository>();
         _menuHandler = new MenuHandler(menuCommandFactory, _playerRepository, _gameSettingsRepository);
+        _mazeService = _serviceProvider.GetRequiredService<IMazeService<IRoom>>();
+        _gameView = _serviceProvider.GetRequiredService<IGameView>();
     }
 
     public void LaunchGame()
@@ -57,16 +63,58 @@ public class GameController
         
         
     }
+    
+    private (TypeOfAction actionType, Direction direction) ProcessKeyPress(ConsoleKey key)
+    {
+        if (!GameControlKeys.IsValidKey(key))
+        {
+            throw new ArgumentException("Invalid key pressed.");
+        }
+
+        var actionType = GameControlKeys.GetTypeOfAction(key);
+        var direction = GameControlKeys.GetDirectionFromKey(key);
+        
+        return (actionType, direction);
+    }
+
+    private void MakeAnAction(TypeOfAction actionType, Direction direction)
+    {
+        var playerActionsHandler = new PlayerActionsHandler(_playerRepository, _mazeService, _gameView);
+        switch (actionType)
+        {
+            case TypeOfAction.Move:
+                playerActionsHandler.Move(direction);
+                break;
+            case TypeOfAction.Attack:
+                // Attack
+                break;
+            case TypeOfAction.Interact:
+                // Interact
+                break;
+            case TypeOfAction.Pause:
+                // Pause game
+                break;
+            default:
+                
+                break;
+        }
+    }
 
     private void StartGame()
     {
-        var player = _playerRepository.Player;
-        var gameView = _serviceProvider.GetRequiredService<IGameVIew>();
-
+        var gameView = _serviceProvider.GetRequiredService<IGameView>();
+        var mazeGeneratorService = _serviceProvider.GetRequiredService<IMazeGeneratorService>();
+        
+        gameView.Display();
         do
         {
-            gameView.Display();
-            Console.ReadKey();
+            var pressedKey = Console.ReadKey(true);
+            var keypressData = ProcessKeyPress(pressedKey.Key);
+            MakeAnAction(keypressData.actionType, keypressData.direction);
+            
+            var newMaze = mazeGeneratorService.UpdateTable();
+            
+            gameView.UpdateMaze(newMaze);
         } while (true);
     }
 }

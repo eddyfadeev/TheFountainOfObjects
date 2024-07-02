@@ -5,19 +5,19 @@ namespace Model.Player;
 public class PlayerService : IPlayerService
 {
     private readonly IPlayer _player;
-    private readonly IMaze<IRoom> _maze;
-    public PlayerService(IPlayer player, IMaze<IRoom> maze)
+    private readonly IMazeService<IRoom> _mazeService;
+    public PlayerService(IPlayer player, IMazeService<IRoom> mazeService)
     {
         _player = player;
-        _maze = maze;
+        _mazeService = mazeService;
     }
 
     public bool CanMove(Direction direction) =>
         direction switch
         {
             Direction.North => _player.Location.Y >= 0,
-            Direction.East => _player.Location.X < (int)_maze.MazeSize - 1,
-            Direction.South => _player.Location.Y < (int)_maze.MazeSize - 1,
+            Direction.East => _player.Location.X < (int)_mazeService.MazeSize - 1,
+            Direction.South => _player.Location.Y < (int)_mazeService.MazeSize - 1,
             Direction.West => _player.Location.X >= 0,
             _ => false
         };
@@ -52,8 +52,8 @@ public class PlayerService : IPlayerService
         direction switch
         {
             Direction.North => HasEnoughArrows() && _player.Location.Y - 1 >= 0,
-            Direction.East => HasEnoughArrows() && _player.Location.X + 1 < (int)_maze.MazeSize,
-            Direction.South => HasEnoughArrows() && _player.Location.Y + 1 < (int)_maze.MazeSize,
+            Direction.East => HasEnoughArrows() && _player.Location.X + 1 < (int)_mazeService.MazeSize,
+            Direction.South => HasEnoughArrows() && _player.Location.Y + 1 < (int)_mazeService.MazeSize,
             Direction.West => HasEnoughArrows() && _player.Location.X - 1 >= 0,
             _ => false
         };

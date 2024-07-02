@@ -1,10 +1,6 @@
-﻿using Model;
-using Model.Enums;
-using Model.Factory;
+﻿using Model.Factory;
 using Model.GameSettings;
 using Model.Interfaces;
-using Model.Room;
-using Model.RoomService;
 using Spectre.Console.Rendering;
 using View.Views.Room;
 
@@ -14,19 +10,22 @@ public class MazeGeneratorService : IMazeGeneratorService
 {
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly IPlayerRepository _playerRepository;
-    private readonly MazeObjectFactory _mazeObjectFactory;
-    private readonly IMaze<IRoom> _mazeService;
+    private readonly IMazeObjectFactory _mazeObjectFactory;
+    private readonly IMazeService<IRoom> _mazeService;
+    private readonly IRoomPopulator _roomPopulator;
     
     public MazeGeneratorService(
         IGameSettingsRepository gameSettingsRepository, 
         IPlayerRepository playerRepository, 
-        MazeObjectFactory mazeObjectFactory, 
-        IMaze<IRoom> mazeService)
+        IMazeObjectFactory mazeObjectFactory, 
+        IMazeService<IRoom> mazeService,
+        IRoomPopulator roomPopulator)
     {
         _gameSettingsRepository = gameSettingsRepository;
         _playerRepository = playerRepository;
         _mazeObjectFactory = mazeObjectFactory;
         _mazeService = mazeService;
+        _roomPopulator = roomPopulator;
     }
     
     public Table CreateTable()
@@ -35,6 +34,18 @@ public class MazeGeneratorService : IMazeGeneratorService
         
         var table = InitializeTable();
         PopulateTable(table, fieldSize);
+        
+        return table;
+    }
+    
+    public Table UpdateTable()
+    {
+        var fieldSize = (int)_mazeService.MazeSize;
+        
+        var table = InitializeTable();
+        var rooms = _mazeService.MazeRooms;
+        AddColumns(table, fieldSize);
+        AddRows(table, rooms);
         
         return table;
     }
@@ -52,9 +63,9 @@ public class MazeGeneratorService : IMazeGeneratorService
 
     private void PopulateTable(Table table, int fieldSize)
     {
-        GenerateRooms();
+        _roomPopulator.GenerateRooms(_mazeService);
         AddColumns(table, fieldSize);
-        SetRoomOccupants();
+        _roomPopulator.SetRoomOccupants(_mazeService, _playerRepository, _mazeObjectFactory, _gameSettingsRepository);
         AddRows(table, fieldSize);
     }
 
@@ -84,85 +95,20 @@ public class MazeGeneratorService : IMazeGeneratorService
         }
     }
 
-    private void GenerateRooms()
+    private void AddRows(Table table, IRoom[,] rooms)
     {
-        var mazeSize = (int)_mazeService.MazeSize;
-        var maze = new IRoom[mazeSize, mazeSize];
+        var cols = rooms.GetLength(0);
+        var rows = rooms.GetLength(1);
         
-        for (int i = 0; i < mazeSize; i++)
-        {
-            for (int j = 0; j < mazeSize; j++)
-            {
-                maze[i, j] = new Room(i, j);
+        for (int row = 0; row < rows; row++) {
+            var rowCells = new IRenderable[cols];
+            
+            for (int col = 0; col < cols; col++) {
+                var roomView = new RoomView(rooms[row, col], _mazeService.MazeSize);
+                rowCells[col] = roomView.RoomCanvas;
             }
-        }
-        
-        _mazeService.MazeRooms = maze;
-    }
-
-    private void SetRoomOccupants()
-    {
-        var random = new Random();
-        var mazeSize = (int)_mazeService.MazeSize;
-        var maze = _mazeService.MazeRooms;
-
-        var entranceLocation = new Location(random.Next(0, mazeSize), random.Next(0, mazeSize / 2 - 1));
-        var fountainLocation = new Location(random.Next(0, mazeSize), random.Next(mazeSize / 2 + 1, mazeSize));
-        
-        AddObjectToRoom(entranceLocation, maze, ObjectType.Entrance);
-        AddObjectToRoom(entranceLocation, maze, _playerRepository.Player);
-        AddObjectToRoom(fountainLocation, maze, ObjectType.Fountain);
-        AddDangerousObjects(maze);
-    }
-
-    private void AddObjectToRoom(Location location, IRoom[,] maze, ObjectType objectType)
-    {
-        var obj = _mazeObjectFactory.CreateObject(objectType, location);
-        maze[location.X, location.Y].AddObject(obj);
-    }
-    
-    private void AddObjectToRoom(Location location, IRoom[,] maze, IPositionable obj)
-    {
-        maze[location.X, location.Y].AddObject(obj);
-    }
-    
-    private void AddDangerousObjects(IRoom[,] maze)
-    {
-        var allPositions = GetAllPositions();
-        
-        var dangerousObjects = GetDangerousObjects();
-        
-        int currentIndex = 0;
-
-        foreach (var (objectType, count) in dangerousObjects)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                var position = allPositions[currentIndex++];
-
-                if (!maze[position.X, position.Y].IsOccupied)
-                {
-                    AddObjectToRoom(position, maze, objectType);
-                }
-            }
+            
+            table.AddRow(rowCells);
         }
     }
-
-    private List<Location> GetAllPositions()
-    {
-        var mazeSize = (int)_mazeService.MazeSize;
-        var random = new Random();
-        
-        return Enumerable.Range(0, mazeSize)
-            .SelectMany(x => Enumerable.Range(0, mazeSize), (x, y) => new Location(x, y))
-            .OrderBy(_ => random.Next())
-            .ToList();
-    }
-
-    private List<(ObjectType, int)> GetDangerousObjects() =>
-    [
-        (ObjectType.Amarok, _gameSettingsRepository.AmaroksCount),
-        (ObjectType.Pit, _gameSettingsRepository.PitsCount),
-        (ObjectType.Maelstrom, _gameSettingsRepository.MaelstromsCount)
-    ];
 }
