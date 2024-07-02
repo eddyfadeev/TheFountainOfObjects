@@ -20,7 +20,6 @@ public class PlayerActionsHandler : IMovable, IShootable
         _gameView = gameView;
     }
 
-    // TODO: Properly implement the method
     public bool Attack(Direction direction)
     {
         if (CanAttack(direction))
@@ -51,7 +50,6 @@ public class PlayerActionsHandler : IMovable, IShootable
             currentRoom.RemoveObject(_player);
             newRoom.AddObject(_player);
             _player.Location = newLocation;
-            
         }
     }
 
@@ -82,80 +80,4 @@ public class PlayerActionsHandler : IMovable, IShootable
     private bool IsWithinMazeBounds(Location location) =>
         location.X >= 0 && location.X < (int)_mazeService.MazeSize &&
         location.Y >= 0 && location.Y < (int)_mazeService.MazeSize;
-}
-
-internal static class GameControlKeys
-{
-    public static List<ConsoleKey> DirectionKeys { get; } =
-    [
-        ConsoleKey.W,
-        ConsoleKey.A,
-        ConsoleKey.S,
-        ConsoleKey.D,
-        ConsoleKey.UpArrow,
-        ConsoleKey.LeftArrow,
-        ConsoleKey.DownArrow,
-        ConsoleKey.RightArrow
-    ];
-
-    public static List<ConsoleKey> InteractionKeys { get; } =
-    [
-        ConsoleKey.E,
-        ConsoleKey.Enter
-    ];
-    
-    public static ConsoleKey AttackTrigger => ConsoleKey.Spacebar;
-    public static ConsoleKey PauseKey => ConsoleKey.Escape;
-
-    public static Dictionary<Enum, object> GameKeys = new()
-    {
-        {TypeOfAction.Attack, AttackTrigger},
-        {TypeOfAction.Move, DirectionKeys},
-        {TypeOfAction.Interact, InteractionKeys},
-        {TypeOfAction.Pause, PauseKey}
-    };
-    
-    public static List<ConsoleKey> GetAllKeys()
-    {
-        var allKeys = DirectionKeys.Concat(InteractionKeys).ToList();
-        allKeys.Add(AttackTrigger);
-        allKeys.Add(PauseKey);
-        
-        return allKeys;
-    }
-    
-    public static TypeOfAction GetTypeOfAction(ConsoleKey key)
-    {
-        foreach (var keyType in GameKeys)
-        {
-            if (keyType.Value is List<ConsoleKey> keyList && keyList.Contains(key) ||
-                keyType.Value is ConsoleKey singleKey && singleKey == key)
-            {
-                return (TypeOfAction)keyType.Key;
-            }
-        }
-        
-        throw new ArgumentException("Invalid key.");
-    }
-    
-    public static Direction GetDirectionFromKey(ConsoleKey key) =>
-        key switch
-        {
-            ConsoleKey.W or ConsoleKey.UpArrow => Direction.North,
-            ConsoleKey.D or ConsoleKey.RightArrow => Direction.East,
-            ConsoleKey.S or ConsoleKey.DownArrow => Direction.South,
-            ConsoleKey.A or ConsoleKey.LeftArrow => Direction.West,
-            _ => throw new ArgumentException("Invalid key.")
-        };
-    
-    public static bool IsValidKey(ConsoleKey key) => GetAllKeys().Contains(key);
-}
-
-public enum TypeOfAction 
-{
-    Move,
-    Attack,
-    Interact,
-    Pause,
-    DoNothing
 }
