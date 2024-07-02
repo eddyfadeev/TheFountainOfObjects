@@ -22,6 +22,7 @@ public class MenuCommandFactory : IMenuCommandFactory
             MenuType.LoadPlayerMenu => new ShowLoadPlayerMenuCommand(_layoutManager, _playerRepository),
             MenuType.SettingsMenu => new ShowSettingsMenuCommand(_layoutManager),
             MenuType.StartScreen => new ShowStartScreenCommand(_layoutManager),
+            MenuType.HelpMenu => new ShowHelpScreenCommand(_layoutManager),
             _ => throw new ArgumentException("Invalid menu type.")
         };
 }

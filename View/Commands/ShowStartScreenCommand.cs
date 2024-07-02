@@ -10,12 +10,12 @@ public class ShowStartScreenCommand : ICommand
     {
         _layoutManager = layoutManager;
     }
-        
-    public Enum? Execute()
+    
+    public Enum Execute()
     {
         var startScreen = new StartScreen(_layoutManager);
         startScreen.Display();
             
-        return null;
+        return MenuType.Back;
     }
 }

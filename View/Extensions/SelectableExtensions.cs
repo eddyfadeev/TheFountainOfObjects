@@ -4,13 +4,13 @@ public static class SelectableExtensions
 {
     public static TEnum SelectEntry<TEnum>(
         this ISelectableMenu<TEnum> selectable,
-        ref List<KeyValuePair<TEnum, string>> menuEntries)
+        List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
         var userMadeChoice = false;
         KeyValuePair<TEnum, string> selected = new();
         
-        AddEntryIfDynamicEnum(ref menuEntries);
+        AddEntryIfDynamicEnum(menuEntries);
         
         while (!userMadeChoice)
         {
@@ -70,7 +70,7 @@ public static class SelectableExtensions
         return menuTable;
     }
     
-    private static void AddEntryIfDynamicEnum<TEnum>(ref List<KeyValuePair<TEnum, string>> menuEntries)
+    private static void AddEntryIfDynamicEnum<TEnum>(List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
         var assemblyName = menuEntries[0].Key.GetType().Assembly.GetName().Name;

@@ -12,4 +12,16 @@ public class Location
     }
     
     public Location() { }
+    
+    public static bool operator ==(Location a, Location b) =>
+        a?.X == b?.X && a?.Y == b?.Y;
+    
+    public static bool operator !=(Location a, Location b) =>
+        !(a == b);
+    
+    public bool IsEqual(Location other) =>
+        X == other.X && Y == other.Y;
+    
+    public override int GetHashCode() =>
+        (X, Y).GetHashCode();
 }

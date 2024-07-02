@@ -13,7 +13,8 @@ public class ShowCreatePlayerMenuCommand : ICommand
     
     public Enum Execute()
     {
-        var createPlayerView = new CreatePlayerView(_layoutManager);
+        var createPlayerView = new CreatePlayerMenuView(_layoutManager);
+        
         return createPlayerView.Display();
     }
 }

@@ -8,4 +8,7 @@ public enum MenuType
     LeaderboardMenu,
     LoadPlayerMenu,
     SettingsMenu,
+    HelpMenu,
+    Game,
+    Back
 }

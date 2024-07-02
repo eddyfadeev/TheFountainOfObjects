@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Model.Factory;
+﻿using Model.GameSettings;
 using Model.Interfaces;
+using Model.Maze;
+using Model.Player;
 using Model.Room;
+using Model.RoomService;
 using Services.Database;
 using Services.Database.Helpers;
 using Services.Database.Interfaces;
 using Services.Database.Repository;
-using Services.GameSettingsRepository;
-using Services.RoomService;
 using View.Factory;
-using View.Interfaces;
 using View.Layout;
-using View.Views.GameView;
+using View.Views.Game;
 
 namespace Controller;
 
@@ -19,16 +18,20 @@ public static class ConfigureServices
 {
     public static void Configure(IServiceCollection services)
     {
-        services.AddTransient<IConnectionProvider, ConnectionProvider>();
-        services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
         services.AddSingleton<ILayoutManager, LayoutManager>();
         services.AddSingleton<IPlayerRepository, PlayerRepository>();
         services.AddSingleton<IDatabaseService, DatabaseService>();
         services.AddSingleton<IMenuCommandFactory, MenuCommandFactory>();
         services.AddSingleton<IGameSettingsRepository, GameSettingsRepository>();
+        services.AddSingleton<IMazeService<IRoom>, MazeService>();
+        services.AddSingleton<IMazeObjectFactory, MazeObjectFactory>();
+        services.AddSingleton<IPlayer, Player>();
+        services.AddSingleton<IGameView, GameView>();
+        
+        services.AddTransient<IConnectionProvider, ConnectionProvider>();
+        services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+        services.AddTransient<IMazeGeneratorService, MazeGeneratorService>();
         services.AddTransient<IRoom, Room>();
-        services.AddSingleton<IRoomService, RoomService>();
-        services.AddSingleton<MazeObjectFactory, MazeObjectFactory>();
-        services.AddSingleton<Model.Player.Player>();
+        services.AddTransient<IRoomPopulator, RoomPopulator>();
     }
 }

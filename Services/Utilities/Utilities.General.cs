@@ -16,6 +16,38 @@ public static partial class Utilities
         return userName;
     }
     
+    public static int GetUserInput(string message, int max)
+    {
+        Console.CursorVisible = true;
+        
+        var number = AnsiConsole.Ask<int>(message);
+
+        while (number < 0 || number > max)
+        {
+            number = AnsiConsole.Ask<int>(message);
+        }
+
+        Console.CursorVisible = false;
+        
+        return number;
+    }
+    
+    public static int GetUserInput(string message, int min, int max)
+    {
+        Console.CursorVisible = true;
+        
+        var number = AnsiConsole.Ask<int>(message);
+
+        while (number < min || number > max)
+        {
+            number = AnsiConsole.Ask<int>(message);
+        }
+
+        Console.CursorVisible = false;
+        
+        return number;
+    }
+    
     public static string ChangeStringColor(string text, Color color)
     {
         return $"[{color.ToString().ToLower()}]{text}[/]";
@@ -37,7 +69,7 @@ public static partial class Utilities
             )).ToList();
     }
     
-    public static void AddCaption(ref Table table)
+    public static void AddCaption(Table table)
     {
         table.Caption = new TableTitle(
             "\nPress any key to continue...",

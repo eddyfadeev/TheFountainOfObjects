@@ -62,6 +62,17 @@ public sealed class LayoutManager : ILayoutManager
         return table;
     }
     
+    public Table CreateInnerTable()
+    {
+        var innerTable = new Table
+        {
+            Border = TableBorder.None,
+            ShowHeaders = false
+        };
+        
+        return innerTable;
+    }
+    
     private void SetDefaultSize()
     {
         const int mainWindowSize = 70;

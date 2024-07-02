@@ -1,6 +1,4 @@
-﻿using Services.Database.Interfaces;
-
-namespace View.Views.LoadPlayerMenu;
+﻿namespace View.Views.LoadPlayerMenu;
 
 public sealed class LoadPlayerView : SelectableMenuView<Enum>
 {
@@ -16,7 +14,7 @@ public sealed class LoadPlayerView : SelectableMenuView<Enum>
         _playerRepository = playerRepository;
     }
 
-    public override Enum? Display()
+    public override Enum Display()
     {
         Console.Clear();
         
@@ -26,10 +24,12 @@ public sealed class LoadPlayerView : SelectableMenuView<Enum>
 
         if (entries is null)
         {
-            return null;
+            AnsiConsole.WriteLine("No players found. Please, create a player first.");
+            
+            return MenuType.Back;
         }
         
-        var selectedEntry = SelectEntry(ref entries);
+        var selectedEntry = SelectEntry(entries);
 
         return selectedEntry;
     }

@@ -1,4 +1,4 @@
-﻿namespace Services.GameSettingsRepository;
+﻿namespace Model.Enums;
 
 public enum MazeSize
 {

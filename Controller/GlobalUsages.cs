@@ -1,8 +1,5 @@
 ﻿global using static Services.Utilities.Utilities;
-
-namespace Controller;
-
-public class GlobalUsages
-{
-    
-}
+global using Microsoft.Extensions.DependencyInjection;
+global using Model.Factory;
+global using View.Interfaces;
+global using View.MazeGenerator;

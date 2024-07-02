@@ -5,6 +5,7 @@ namespace Services.Database.Repository;
 
 public class PlayerRepository(IDatabaseService databaseService) : IPlayerRepository
 {
+    public Player? Player { get; set; }
     public int AddPlayer(string name, int score)
     {
         var player = new PlayerDTO
@@ -35,6 +36,10 @@ public class PlayerRepository(IDatabaseService databaseService) : IPlayerReposit
 
     public PlayerDTO LoadPlayer(long playerId) => 
         databaseService.GetPlayerById(playerId) ?? 
+        throw new ArgumentException("Player not found.");
+    
+    public PlayerDTO LoadPlayer(string playerName) => 
+        databaseService.GetPlayerByName(playerName) ?? 
         throw new ArgumentException("Player not found.");
 
     public List<PlayerDTO> GetAllPlayers() => 

@@ -13,9 +13,10 @@ public class ShowLoadPlayerMenuCommand : ICommand
         _playerRepository = playerRepository;
     }
 
-    public Enum? Execute()
+    public Enum Execute()
     {
         var createPlayerView = new LoadPlayerView(_playerRepository, _layoutManager);
+        
         return createPlayerView.Display();
     }
 }

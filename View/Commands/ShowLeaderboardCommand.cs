@@ -13,11 +13,11 @@ public class ShowLeaderboardCommand : ICommand
         _playerRepository = playerRepository;
     }
     
-    public Enum? Execute()
+    public Enum Execute()
     {
         var leaderboardView = new LeaderboardView(_playerRepository, _layoutManager);
         leaderboardView.Display();
 
-        return null;
+        return MenuType.Back;
     }
 }

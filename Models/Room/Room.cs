@@ -52,4 +52,16 @@ public class Room : IRoom
             true when IsOccupiedBy<Fountain>() => Color.Blue,
             _ => Color.Grey37 
         };
+    
+    public override bool Equals(object obj)
+    {
+        if (obj is Location location)
+        {
+            return Location == location;
+        }
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode() =>
+        Location.GetHashCode();
 }

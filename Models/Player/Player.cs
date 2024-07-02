@@ -1,6 +1,6 @@
 ﻿namespace Model.Player;
 
-public class Player : IPositionable
+public class Player : IPlayer
 {
     private int? _id;
     private int _score;
@@ -11,10 +11,10 @@ public class Player : IPositionable
         set => _id = value is null ? null : (int)value.Value;
     }
     
-    public long? Score
+    public int? Score
     {
         get => _score;
-        set => _score = value is null or < 0 ? 0 : (int)value.Value;
+        set => _score = value is null or < 0 ? 0 : value.Value;
     }
     
     public string? Name { get; set; }
@@ -25,4 +25,6 @@ public class Player : IPositionable
         X = 0,
         Y = 0
     };
+    
+    public void Shoot() => Arrows--;
 }
