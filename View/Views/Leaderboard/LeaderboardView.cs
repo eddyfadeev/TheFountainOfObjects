@@ -2,7 +2,7 @@
 
 namespace View.Views.Leaderboard;
 
-public sealed class LeaderboardView : MenuView
+public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
 {
     private readonly List<PlayerDTO> _players;
     
@@ -18,37 +18,36 @@ public sealed class LeaderboardView : MenuView
     
     public override void Display()
     {
-        Console.Clear();
         LayoutManager.SupportWindowIsVisible = false;
         
-        var leaderboardTable = CreateLeaderboardTable();
-        
-        AnsiConsole.Write(leaderboardTable);
+        var leaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardMenu);
+
+        LayoutManager.MainWindow.Update(leaderboardMenu);
+        LayoutManager.UpdateLayout();
         Console.ReadKey();
     }
 
-    public Table CreateTopTen()
+    public Table GetSideTable(LeaderboardType menuType)
     {
-        const int numberOfEntries = 10;
-        var topTenTable = CreateLeaderboardTable(numberOfEntries);
-        topTenTable.ShowFooters = false;
-
-        return topTenTable;
+        var sideLeaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardSideMenu);
+        
+        return sideLeaderboardMenu;
     }
 
-    private Table CreateLeaderboardTable(int? numberOfEntries = null)
+    private Table CreateLeaderboardTable(LeaderboardType leaderboardType)
     {
         var table = LayoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = LayoutManager.CreateInnerTable();
         
         leaderboardTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]").Centered();
         
-        var numberOfEntriesToAdd = numberOfEntries is null || numberOfEntries > _players.Count ? _players.Count : numberOfEntries.Value;
 
-        if (numberOfEntries is null)
+        if (leaderboardType is LeaderboardType.LeaderboardMenu)
         {
             AddCaption(table);
         }
+        
+        var numberOfEntriesToAdd = CalculateNumberOfEntries(leaderboardType);
         
         AddPlayersToTable(leaderboardTable, numberOfEntriesToAdd);
 
@@ -56,6 +55,15 @@ public sealed class LeaderboardView : MenuView
         
         return table;
     }
+
+    private int CalculateNumberOfEntries(LeaderboardType leaderboardType) =>
+        leaderboardType switch
+        {
+            LeaderboardType.LeaderboardMenu => _players.Count,
+            LeaderboardType.LeaderboardSideMenu => _players.Count <= 10? _players.Count : 10,
+            _ => throw new ArgumentException("Wrong leaderboard type")
+        };
+    
 
     private void AddPlayersToTable(Table table, int numberOfEntries)
     {

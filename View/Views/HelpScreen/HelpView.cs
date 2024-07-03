@@ -1,6 +1,6 @@
 ﻿namespace View.Views.HelpScreen;
 
-public class HelpView : MenuView
+public class HelpView : MenuView, ISideMenu<HelpType>
 {
     public override string MenuName { get; }
 
@@ -14,12 +14,20 @@ public class HelpView : MenuView
 
     public override void Display()
     {
-        var helpScreen = CreateHelpTable(HelpType.MainMenu);
         LayoutManager.SupportWindowIsVisible = false;
         
-        LayoutManager.MainWindow.Update(helpScreen);
+        var helpMenu = CreateHelpTable(HelpType.HelpMenu);
+        
+        LayoutManager.MainWindow.Update(helpMenu);
         LayoutManager.UpdateLayout();
         Console.ReadKey();
+    }
+
+    public Table GetSideTable(HelpType menuType)
+    {
+        var sideHelp = CreateHelpTable(menuType);
+        
+        return sideHelp;
     }
 
     public Table CreateHelpTable(HelpType helpType)
@@ -32,7 +40,7 @@ public class HelpView : MenuView
         
         helpTable.AddRow(tableText);
 
-        if (helpType is HelpType.MainMenu)
+        if (helpType is HelpType.HelpMenu)
         {
             AddCaption(table);
         }
@@ -67,9 +75,9 @@ public class HelpView : MenuView
         
         return helpType switch
         {
-            HelpType.MainMenu => new Markup(inMenuInfo + mainInfo + inGameInfo),
-            HelpType.GameSideWindow => new Markup(inGameInfo),
-            HelpType.MenuSideWindow => new Markup(inMenuInfo),
+            HelpType.HelpMenu => new Markup(inMenuInfo + mainInfo + inGameInfo),
+            HelpType.GameSideMenu => new Markup(inGameInfo),
+            HelpType.MainMenuSide => new Markup(inMenuInfo),
             _ => throw new ArgumentException("Invalid help type.")
         };
     }

@@ -5,14 +5,17 @@ namespace View.Views.MainMenu;
 
 public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
 {
-    private readonly IPlayerRepository _playerRepository;
+    private readonly ISideMenu<HelpType> _helpSideView;
+    private readonly ISideMenu<LeaderboardType> _leaderboardSideView;
     public override string MenuName { get; }
     public override ILayoutManager LayoutManager { get; }
 
-    public MainMenuView(IPlayerRepository playerRepository, ILayoutManager layoutManager)
+    public MainMenuView(ILayoutManager layoutManager,
+        ISideMenu<HelpType> helpSideView, ISideMenu<LeaderboardType> leaderboardSideView)
     {
         LayoutManager = layoutManager;
-        _playerRepository = playerRepository;
+        _helpSideView = helpSideView;
+        _leaderboardSideView = leaderboardSideView;
         MenuName = "Main Menu";
     }
     
@@ -29,17 +32,7 @@ public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
         return SelectEntry(mainMenuEntriesList);
     }
 
-    private Table GetHelpWindow()
-    {
-        var helpView = new HelpView(LayoutManager);
-        
-        return helpView.CreateHelpTable(HelpType.MenuSideWindow);
-    }
+    private Table GetHelpWindow() => _helpSideView.GetSideTable(HelpType.MainMenuSide);
 
-    private Table GetLeaderboardTable()
-    {
-        var leaderboardView = new LeaderboardView(_playerRepository, LayoutManager);
-        
-        return leaderboardView.CreateTopTen();
-    }
+    private Table GetLeaderboardTable() => _leaderboardSideView.GetSideTable(LeaderboardType.LeaderboardSideMenu);
 }

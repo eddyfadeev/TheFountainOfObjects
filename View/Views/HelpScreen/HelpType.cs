@@ -2,7 +2,7 @@
 
 public enum HelpType
 {
-    MainMenu,
-    MenuSideWindow,
-    GameSideWindow
+    HelpMenu,
+    MainMenuSide,
+    GameSideMenu
 }

@@ -10,6 +10,7 @@ public class MazeGeneratorService : IMazeGeneratorService
 {
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly IPlayerRepository _playerRepository;
+    private readonly ILayoutManager _layoutManager;
     private readonly IMazeObjectFactory _mazeObjectFactory;
     private readonly IMazeService<IRoom> _mazeService;
     private readonly IRoomPopulator _roomPopulator;
@@ -17,12 +18,14 @@ public class MazeGeneratorService : IMazeGeneratorService
     public MazeGeneratorService(
         IGameSettingsRepository gameSettingsRepository, 
         IPlayerRepository playerRepository, 
+        ILayoutManager layoutManager,
         IMazeObjectFactory mazeObjectFactory, 
         IMazeService<IRoom> mazeService,
         IRoomPopulator roomPopulator)
     {
         _gameSettingsRepository = gameSettingsRepository;
         _playerRepository = playerRepository;
+        _layoutManager = layoutManager;
         _mazeObjectFactory = mazeObjectFactory;
         _mazeService = mazeService;
         _roomPopulator = roomPopulator;
@@ -32,7 +35,7 @@ public class MazeGeneratorService : IMazeGeneratorService
     {
         var fieldSize = (int)_mazeService.MazeSize;
         
-        var table = InitializeTable();
+        var table = _layoutManager.CreateInnerTable();
         PopulateTable(table, fieldSize);
         
         return table;
@@ -42,22 +45,11 @@ public class MazeGeneratorService : IMazeGeneratorService
     {
         var fieldSize = (int)_mazeService.MazeSize;
         
-        var table = InitializeTable();
+        var table = _layoutManager.CreateInnerTable();
         var rooms = _mazeService.MazeRooms;
         AddColumns(table, fieldSize);
         AddRows(table, rooms);
         
-        return table;
-    }
-
-    private Table InitializeTable()
-    {
-        var table = new Table
-        {
-            Border = TableBorder.None,
-            ShowHeaders = false
-        };
-
         return table;
     }
 

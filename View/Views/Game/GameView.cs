@@ -19,13 +19,13 @@ public class GameView : IGameView
     
     public void Display()
     {
-        var helpView = new HelpView(LayoutManager);
-        var helpWindow = helpView.CreateHelpTable(HelpType.GameSideWindow);
+        ISideMenu<HelpType> helpView = new HelpView(LayoutManager);
+        var helpWindow = helpView.GetSideTable(HelpType.GameSideMenu);
         Maze = GenerateMazeTable();
         
         LayoutManager.SupportWindowIsVisible = true;
         LayoutManager.MainWindow.Update(Maze);
-        LayoutManager.SupportWindowTop.Update(helpWindow);
+        LayoutManager.SupportWindowBottom.Update(helpWindow);
         
         LayoutManager.UpdateLayout();
     }

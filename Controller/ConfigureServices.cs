@@ -13,6 +13,8 @@ using Services.Database.Repository;
 using View.Factory;
 using View.Layout;
 using View.Views.Game;
+using View.Views.HelpScreen;
+using View.Views.Leaderboard;
 
 namespace Controller;
 
@@ -36,5 +38,7 @@ public static class ConfigureServices
         services.AddTransient<IRoom, Room>();
         services.AddTransient<IRoomPopulator, RoomPopulator>();
         services.AddTransient<IMessagesFactory, MessagesFactory>();
+        services.AddTransient<ISideMenu<HelpType>, HelpView>();
+        services.AddTransient<ISideMenu<LeaderboardType>, LeaderboardView>();
     }
 }

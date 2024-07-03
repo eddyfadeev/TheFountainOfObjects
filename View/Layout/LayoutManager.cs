@@ -67,7 +67,8 @@ public sealed class LayoutManager : ILayoutManager
         var innerTable = new Table
         {
             Border = TableBorder.None,
-            ShowHeaders = false
+            ShowHeaders = false,
+            ShowFooters = false
         };
         
         return innerTable;
