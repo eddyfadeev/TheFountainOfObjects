@@ -72,6 +72,10 @@ public class RoomPopulator : IRoomPopulator
                     var objectToPlace = mazeObjectFactory.CreateObject(objectType, position);
                     AddObjectToRoom(position, maze, objectToPlace);
                 }
+                else
+                {
+                    i--;
+                }
             }
         }
     }

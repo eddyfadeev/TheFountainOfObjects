@@ -1,6 +1,6 @@
 ﻿namespace Model.Objects;
 
-public class Entrance : IPositionable, IActivable
+public class Entrance : IPositionable
 {
     public Location Location { get; set; }
     
@@ -12,6 +12,4 @@ public class Entrance : IPositionable, IActivable
             Y = y
         };
     }
-
-    public void Activate() => throw new NotImplementedException();
 }

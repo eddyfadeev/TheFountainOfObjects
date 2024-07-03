@@ -3,4 +3,5 @@
 public interface IActivable
 {
     void Activate();
+    string ActivatedMessage();
 }

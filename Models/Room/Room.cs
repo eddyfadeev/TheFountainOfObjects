@@ -63,7 +63,7 @@ public class Room : IRoom
     private List<MessageType> SetRoomMessages()
     {
         var messages = new List<MessageType>();
-        var dangerInAdjacent = _mazeService.GetAdjacentRoomsOccupants(Location).Any();
+        var dangerInAdjacent = _mazeService.GetAdjacentRoomsOccupants(Location).Count != 0;
         
         if (IsOccupiedBy<IPositionable>())
         {

@@ -20,5 +20,5 @@ public class Fountain : IPositionable, IActivable
         IsActivated = true;
     }
     
-    public string ActivatedMessage() => "[blue]You activated the fountain![/]";
+    public string ActivatedMessage() => "[deepskyblue1]You activated the fountain![/]";
 }

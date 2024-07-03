@@ -31,8 +31,7 @@ public class PlayerActionsHandler : IMovable, IShootable
 
             if (enemy is not null)
             {
-                targetRoom.RemoveObject(enemy);
-                return true;
+                return targetRoom.RemoveObject(enemy);
             }
         }
 
