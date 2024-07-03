@@ -1,6 +1,6 @@
 ﻿namespace Model.Objects.Dangerous;
 
-public class Maelstrom : IPositionable, IInteractable
+public class Maelstrom : IPositionable, IDangerous
 {
     public Location Location { get; set; }
     
@@ -13,5 +13,5 @@ public class Maelstrom : IPositionable, IInteractable
         };
     }
 
-    public void Interact(Player.Player player) => throw new NotImplementedException();
+    public void Attack(Player.Player player) => throw new NotImplementedException();
 }

@@ -5,7 +5,7 @@ namespace Model.RoomService;
 
 public static class RoomExtensions
 {
-    public static Canvas SetRoomColor(this IRoom room, MazeSize mazeSize)
+    public static Canvas PaintRoom(this IRoom room, MazeSize mazeSize)
     {
         var cellSize = CalculateCellSize(mazeSize);
         var roomColor = room.RoomColor;

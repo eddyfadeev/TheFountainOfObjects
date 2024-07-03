@@ -1,9 +1,9 @@
 ﻿namespace Model;
 
-public class Location
+public sealed class Location : IEquatable<Location>
 {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public int X { get; init; }
+    public int Y { get; init; }
     
     public Location(int x, int y)
     {
@@ -14,14 +14,48 @@ public class Location
     public Location() { }
     
     public static bool operator ==(Location a, Location b) =>
-        a?.X == b?.X && a?.Y == b?.Y;
+        a.X == b.X && a.Y == b.Y;
     
     public static bool operator !=(Location a, Location b) =>
         !(a == b);
     
-    public bool IsEqual(Location other) =>
-        X == other.X && Y == other.Y;
-    
-    public override int GetHashCode() =>
-        (X, Y).GetHashCode();
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y);
+    }
+
+    public bool Equals(Location? other)
+    {
+        if (ReferenceEquals(null, other))
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, other))
+        {
+            return true;
+        }
+
+        return X == other.X && Y == other.Y;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj))
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj.GetType() != this.GetType())
+        {
+            return false;
+        }
+
+        return Equals((Location)obj);
+    }
 }

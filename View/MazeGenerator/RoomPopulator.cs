@@ -17,7 +17,8 @@ public class RoomPopulator : IRoomPopulator
         {
             for (int j = 0; j < mazeSize; j++)
             {
-                maze[i, j] = new Room(i, j);
+                var location = new Location(i, j);
+                maze[i, j] = new Room(location, mazeService);
             }
         }
         

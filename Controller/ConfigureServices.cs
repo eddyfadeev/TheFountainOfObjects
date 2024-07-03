@@ -1,6 +1,8 @@
 ﻿using Model.GameSettings;
 using Model.Interfaces;
 using Model.Maze;
+using Model.Messages.Factory;
+using Model.Messages.Interfaces;
 using Model.Player;
 using Model.Room;
 using Model.RoomService;
@@ -33,5 +35,6 @@ public static class ConfigureServices
         services.AddTransient<IMazeGeneratorService, MazeGeneratorService>();
         services.AddTransient<IRoom, Room>();
         services.AddTransient<IRoomPopulator, RoomPopulator>();
+        services.AddTransient<IMessagesFactory, MessagesFactory>();
     }
 }

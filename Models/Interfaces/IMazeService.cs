@@ -8,4 +8,5 @@ public interface IMazeService<T>
     MazeSize MazeSize { get; }
     T this[Location location] { get; set; }
     internal void SetMazeSize(MazeSize mazeSize);
+    internal List<IDangerous> GetAdjacentRoomsOccupants(Location location);
 }

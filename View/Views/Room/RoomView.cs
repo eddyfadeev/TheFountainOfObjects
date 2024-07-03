@@ -10,6 +10,6 @@ public class RoomView : IRoomView
     
     public RoomView(IRoom room, MazeSize mazeSize)
     {
-        RoomCanvas = room.SetRoomColor(mazeSize);
+        RoomCanvas = room.PaintRoom(mazeSize);
     }
 }

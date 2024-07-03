@@ -1,4 +1,8 @@
-﻿using Model.Enums;
+﻿using Model.Creatures;
+using Model.Enums;
+using Model.Messages.Enum;
+using Model.Objects;
+using Model.Objects.Dangerous;
 using Spectre.Console;
 
 namespace Model.Maze;
@@ -43,11 +47,35 @@ public class MazeService : IMazeService<IRoom>
         MazeSize = mazeSize;
     }
     
-    private static bool IsMazeSizeCorrect(MazeSize value) => 
+    private bool IsMazeSizeCorrect(MazeSize value) => 
         value is 
             MazeSize.Small or
             MazeSize.Medium or
             MazeSize.Large;
+    
+    public List<IDangerous> GetAdjacentRoomsOccupants(Location location)
+    {
+        var maxX = location.X + 1 < (int)_mazeSize ? location.X + 1 : location.X;
+        var minX = location.X - 1 >= 0 ? location.X - 1 : location.X;
+        var maxY = location.Y + 1 < (int)_mazeSize ? location.Y + 1 : location.Y;
+        var minY = location.Y - 1 >= 0 ? location.Y - 1 : location.Y;
+        
+        var dangerousOccupants = new List<IDangerous>();
+
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = minY; y <= maxY; y++)
+            {
+                if (x == location.X && y == location.Y)
+                {
+                    continue;
+                }
+                dangerousOccupants.AddRange(MazeRooms[x, y].Occupants.OfType<IDangerous>());
+            }
+        }
+        
+        return dangerousOccupants;
+    }
     
     private void ResizeMaze() => MazeRooms = new IRoom[(int)_mazeSize, (int)_mazeSize];
 }

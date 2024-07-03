@@ -1,27 +1,31 @@
-﻿using Model.Objects;
+﻿using Model.Creatures;
+using Model.Messages.Enum;
+using Model.Objects;
+using Model.Objects.Dangerous;
 using Spectre.Console;
 
 namespace Model.Room;
 
 public class Room : IRoom
 {
-    private List<IPositionable> Occupants { get; }
+    private IMazeService<IRoom> _mazeService;
+    public List<IPositionable> Occupants { get; }
     public bool IsVisited { get; private set; }
     public Location Location { get; set; }
 
     public Color RoomColor => SetRoomColor();
 
     public bool IsOccupied => Occupants.Count != 0;
+
+    public List<MessageType> Messages => SetRoomMessages();
     
-    public Room(int x, int y)
+    public Room(Location location, IMazeService<IRoom> mazeService)
     {
+        _mazeService = mazeService;
         Occupants = new List<IPositionable>();
-        
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+
+        Location = location;
+        // Map visibility switch
         IsVisited = false;
     }
 
@@ -47,21 +51,84 @@ public class Room : IRoom
         IsVisited switch
         {
             true when IsOccupiedBy<Player.Player>() => Color.Green,
-            true when !IsOccupiedBy<Player.Player>() => Color.White,
             true when IsOccupiedBy<Entrance>() => Color.Gold3_1,
-            true when IsOccupiedBy<Fountain>() => Color.Blue,
-            _ => Color.Grey37 
+            true when IsOccupiedBy<Fountain>() => Color.DeepSkyBlue1,
+            true when IsOccupiedBy<Amarok>() => Color.Red,
+            true when IsOccupiedBy<Maelstrom>() => Color.Cyan1,
+            true when IsOccupiedBy<Pit>() => Color.Grey11,
+            true when !IsOccupiedBy<Player.Player>() => Color.Grey37,
+            _ => Color.Grey11 
         };
     
-    public override bool Equals(object obj)
+    private List<MessageType> SetRoomMessages()
     {
-        if (obj is Location location)
+        var messages = new List<MessageType>();
+        var dangerInAdjacent = _mazeService.GetAdjacentRoomsOccupants(Location).Any();
+        
+        if (IsOccupiedBy<IPositionable>())
         {
-            return Location == location;
+            foreach (var occupant in Occupants)
+            {
+                SetOccupantMessage(occupant, messages);
+            }
         }
-        return base.Equals(obj);
+        
+        if (dangerInAdjacent)
+        {
+            SetAdjacentDangerMessages(messages);
+        }
+        else
+        {
+            messages.Add(MessageType.Nothing);
+        }
+
+        return messages;
     }
 
-    public override int GetHashCode() =>
-        Location.GetHashCode();
+    private void SetOccupantMessage(IPositionable occupant, List<MessageType> messages)
+    {
+        switch (occupant)
+        {
+            case Fountain fountain:
+                messages.Add(
+                    fountain.IsActivated ? 
+                        MessageType.AtActiveFountain : 
+                        MessageType.AtNotActiveFountain
+                );
+                break;
+            case Entrance:
+                messages.Add(MessageType.AtEntranceRoom);
+                break;
+            case Amarok:
+                messages.Add(MessageType.SteppedIntoAmarokRoom);
+                break;
+            case Maelstrom:
+                messages.Add(MessageType.SteppedIntoMaelstromRoom);
+                break;
+            case Pit:
+                messages.Add(MessageType.SteppedIntoPitRoom);
+                break;
+        }
+    }
+    
+    private void SetAdjacentDangerMessages(List<MessageType> messages)
+    {
+        var adjacentOccupants = _mazeService.GetAdjacentRoomsOccupants(Location);
+        
+        foreach (var occupant in adjacentOccupants)
+        {
+            switch (occupant)
+            {
+                case Amarok:
+                    messages.Add(MessageType.AmarokNearby);
+                    break;
+                case Maelstrom:
+                    messages.Add(MessageType.MaelstromNearby);
+                    break;
+                case Pit:
+                    messages.Add(MessageType.PitNearby);
+                    break;
+            }
+        }
+    }
 }

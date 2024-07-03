@@ -1,6 +1,6 @@
 ﻿namespace Model.Interfaces;
 
-public interface IEnemy : IPositionable, IInteractable
+public interface IEnemy : IPositionable, IDangerous
 {
-    void Attack(Player.Player player);
+    bool IsAlive { get; }
 }
