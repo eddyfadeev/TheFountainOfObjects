@@ -2,5 +2,5 @@
 
 public interface IActivable
 {
-    static abstract void Activate();
+    void Activate();
 }

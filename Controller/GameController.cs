@@ -33,7 +33,6 @@ public class GameController
     public void LaunchGame()
     {
         Console.CursorVisible = false;
-        //Console.SetWindowSize(120, 35); 
         
         _menuHandler.ShowStartScreen();
         _menuHandler.ShowCreatePlayerMenu();
@@ -64,7 +63,7 @@ public class GameController
         
     }
     
-    private (TypeOfAction actionType, Direction direction) ProcessKeyPress(ConsoleKey key)
+    private void ProcessKeyPress(ConsoleKey key)
     {
         if (!GameControlKeys.IsValidKey(key))
         {
@@ -72,17 +71,12 @@ public class GameController
         }
 
         var actionType = GameControlKeys.GetTypeOfAction(key);
-        var direction = GameControlKeys.GetDirectionFromKey(key);
-        
-        return (actionType, direction);
-    }
-
-    private void MakeAnAction(TypeOfAction actionType, Direction direction)
-    {
         var playerActionsHandler = new PlayerActionsHandler(_playerRepository, _mazeService, _gameView);
+        
         switch (actionType)
         {
             case TypeOfAction.Move:
+                var direction = GameControlKeys.GetDirectionFromKey(key);
                 playerActionsHandler.Move(direction);
                 break;
             case TypeOfAction.Attack:
@@ -98,23 +92,22 @@ public class GameController
                 
                 break;
         }
+        
     }
 
     private void StartGame()
     {
-        var gameView = _serviceProvider.GetRequiredService<IGameView>();
         var mazeGeneratorService = _serviceProvider.GetRequiredService<IMazeGeneratorService>();
         
-        gameView.Display();
+        _gameView.Display();
         do
         {
             var pressedKey = Console.ReadKey(true);
-            var keypressData = ProcessKeyPress(pressedKey.Key);
-            MakeAnAction(keypressData.actionType, keypressData.direction);
+            ProcessKeyPress(pressedKey.Key);
             
             var newMaze = mazeGeneratorService.UpdateTable();
             
-            gameView.UpdateMaze(newMaze);
+            _gameView.UpdateMaze(newMaze);
         } while (true);
     }
 }

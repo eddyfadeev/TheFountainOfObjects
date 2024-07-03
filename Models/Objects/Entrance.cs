@@ -13,5 +13,5 @@ public class Entrance : IPositionable, IActivable
         };
     }
 
-    public static void Activate() => throw new NotImplementedException();
+    public void Activate() => throw new NotImplementedException();
 }

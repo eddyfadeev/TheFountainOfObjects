@@ -25,22 +25,13 @@ internal static class GameControlKeys
     public static ConsoleKey AttackTrigger => ConsoleKey.Spacebar;
     public static ConsoleKey PauseKey => ConsoleKey.Escape;
 
-    public static Dictionary<Enum, object> GameKeys = new()
+    public static readonly Dictionary<Enum, object> GameKeys = new()
     {
         {TypeOfAction.Attack, AttackTrigger},
         {TypeOfAction.Move, DirectionKeys},
         {TypeOfAction.Interact, InteractionKeys},
         {TypeOfAction.Pause, PauseKey}
     };
-    
-    public static List<ConsoleKey> GetAllKeys()
-    {
-        var allKeys = DirectionKeys.Concat(InteractionKeys).ToList();
-        allKeys.Add(AttackTrigger);
-        allKeys.Add(PauseKey);
-        
-        return allKeys;
-    }
     
     public static TypeOfAction GetTypeOfAction(ConsoleKey key)
     {
@@ -63,8 +54,17 @@ internal static class GameControlKeys
             ConsoleKey.D or ConsoleKey.RightArrow => Direction.East,
             ConsoleKey.S or ConsoleKey.DownArrow => Direction.South,
             ConsoleKey.A or ConsoleKey.LeftArrow => Direction.West,
-            _ => throw new ArgumentException("Invalid key.")
+            _ => throw new ArgumentException("Invalid direction key.")
         };
     
     public static bool IsValidKey(ConsoleKey key) => GetAllKeys().Contains(key);
+    
+    private static List<ConsoleKey> GetAllKeys()
+    {
+        var allKeys = DirectionKeys.Concat(InteractionKeys).ToList();
+        allKeys.Add(AttackTrigger);
+        allKeys.Add(PauseKey);
+        
+        return allKeys;
+    }
 }
