@@ -30,7 +30,7 @@ public class HelpView : MenuView, ISideMenu<HelpType>
         return sideHelp;
     }
 
-    public Table CreateHelpTable(HelpType helpType)
+    private Table CreateHelpTable(HelpType helpType)
     {
         var table = LayoutManager.CreateTableLayout(MenuName);
         var helpTable = LayoutManager.CreateInnerTable();

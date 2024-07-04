@@ -20,7 +20,7 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
     {
         LayoutManager.SupportWindowIsVisible = false;
         
-        var leaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardMenu);
+        var leaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardMenu).Centered();
 
         LayoutManager.MainWindow.Update(leaderboardMenu);
         LayoutManager.UpdateLayout();
@@ -30,6 +30,7 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
     public Table GetSideTable(LeaderboardType menuType)
     {
         var sideLeaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardSideMenu);
+        sideLeaderboardMenu.Alignment(Justify.Left);
         
         return sideLeaderboardMenu;
     }
@@ -39,12 +40,13 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
         var table = LayoutManager.CreateTableLayout(MenuName);
         var leaderboardTable = LayoutManager.CreateInnerTable();
         
-        leaderboardTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]").Centered();
+        leaderboardTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]");
         
 
         if (leaderboardType is LeaderboardType.LeaderboardMenu)
         {
             AddCaption(table);
+            leaderboardTable.Centered();
         }
         
         var numberOfEntriesToAdd = CalculateNumberOfEntries(leaderboardType);

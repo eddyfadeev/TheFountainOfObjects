@@ -58,4 +58,11 @@ public sealed class Location : IEquatable<Location>
 
         return Equals((Location)obj);
     }
+
+    public override string ToString()
+    {
+        var x = X + 1;
+        var y = Y + 1;
+        return $"X: {x}, Y: {y}";
+    }
 }

@@ -13,6 +13,7 @@ using Services.Database.Repository;
 using View.Factory;
 using View.Layout;
 using View.Views.Game;
+using View.Views.GameStats;
 using View.Views.HelpScreen;
 using View.Views.Leaderboard;
 
@@ -40,5 +41,6 @@ public static class ConfigureServices
         services.AddTransient<IMessagesFactory, MessagesFactory>();
         services.AddTransient<ISideMenu<HelpType>, HelpView>();
         services.AddTransient<ISideMenu<LeaderboardType>, LeaderboardView>();
+        services.AddTransient<ISideMenu<GameStatsType>, GameStatsView>();
     }
 }

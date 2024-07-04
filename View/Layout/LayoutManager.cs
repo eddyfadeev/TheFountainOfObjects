@@ -47,14 +47,9 @@ public sealed class LayoutManager : ILayoutManager
         var table = new Table 
         {
             ShowHeaders = false,
-            Border = TableBorder.Rounded,
+            Border = TableBorder.None,
             Expand = true,
-            Title = new TableTitle(
-                menuName,
-                new Style(
-                    foreground: Color.White,
-                    decoration: Decoration.Bold
-                )),
+            Title = new TableTitle($"[underline bold white]{ menuName }[/]")
         };
         
         table.AddColumn(new TableColumn(menuName).Centered());
