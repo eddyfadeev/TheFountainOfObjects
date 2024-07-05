@@ -37,8 +37,8 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
 
     private Table CreateLeaderboardTable(LeaderboardType leaderboardType)
     {
-        var table = LayoutManager.CreateTableLayout(MenuName);
-        var leaderboardTable = LayoutManager.CreateInnerTable();
+        var table = CreateOuterTable(MenuName);
+        var leaderboardTable = CreateInnerTable();
         
         leaderboardTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]");
         

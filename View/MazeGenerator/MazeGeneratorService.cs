@@ -1,8 +1,6 @@
-﻿using Model.Factory;
-using Model.GameSettings;
+﻿using Model.GameSettings;
 using Model.Interfaces;
-using Spectre.Console.Rendering;
-using View.Views.Room;
+using Model.Maze;
 
 namespace View.MazeGenerator;
 
@@ -10,97 +8,42 @@ public class MazeGeneratorService : IMazeGeneratorService
 {
     private readonly IGameSettingsRepository _gameSettingsRepository;
     private readonly IPlayerRepository _playerRepository;
-    private readonly ILayoutManager _layoutManager;
     private readonly IMazeObjectFactory _mazeObjectFactory;
+    private readonly IMaze<IRoom> _maze;
     private readonly IMazeService<IRoom> _mazeService;
     private readonly IRoomPopulator _roomPopulator;
     
     public MazeGeneratorService(
         IGameSettingsRepository gameSettingsRepository, 
         IPlayerRepository playerRepository, 
-        ILayoutManager layoutManager,
         IMazeObjectFactory mazeObjectFactory, 
+        IMaze<IRoom> maze,
         IMazeService<IRoom> mazeService,
         IRoomPopulator roomPopulator)
     {
         _gameSettingsRepository = gameSettingsRepository;
         _playerRepository = playerRepository;
-        _layoutManager = layoutManager;
         _mazeObjectFactory = mazeObjectFactory;
+        _maze = maze;
         _mazeService = mazeService;
         _roomPopulator = roomPopulator;
     }
     
-    public Table CreateTable()
+    public Table GenerateMaze()
     {
-        var fieldSize = (int)_mazeService.MazeSize;
+        var fieldSize = (int)_maze.MazeSize;
         
-        var table = _layoutManager.CreateInnerTable();
-        PopulateTable(table, fieldSize);
-        
-        return table;
-    }
-    
-    public Table UpdateTable()
-    {
-        var fieldSize = (int)_mazeService.MazeSize;
-        
-        var table = _layoutManager.CreateInnerTable();
-        var rooms = _mazeService.MazeRooms;
-        AddColumns(table, fieldSize);
-        AddRows(table, rooms);
+        var table = CreateInnerTable();
+        PopulateMaze(table, fieldSize);
         
         return table;
     }
 
-    private void PopulateTable(Table table, int fieldSize)
+    private void PopulateMaze(Table table, int fieldSize)
     {
-        _roomPopulator.GenerateRooms(_mazeService);
+        _roomPopulator.GenerateRooms(_maze, _mazeService);
         AddColumns(table, fieldSize);
-        _roomPopulator.SetRoomOccupants(_mazeService, _playerRepository, _mazeObjectFactory, _gameSettingsRepository);
-        AddRows(table, fieldSize);
-    }
-
-    private void AddColumns(Table table, int cols)
-    {
-        for (int i = 0; i < cols; i++)
-        {
-            table.AddColumn(new TableColumn(string.Empty).NoWrap().Padding(0, 0, 0, 0));
-        }
-    }
-
-    private void AddRows(Table table, int rows)
-    {
-        var cols = rows;
-
-        for (int row = 0; row < rows; row++)
-        {
-            var rowCells = new IRenderable[cols];
-
-            for (int col = 0; col < cols; col++)
-            {
-                var roomView = new RoomView(_mazeService.MazeRooms[row, col], _mazeService.MazeSize);
-                rowCells[col] = roomView.RoomCanvas;
-            }
-            
-            table.AddRow(rowCells);
-        }
-    }
-
-    private void AddRows(Table table, IRoom[,] rooms)
-    {
-        var cols = rooms.GetLength(0);
-        var rows = rooms.GetLength(1);
-        
-        for (int row = 0; row < rows; row++) {
-            var rowCells = new IRenderable[cols];
-            
-            for (int col = 0; col < cols; col++) {
-                var roomView = new RoomView(rooms[row, col], _mazeService.MazeSize);
-                rowCells[col] = roomView.RoomCanvas;
-            }
-            
-            table.AddRow(rowCells);
-        }
+        _roomPopulator.SetRoomOccupants(_maze, _playerRepository, _mazeObjectFactory, _gameSettingsRepository);
+        AddRows(_maze, table, fieldSize);
     }
 }

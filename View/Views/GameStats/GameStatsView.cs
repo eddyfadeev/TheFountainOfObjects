@@ -22,7 +22,7 @@ public class GameStatsView : ISideMenu<GameStatsType>
 
     private Table CreateStatsTable()
     {
-        var table = _layoutManager.CreateTableLayout(_menuName);
+        var table = CreateOuterTable(_menuName);
         var statsTable = PrepareStats();
         
         table.AddRow(statsTable);
@@ -32,7 +32,7 @@ public class GameStatsView : ISideMenu<GameStatsType>
 
     private Table PrepareStats()
     {
-        var statsTable = _layoutManager.CreateInnerTable();
+        var statsTable = CreateInnerTable();
         statsTable.AddColumns("Entry", "Value");
         
         AddStats(statsTable);

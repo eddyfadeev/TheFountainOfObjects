@@ -2,47 +2,47 @@
 using Model.Enums;
 using Model.GameSettings;
 using Model.Interfaces;
+using Model.Maze;
 using Model.Room;
 
 namespace View.MazeGenerator;
 
 public class RoomPopulator : IRoomPopulator
 {
-    public void GenerateRooms(IMazeService<IRoom> mazeService)
+    public void GenerateRooms(IMaze<IRoom> maze, IMazeService<IRoom> mazeService)
     {
-        var mazeSize = (int)mazeService.MazeSize;
-        var maze = new IRoom[mazeSize, mazeSize];
+        var mazeSize = (int)maze.MazeSize;
+        var newMaze = new IRoom[mazeSize, mazeSize];
         
         for (int i = 0; i < mazeSize; i++)
         {
             for (int j = 0; j < mazeSize; j++)
             {
                 var location = new Location(i, j);
-                maze[i, j] = new Room(location, mazeService);
+                newMaze[i, j] = new Room(location, mazeService);
             }
         }
         
-        mazeService.MazeRooms = maze;
+        maze.MazeRooms = newMaze;
     }
     
     public void SetRoomOccupants(
-        IMazeService<IRoom> mazeService, 
+        IMaze<IRoom> maze, 
         IPlayerRepository playerRepository, 
         IMazeObjectFactory mazeObjectFactory, 
         IGameSettingsRepository gameSettingsRepository)
     {
         var random = new Random();
-        var mazeSize = (int)mazeService.MazeSize;
-        var maze = mazeService.MazeRooms;
+        var mazeSize = (int)maze.MazeSize;
 
         var entranceLocation = new Location(random.Next(0, mazeSize), random.Next(0, mazeSize / 2 - 1));
         var fountainLocation = new Location(random.Next(0, mazeSize), random.Next(mazeSize / 2 + 1, mazeSize));
         playerRepository.Player.Location = entranceLocation;
         
-        AddObjectToRoom(entranceLocation, maze, mazeObjectFactory.CreateObject(ObjectType.Entrance, entranceLocation));
-        AddObjectToRoom(entranceLocation, maze, playerRepository.Player);
-        AddObjectToRoom(fountainLocation, maze, mazeObjectFactory.CreateObject(ObjectType.Fountain, fountainLocation));
-        AddDangerousObjects(maze, gameSettingsRepository, mazeObjectFactory);
+        AddObjectToRoom(entranceLocation, maze.MazeRooms, mazeObjectFactory.CreateObject(ObjectType.Entrance, entranceLocation));
+        AddObjectToRoom(entranceLocation, maze.MazeRooms, playerRepository.Player);
+        AddObjectToRoom(fountainLocation, maze.MazeRooms, mazeObjectFactory.CreateObject(ObjectType.Fountain, fountainLocation));
+        AddDangerousObjects(maze.MazeRooms, gameSettingsRepository, mazeObjectFactory);
     }
     
     private void AddObjectToRoom(Location location, IRoom[,] maze, IPositionable obj)

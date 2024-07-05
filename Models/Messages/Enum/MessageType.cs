@@ -18,5 +18,6 @@ public enum MessageType
     AtActiveFountain,
     NothingHappened,
     FountainActivated,
-    FountainIsAlreadyActivated
+    FountainIsAlreadyActivated,
+    Attack,
 }

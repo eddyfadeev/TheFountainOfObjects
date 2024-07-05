@@ -1,13 +1,14 @@
 ﻿using Model.GameSettings;
 using Model.Interfaces;
+using Model.Maze;
 
 namespace View.MazeGenerator;
 
 public interface IRoomPopulator
 {
-    void GenerateRooms(IMazeService<IRoom> mazeService);
+    void GenerateRooms(IMaze<IRoom> maze, IMazeService<IRoom> mazeService);
     void SetRoomOccupants(
-        IMazeService<IRoom> mazeService, 
+        IMaze<IRoom> maze, 
         IPlayerRepository playerRepository, 
         IMazeObjectFactory mazeObjectFactory, 
         IGameSettingsRepository gameSettingsRepository);

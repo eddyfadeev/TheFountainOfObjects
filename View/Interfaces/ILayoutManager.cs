@@ -7,6 +7,4 @@ public interface ILayoutManager
     public Spectre.Console.Layout SupportWindowBottom { get; }
     public bool SupportWindowIsVisible { get; set; }
     void UpdateLayout();
-    Table CreateTableLayout(string menuName);
-    Table CreateInnerTable();
 }

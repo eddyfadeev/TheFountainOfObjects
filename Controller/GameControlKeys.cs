@@ -4,7 +4,7 @@ namespace Controller;
 
 internal static class GameControlKeys
 {
-    public static List<ConsoleKey> DirectionKeys { get; } =
+    private static List<ConsoleKey> DirectionKeys { get; } =
     [
         ConsoleKey.W,
         ConsoleKey.A,
@@ -16,16 +16,16 @@ internal static class GameControlKeys
         ConsoleKey.RightArrow
     ];
 
-    public static List<ConsoleKey> InteractionKeys { get; } =
+    private static List<ConsoleKey> InteractionKeys { get; } =
     [
         ConsoleKey.E,
         ConsoleKey.Enter
     ];
     
-    public static ConsoleKey AttackTrigger => ConsoleKey.Spacebar;
-    public static ConsoleKey PauseKey => ConsoleKey.Escape;
+    private static ConsoleKey AttackTrigger => ConsoleKey.Spacebar;
+    private static ConsoleKey PauseKey => ConsoleKey.Escape;
 
-    public static readonly Dictionary<Enum, object> GameKeys = new()
+    private static readonly Dictionary<Enum, object> GameKeys = new()
     {
         {TypeOfAction.Attack, AttackTrigger},
         {TypeOfAction.Move, DirectionKeys},
@@ -44,7 +44,7 @@ internal static class GameControlKeys
             }
         }
         
-        throw new ArgumentException("Invalid key.");
+        return TypeOfAction.DoNothing;
     }
     
     public static Direction GetDirectionFromKey(ConsoleKey key) =>
@@ -56,15 +56,4 @@ internal static class GameControlKeys
             ConsoleKey.A or ConsoleKey.LeftArrow => Direction.West,
             _ => throw new ArgumentException("Invalid direction key.")
         };
-    
-    public static bool IsValidKey(ConsoleKey key) => GetAllKeys().Contains(key);
-    
-    private static List<ConsoleKey> GetAllKeys()
-    {
-        var allKeys = DirectionKeys.Concat(InteractionKeys).ToList();
-        allKeys.Add(AttackTrigger);
-        allKeys.Add(PauseKey);
-        
-        return allKeys;
-    }
 }

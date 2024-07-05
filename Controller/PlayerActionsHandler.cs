@@ -1,6 +1,7 @@
 ﻿using Model;
 using Model.Enums;
 using Model.Interfaces;
+using Model.Maze;
 using Model.Messages.Enum;
 using Model.Objects;
 using Model.Player;
@@ -11,33 +12,38 @@ namespace Controller;
 
 public class PlayerActionsHandler : IMovable, IShootable
 {
-    private readonly IMazeService<IRoom> _mazeService;
+    private readonly IMaze<IRoom> _maze;
     private readonly IPlayer _player;
     private readonly IGameView _gameView;
     
-    public PlayerActionsHandler(IPlayerRepository playerRepository, IMazeService<IRoom> mazeService, IGameView gameView)
+    public PlayerActionsHandler(IPlayerRepository playerRepository, IMaze<IRoom> maze, IGameView gameView)
     {
         _player = playerRepository.Player!;
-        _mazeService = mazeService;
+        _maze = maze;
         _gameView = gameView;
     }
 
-    public bool Attack(Direction direction)
+    public void Attack(Direction direction)
     {
         if (CanAttack(direction))
         {
             var targetLocation = GetTargetLocation(_player.Location, direction);
-            var targetRoom = _mazeService[targetLocation];
+            var targetRoom = _maze[targetLocation];
 
             var enemy = targetRoom.GetObject<IEnemy>();
 
             if (enemy is not null)
             {
-                return targetRoom.RemoveObject(enemy);
+                _gameView.UpdateSpecialMessage(MessageType.KilledAmarok);
+                
+                targetRoom.RemoveObject(enemy);
             }
+            else
+            {
+                _gameView.UpdateSpecialMessage(MessageType.MissedShot);
+            }
+            
         }
-
-        return false;
     }
     
     public void Move(Direction direction)
@@ -45,8 +51,8 @@ public class PlayerActionsHandler : IMovable, IShootable
         if (CanMove(direction))
         {
             var newLocation = GetTargetLocation(_player.Location, direction);
-            var currentRoom = _mazeService[_player.Location];
-            var newRoom = _mazeService[newLocation];
+            var currentRoom = _maze[_player.Location];
+            var newRoom = _maze[newLocation];
             
             currentRoom.RemoveObject(_player);
             newRoom.AddObject(_player);
@@ -74,12 +80,12 @@ public class PlayerActionsHandler : IMovable, IShootable
         }
     }
 
-    private IActivable? GetActivable(Location location) => _mazeService[location].GetObject<IActivable>();
+    private IActivable? GetActivable(Location location) => _maze[location].GetObject<IActivable>();
 
     private bool CanAttack(Direction direction)
     {
         var targetLocation = GetTargetLocation(_player.Location, direction);
-        var targetRoom = _mazeService[targetLocation];
+        var targetRoom = _maze[targetLocation];
         
         return targetRoom.IsOccupiedBy<IEnemy>();
     }
@@ -101,6 +107,6 @@ public class PlayerActionsHandler : IMovable, IShootable
     };
 
     private bool IsWithinMazeBounds(Location location) =>
-        location.X >= 0 && location.X < (int)_mazeService.MazeSize &&
-        location.Y >= 0 && location.Y < (int)_mazeService.MazeSize;
+        location.X >= 0 && location.X < (int)_maze.MazeSize &&
+        location.Y >= 0 && location.Y < (int)_maze.MazeSize;
 }

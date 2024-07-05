@@ -1,12 +1,11 @@
 ﻿using Model.Enums;
+using Spectre.Console;
 
 namespace Model.Interfaces;
 
 public interface IMazeService<T>
 {
-    T[,] MazeRooms { get; set; }
-    MazeSize MazeSize { get; }
-    T this[Location location] { get; set; }
-    internal void SetMazeSize(MazeSize mazeSize);
-    internal List<IDangerous> GetAdjacentRoomsOccupants(Location location);
+    void SetMazeSize(MazeSize mazeSize);
+    List<IDangerous> GetAdjacentRoomsOccupants(Location location);
+    Table UpdateMaze();
 }

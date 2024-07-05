@@ -42,33 +42,6 @@ public sealed class LayoutManager : ILayoutManager
         AnsiConsole.Write(GameLayout);
     }
     
-    public Table CreateTableLayout(string menuName)
-    {
-        var table = new Table 
-        {
-            ShowHeaders = false,
-            Border = TableBorder.None,
-            Expand = true,
-            Title = new TableTitle($"[underline bold white]{ menuName }[/]")
-        };
-        
-        table.AddColumn(new TableColumn(menuName).Centered());
-
-        return table;
-    }
-    
-    public Table CreateInnerTable()
-    {
-        var innerTable = new Table
-        {
-            Border = TableBorder.None,
-            ShowHeaders = false,
-            ShowFooters = false
-        };
-        
-        return innerTable;
-    }
-    
     private void SetDefaultSize()
     {
         const int mainWindowSize = 70;

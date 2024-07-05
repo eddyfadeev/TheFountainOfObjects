@@ -26,6 +26,7 @@ public class MessagesFactory : IMessagesFactory
             MessageType.NothingHappened => new NothingHappened(),
             MessageType.FountainActivated => new FountainActivated(),
             MessageType.FountainIsAlreadyActivated => new FountainIsAlreadyActivated(),
+            MessageType.Attack => new AttackDirection(),
             _ => throw new ArgumentException("No such message type. Message factory.")
         };
 }

@@ -6,6 +6,7 @@ using Model.Messages.Interfaces;
 using Model.Player;
 using Model.Room;
 using Model.RoomService;
+using Services;
 using Services.Database;
 using Services.Database.Helpers;
 using Services.Database.Interfaces;
@@ -28,6 +29,7 @@ public static class ConfigureServices
         services.AddSingleton<IDatabaseService, DatabaseService>();
         services.AddSingleton<IMenuCommandFactory, MenuCommandFactory>();
         services.AddSingleton<IGameSettingsRepository, GameSettingsRepository>();
+        services.AddSingleton<IMaze<IRoom>, Maze>();
         services.AddSingleton<IMazeService<IRoom>, MazeService>();
         services.AddSingleton<IMazeObjectFactory, MazeObjectFactory>();
         services.AddSingleton<IPlayer, Player>();

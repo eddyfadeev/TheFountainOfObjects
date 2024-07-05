@@ -5,7 +5,7 @@ namespace Model.Interfaces;
 
 public interface IRoom : IPositionable
 {
-    internal List<IPositionable> Occupants { get; }
+    public List<IPositionable> Occupants { get; }
     bool IsVisited { get; }
     bool IsOccupied { get; }
     Color RoomColor { get; }

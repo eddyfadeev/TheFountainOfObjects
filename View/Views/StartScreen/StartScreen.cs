@@ -36,7 +36,7 @@ public sealed class StartScreen : MenuView
     
     private Table ComposeIntro()
     {
-        var introTable = LayoutManager.CreateTableLayout(MenuName);
+        var introTable = CreateOuterTable(MenuName);
         
         introTable.AddRow(IntroText);
         

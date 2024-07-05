@@ -57,8 +57,7 @@ public static class SelectableExtensions
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var layoutManager = selectable.LayoutManager;
-        var menuTable = layoutManager.CreateTableLayout(menuName);
+        var menuTable = CreateOuterTable(menuName);
         
         for (int i = 0; i < menuEntries.Count; i++)
         {

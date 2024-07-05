@@ -32,8 +32,8 @@ public class HelpView : MenuView, ISideMenu<HelpType>
 
     private Table CreateHelpTable(HelpType helpType)
     {
-        var table = LayoutManager.CreateTableLayout(MenuName);
-        var helpTable = LayoutManager.CreateInnerTable();
+        var table = CreateOuterTable(MenuName);
+        var helpTable = CreateInnerTable();
         
         helpTable.AddColumn("[white bold]Help[/]").Centered();
         var tableText = SetPanelText(helpType);

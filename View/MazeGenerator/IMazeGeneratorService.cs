@@ -2,6 +2,5 @@
 
 public interface IMazeGeneratorService
 {
-    Table CreateTable();
-    Table UpdateTable();
+    Table GenerateMaze();
 }
