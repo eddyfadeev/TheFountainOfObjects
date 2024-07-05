@@ -1,4 +1,5 @@
 ﻿using Model.Interfaces;
+using Model.Messages.Enum;
 using Model.Messages.Interfaces;
 using View.MazeGenerator;
 using View.Views.GameStats;
@@ -19,6 +20,7 @@ public class GameView : IGameView
     public Table? Maze { get; private set; }
     public string MenuName { get; }
     public ILayoutManager LayoutManager { get; }
+    public string SpecialMessage { get; private set; }
     
     public GameView(
         ILayoutManager layoutManager, 
@@ -40,6 +42,7 @@ public class GameView : IGameView
         _gameStatsView = gameStatsView;
         
         MenuName = "The Fountain of Objects";
+        SpecialMessage = string.Empty;
     }
     
     public void Display()
@@ -67,6 +70,15 @@ public class GameView : IGameView
         LayoutManager.SupportWindowTop.Update(gameStatsSideWindow);
         
         LayoutManager.UpdateLayout();
+        
+        SpecialMessage = string.Empty;
+    }
+
+    public void UpdateSpecialMessage(MessageType messageType)
+    {
+        var messageToUpdate = _messagesFactory.CreateMessage(messageType);
+        
+        SpecialMessage = messageToUpdate.GetMessage();
     }
 
     private Table CreateStats()
@@ -97,9 +109,14 @@ public class GameView : IGameView
         {
             throw new ArgumentException("Player is null in Game View.");
         }
+        
+        if (!string.IsNullOrWhiteSpace(SpecialMessage))
+        {
+            messagesTable.AddRow(SpecialMessage);
+        }
 
         var roomMessages = _mazeService[player.Location].Messages;
-
+        
         foreach (var message in roomMessages)
         {
             var messageText = _messagesFactory.CreateMessage(message).GetMessage();

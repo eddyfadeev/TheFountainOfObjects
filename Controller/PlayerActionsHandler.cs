@@ -1,6 +1,8 @@
 ﻿using Model;
 using Model.Enums;
 using Model.Interfaces;
+using Model.Messages.Enum;
+using Model.Objects;
 using Model.Player;
 using Services.Database.Interfaces;
 using View.Views.Game;
@@ -51,6 +53,28 @@ public class PlayerActionsHandler : IMovable, IShootable
             _player.Location = newLocation;
         }
     }
+
+    public void InteractWithRoom(Location location)
+    {
+        var activable = GetActivable(location);
+        var isActivated = activable is not null && activable.IsActivated;
+
+        switch (activable)
+        {
+            case Fountain when !isActivated:
+                activable.Activate();
+                _gameView.UpdateSpecialMessage(MessageType.FountainActivated);
+                break;
+            case Fountain when isActivated:
+                _gameView.UpdateSpecialMessage(MessageType.FountainIsAlreadyActivated);
+                break;
+            default:
+                _gameView.UpdateSpecialMessage(MessageType.NothingHappened);
+                break;
+        }
+    }
+
+    private IActivable? GetActivable(Location location) => _mazeService[location].GetObject<IActivable>();
 
     private bool CanAttack(Direction direction)
     {

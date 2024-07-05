@@ -1,7 +1,11 @@
-﻿namespace View.Views.Game;
+﻿using Model.Messages.Enum;
+
+namespace View.Views.Game;
 
 public interface IGameView : INonSelectableMenu
 {
-    public Table? Maze { get; }
-    public void UpdateMaze(Table maze);
+    string SpecialMessage { get; }
+    Table? Maze { get; }
+    void UpdateMaze(Table maze);
+    void UpdateSpecialMessage(MessageType messageType);
 }

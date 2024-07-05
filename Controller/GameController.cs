@@ -83,7 +83,7 @@ public class GameController
                 // Attack
                 break;
             case TypeOfAction.Interact:
-                // Interact
+                playerActionsHandler.InteractWithRoom(_playerRepository.Player.Location);
                 break;
             case TypeOfAction.Pause:
                 // Pause game

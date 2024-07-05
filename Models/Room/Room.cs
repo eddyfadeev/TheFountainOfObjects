@@ -79,7 +79,7 @@ public class Room : IRoom
         }
         else
         {
-            messages.Add(MessageType.Nothing);
+            messages.Add(MessageType.FeelNothing);
         }
 
         return messages;

@@ -2,7 +2,7 @@
 
 public enum MessageType
 {
-    Nothing,
+    FeelNothing,
     AmarokNearby,  
     MaelstromNearby,
     PitNearby,
@@ -15,5 +15,8 @@ public enum MessageType
     Victory, 
     AtEntranceRoom, 
     AtNotActiveFountain, 
-    AtActiveFountain
+    AtActiveFountain,
+    NothingHappened,
+    FountainActivated,
+    FountainIsAlreadyActivated
 }

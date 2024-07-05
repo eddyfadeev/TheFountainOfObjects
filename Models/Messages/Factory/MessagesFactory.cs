@@ -9,7 +9,7 @@ public class MessagesFactory : IMessagesFactory
     public IMessage CreateMessage(MessageType messageType) =>
         messageType switch
         {
-            MessageType.Nothing => new Nothing(),
+            MessageType.FeelNothing => new FeelNothing(),
             MessageType.AmarokNearby => new AmarokNearby(),
             MessageType.MaelstromNearby => new MaelstromNearby(),
             MessageType.PitNearby => new PitNearby(),
@@ -23,6 +23,9 @@ public class MessagesFactory : IMessagesFactory
             MessageType.AtEntranceRoom => new AtEntrance(),
             MessageType.AtNotActiveFountain => new AtNotActiveFountain(),
             MessageType.AtActiveFountain => new AtActiveFountain(),
-            _ => throw new ArgumentException("No such message type")
+            MessageType.NothingHappened => new NothingHappened(),
+            MessageType.FountainActivated => new FountainActivated(),
+            MessageType.FountainIsAlreadyActivated => new FountainIsAlreadyActivated(),
+            _ => throw new ArgumentException("No such message type. Message factory.")
         };
 }

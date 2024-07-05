@@ -1,8 +1,4 @@
-﻿using Model.Creatures;
-using Model.Enums;
-using Model.Messages.Enum;
-using Model.Objects;
-using Model.Objects.Dangerous;
+﻿using Model.Enums;
 using Spectre.Console;
 
 namespace Model.Maze;

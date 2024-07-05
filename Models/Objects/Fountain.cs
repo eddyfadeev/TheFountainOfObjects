@@ -1,6 +1,6 @@
 ﻿namespace Model.Objects;
 
-public class Fountain : IPositionable, IActivable
+public class Fountain : IActivable
 {
     public Location Location { get; set; }
     public bool IsActivated { get; private set; }
@@ -19,6 +19,4 @@ public class Fountain : IPositionable, IActivable
     {
         IsActivated = true;
     }
-    
-    public string ActivatedMessage() => "[deepskyblue1]You activated the fountain![/]";
 }
