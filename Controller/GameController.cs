@@ -13,7 +13,7 @@ public class GameController
     private readonly IServiceProvider _serviceProvider;
     private readonly IPlayerRepository _playerRepository;
     private readonly IGameSettingsRepository _gameSettingsRepository;
-    private readonly MenuHandler _menuHandler;
+    private readonly MainMenuHandler _mainMenuHandler;
     private readonly IMaze<IRoom> _maze;
     private readonly IGameView _gameView;
     
@@ -23,7 +23,7 @@ public class GameController
         var menuCommandFactory = _serviceProvider.GetRequiredService<IMenuCommandFactory>();
         _playerRepository = _serviceProvider.GetRequiredService<IPlayerRepository>();
         _gameSettingsRepository = _serviceProvider.GetRequiredService<IGameSettingsRepository>();
-        _menuHandler = new MenuHandler(menuCommandFactory, _playerRepository, _gameSettingsRepository);
+        _mainMenuHandler = new MainMenuHandler(menuCommandFactory, _playerRepository, _gameSettingsRepository);
         _maze = _serviceProvider.GetRequiredService<IMaze<IRoom>>();
         _gameView = _serviceProvider.GetRequiredService<IGameView>();
     }
@@ -32,12 +32,12 @@ public class GameController
     {
         Console.CursorVisible = false;
         
-        _menuHandler.ShowStartScreen();
-        _menuHandler.ShowCreatePlayerMenu();
+        _mainMenuHandler.ShowStartScreen();
+        _mainMenuHandler.ShowCreatePlayerMenu();
 
         do
         {
-            var menuChoice = _menuHandler.ShowMainMenu();
+            var menuChoice = _mainMenuHandler.ShowMainMenu();
         
             switch (menuChoice)
             {
@@ -45,13 +45,13 @@ public class GameController
                     StartGame();
                     break;
                 case MainMenuEntries.Leaderboard:
-                    _menuHandler.ShowLeaderboardMenu();
+                    _mainMenuHandler.ShowLeaderboardMenu();
                     break;
                 case MainMenuEntries.Settings:
-                    _menuHandler.ShowSettingsMenu();
+                    _mainMenuHandler.ShowSettingsMenu();
                     break;
                 case MainMenuEntries.Help:
-                    _menuHandler.ShowHelpMenu();
+                    _mainMenuHandler.ShowHelpMenu();
                     break;
                 case MainMenuEntries.Exit:
                     return;

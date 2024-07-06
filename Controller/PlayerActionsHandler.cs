@@ -31,7 +31,8 @@ public class PlayerActionsHandler : IMovable, IShootable
             var targetRoom = _maze[targetLocation];
 
             var enemy = targetRoom.GetObject<IEnemy>();
-
+            _player.Shoot();
+            
             if (enemy is not null)
             {
                 _gameView.UpdateSpecialMessage(MessageType.KilledAmarok);
@@ -42,7 +43,6 @@ public class PlayerActionsHandler : IMovable, IShootable
             {
                 _gameView.UpdateSpecialMessage(MessageType.MissedShot);
             }
-            
         }
     }
     
@@ -84,10 +84,9 @@ public class PlayerActionsHandler : IMovable, IShootable
 
     private bool CanAttack(Direction direction)
     {
-        var targetLocation = GetTargetLocation(_player.Location, direction);
-        var targetRoom = _maze[targetLocation];
-        
-        return targetRoom.IsOccupiedBy<IEnemy>();
+        var attackLocation = GetTargetLocation(_player.Location, direction);
+
+        return IsWithinMazeBounds(attackLocation);
     }
 
     private bool CanMove(Direction direction)

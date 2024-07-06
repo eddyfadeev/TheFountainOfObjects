@@ -11,13 +11,13 @@ using View.Views.SettingsMenu;
 
 namespace Controller;
 
-internal class MenuHandler
+internal class MainMenuHandler
 {
     private readonly IMenuCommandFactory _menuCommandFactory;
     private readonly IPlayerRepository _playerRepository;
     private readonly IGameSettingsRepository _gameSettingsRepository;
 
-    public MenuHandler(
+    public MainMenuHandler(
         IMenuCommandFactory menuCommandFactory, 
         IPlayerRepository playerRepository, 
         IGameSettingsRepository gameSettingsRepository
