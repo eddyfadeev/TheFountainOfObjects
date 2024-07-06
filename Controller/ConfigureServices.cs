@@ -29,8 +29,8 @@ public static class ConfigureServices
         services.AddSingleton<IDatabaseService, DatabaseService>();
         services.AddSingleton<IMenuCommandFactory, MenuCommandFactory>();
         services.AddSingleton<IGameSettingsRepository, GameSettingsRepository>();
-        services.AddSingleton<IMaze<IRoom>, Maze>();
         services.AddSingleton<IMazeService<IRoom>, MazeService>();
+        services.AddSingleton<IMaze<IRoom>, Maze>();
         services.AddSingleton<IMazeObjectFactory, MazeObjectFactory>();
         services.AddSingleton<IPlayer, Player>();
         services.AddSingleton<IGameView, GameView>();

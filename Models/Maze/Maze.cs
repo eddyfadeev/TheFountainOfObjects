@@ -1,17 +1,27 @@
 ﻿using Model.Enums;
+using Spectre.Console;
 
 namespace Model.Maze;
 
 public class Maze : IMaze<IRoom>
 {
-    public MazeSize MazeSize { get; set; }
-    public IRoom[,] MazeRooms { get; set; }
-
-    public Maze(MazeSize mazeSize)
+    private MazeSize _mazeSize;
+    public MazeSize MazeSize
     {
-        MazeSize = mazeSize;
-        MazeRooms = new IRoom[(int)mazeSize, (int)mazeSize];
+        get => _mazeSize;
+        set
+        {
+            if (!IsMazeSizeCorrect(value))
+            {
+                AnsiConsole.WriteLine("Invalid maze size. Defaulting to small (4x4).");
+                value = MazeSize.Small;
+            }
+            
+            _mazeSize = value;
+            ResizeMaze();
+        }
     }
+    public IRoom[,] MazeRooms { get; set; }
 
     public Maze()
     {
@@ -24,4 +34,12 @@ public class Maze : IMaze<IRoom>
         get => MazeRooms[location.X, location.Y];
         set => MazeRooms[location.X, location.Y] = value;
     }
+    
+    private bool IsMazeSizeCorrect(MazeSize value) => 
+        value is 
+            MazeSize.Small or
+            MazeSize.Medium or
+            MazeSize.Large;
+    
+    private void ResizeMaze() => MazeRooms = new IRoom[(int)_mazeSize, (int)_mazeSize];
 }

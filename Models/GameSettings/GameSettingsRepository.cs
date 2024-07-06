@@ -43,13 +43,12 @@ public class GameSettingsRepository : IGameSettingsRepository
     
     public void SetMazeSize(MazeSize mazeSize)
     {
-        _mazeService.SetMazeSize(mazeSize);
+        _mazeService.ChangeMazeSize(mazeSize);
     }
     
     private void SetDefaultSettings()
     {
-        
-        _mazeService.SetMazeSize(MazeSize.Small);
+        _mazeService.ChangeMazeSize(MazeSize.Small);
         PitsCount = 1;
         MaelstromsCount = 1;
         AmaroksCount = 1;

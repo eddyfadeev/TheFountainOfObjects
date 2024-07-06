@@ -8,7 +8,7 @@ namespace Model.Room;
 
 public class Room : IRoom
 {
-    private IMazeService<IRoom> _mazeService;
+    private readonly IMazeService<IRoom> _mazeService;
     public List<IPositionable> Occupants { get; }
     public bool IsVisited { get; private set; }
     public Location Location { get; set; }
@@ -18,13 +18,14 @@ public class Room : IRoom
     public bool IsOccupied => Occupants.Count != 0;
 
     public List<MessageType> Messages => SetRoomMessages();
-    
+
     public Room(Location location, IMazeService<IRoom> mazeService)
     {
         _mazeService = mazeService;
         Occupants = new List<IPositionable>();
 
         Location = location;
+        
         // Map visibility switch
         IsVisited = false;
     }
@@ -81,7 +82,7 @@ public class Room : IRoom
         {
             messages.Add(MessageType.FeelNothing);
         }
-
+        
         return messages;
     }
 

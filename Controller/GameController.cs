@@ -75,7 +75,7 @@ public class GameController
                 break;
             case TypeOfAction.Attack:
                 _gameView.UpdateSpecialMessage(MessageType.Attack);
-                var newMaze = mazeService.UpdateMaze();
+                var newMaze = mazeService.UpdateMaze(_maze);
                 
                 _gameView.UpdateMaze(newMaze);
                 var keyPress = Console.ReadKey(true);
@@ -106,7 +106,7 @@ public class GameController
             var pressedKey = Console.ReadKey(true);
             ProcessKeyPress(pressedKey.Key);
             
-            var newMaze = mazeService.UpdateMaze();
+            var newMaze = mazeService.UpdateMaze(_maze);
             
             _gameView.UpdateMaze(newMaze);
         } while (true);
