@@ -65,7 +65,7 @@ public class GameController
     {
         var mazeService = _serviceProvider.GetRequiredService<IMazeService<IRoom>>();
         var actionType = GameControlKeys.GetTypeOfAction(key);
-        var playerActionsHandler = new PlayerActionsHandler(_playerRepository, _maze, _gameView);
+        var playerActionsHandler = new PlayerActionsHandler(_playerRepository, _maze, _gameView, mazeService);
         
         switch (actionType)
         {
@@ -83,8 +83,8 @@ public class GameController
 
                 playerActionsHandler.Attack(directionToAttack);
                 break;
-            case TypeOfAction.Interact:
-                playerActionsHandler.InteractWithRoom(_playerRepository.Player!.Location);
+            case TypeOfAction.Use:
+                playerActionsHandler.UseInRoom(_playerRepository.Player!.Location);
                 break;
             case TypeOfAction.Pause:
                 // Pause game
@@ -105,6 +105,11 @@ public class GameController
         {
             var pressedKey = Console.ReadKey(true);
             ProcessKeyPress(pressedKey.Key);
+
+            if (_maze[_playerRepository.Player!.Location].IsDangerous)
+            {
+                _maze[_playerRepository.Player.Location].GetObject<IDangerous>()!.Attack(_playerRepository.Player); 
+            }
             
             var newMaze = mazeService.UpdateMaze(_maze);
             

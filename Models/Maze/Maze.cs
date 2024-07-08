@@ -31,8 +31,8 @@ public class Maze : IMaze<IRoom>
 
     public IRoom this[Location location]
     {
-        get => MazeRooms[location.X, location.Y];
-        set => MazeRooms[location.X, location.Y] = value;
+        get => MazeRooms[location.Y, location.X];
+        set => MazeRooms[location.Y, location.X] = value;
     }
     
     private bool IsMazeSizeCorrect(MazeSize value) => 

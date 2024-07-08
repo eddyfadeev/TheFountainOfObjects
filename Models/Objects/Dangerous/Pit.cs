@@ -1,6 +1,6 @@
 ﻿namespace Model.Objects.Dangerous;
 
-public class Pit : IPositionable, IDangerous
+public class Pit : IDangerous
 {
     public Location Location { get; set; }
     
@@ -13,5 +13,5 @@ public class Pit : IPositionable, IDangerous
         };
     }
 
-    public void Attack(Player.Player player) => throw new NotImplementedException();
+    public void Attack(Player.Player player) => player.Kill();
 }

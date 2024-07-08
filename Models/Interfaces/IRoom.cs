@@ -8,6 +8,8 @@ public interface IRoom : IPositionable
     public List<IPositionable> Occupants { get; }
     bool IsVisited { get; }
     bool IsOccupied { get; }
+    bool IsDangerous { get; }
+    bool IsEntrance { get; }
     Color RoomColor { get; }
     List<MessageType> Messages { get; }
     void AddObject(IPositionable obj);

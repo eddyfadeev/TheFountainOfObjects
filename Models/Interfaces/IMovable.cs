@@ -5,5 +5,5 @@ namespace Model.Interfaces;
 public interface IMovable
 {
     void Move(Direction direction);
-    public void InteractWithRoom(Location location);
+    public void UseInRoom(Location location);
 }

@@ -54,4 +54,59 @@ public class MazeService : IMazeService<IRoom>
     }
     
     public void ChangeMazeSize(MazeSize mazeSize) => _maze.MazeSize = mazeSize;
+    
+    public bool IsWithinMazeBounds(Location location) =>
+        XIsWithinMazeBounds(location.X) &&
+        YIsWithinMazeBounds(location.Y);
+
+    public Location GetAdjustedLocation(Location location)
+    {
+        var newX = location.X;
+        var newY = location.Y;
+        
+        if (IsWithinMazeBounds(location))
+        {
+            return location;
+        }
+
+        if (!XIsWithinMazeBounds(location.X))
+        {
+            newX = AdjustCoordinate(location.X);
+        }
+
+        if (!YIsWithinMazeBounds(location.Y))
+        {
+            newY = AdjustCoordinate(location.Y);
+        }
+        
+        return new Location
+        {
+            X = newX,
+            Y = newY
+        };
+    }
+
+    private int AdjustCoordinate(int coordinate)
+    {
+        int newCoordinate;
+        
+        if (coordinate < 0)
+        {
+            newCoordinate = 0;
+        } 
+        else if (coordinate >= (int)_maze.MazeSize - 1)
+        {
+            newCoordinate = (int) _maze.MazeSize - 1;
+        }
+        else
+        {
+            newCoordinate = coordinate;
+        }
+
+        return newCoordinate;
+    }
+    
+    private bool XIsWithinMazeBounds(int x) => x >= 0 && x < (int)_maze.MazeSize;
+    
+    private bool YIsWithinMazeBounds(int y) => y >= 0 && y < (int)_maze.MazeSize;
 }

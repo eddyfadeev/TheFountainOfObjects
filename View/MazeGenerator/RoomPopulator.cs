@@ -14,12 +14,12 @@ public class RoomPopulator : IRoomPopulator
         var mazeSize = (int)maze.MazeSize;
         var newMaze = new IRoom[mazeSize, mazeSize];
         
-        for (int i = 0; i < mazeSize; i++)
+        for (int y = 0; y < mazeSize; y++)
         {
-            for (int j = 0; j < mazeSize; j++)
+            for (int x = 0; x < mazeSize; x++)
             {
-                var location = new Location(i, j);
-                newMaze[i, j] = new Room(location, mazeService);
+                var location = new Location(x, y);
+                newMaze[y, x] = new Room(location, mazeService);
             }
         }
         
@@ -35,8 +35,8 @@ public class RoomPopulator : IRoomPopulator
         var random = new Random();
         var mazeSize = (int)maze.MazeSize;
 
-        var entranceLocation = new Location(random.Next(0, mazeSize), random.Next(0, mazeSize / 2 - 1));
-        var fountainLocation = new Location(random.Next(0, mazeSize), random.Next(mazeSize / 2 + 1, mazeSize));
+        var entranceLocation = new Location(random.Next(0, mazeSize / 2 - 1), random.Next(0, mazeSize));
+        var fountainLocation = new Location(random.Next(mazeSize / 2 + 1, mazeSize), random.Next(0, mazeSize));
         playerRepository.Player.Location = entranceLocation;
         
         AddObjectToRoom(entranceLocation, maze.MazeRooms, mazeObjectFactory.CreateObject(ObjectType.Entrance, entranceLocation));
@@ -47,7 +47,7 @@ public class RoomPopulator : IRoomPopulator
     
     private void AddObjectToRoom(Location location, IRoom[,] maze, IPositionable obj)
     {
-        maze[location.X, location.Y].AddObject(obj);
+        maze[location.Y, location.X].AddObject(obj);
     }
     
     private void AddDangerousObjects(
@@ -67,7 +67,7 @@ public class RoomPopulator : IRoomPopulator
             {
                 var position = allPositions[currentIndex++];
 
-                if (!maze[position.X, position.Y].IsOccupied)
+                if (!maze[position.Y, position.X].IsOccupied)
                 {
                     var objectToPlace = mazeObjectFactory.CreateObject(objectType, position);
                     AddObjectToRoom(position, maze, objectToPlace);

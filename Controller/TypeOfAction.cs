@@ -4,7 +4,7 @@ public enum TypeOfAction
 {
     Move,
     Attack,
-    Interact,
+    Use,
     Pause,
     DoNothing
 }

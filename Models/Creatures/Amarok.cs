@@ -2,9 +2,8 @@
 
 public class Amarok : IEnemy
 {
-    private bool _isAlive;
     public Location Location { get; set; }
-    public bool IsAlive => _isAlive;
+    public bool IsAlive { get; }
     
     public Amarok(int x, int y)
     {
@@ -13,8 +12,9 @@ public class Amarok : IEnemy
             X = x,
             Y = y
         };
-        _isAlive = true;
+        
+        IsAlive = true;
     }
 
-    public void Attack(Player.Player player) => throw new NotImplementedException();
+    public void Attack(Player.Player player) => player.Kill();
 }

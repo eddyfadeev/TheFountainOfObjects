@@ -20,4 +20,6 @@ public enum MessageType
     FountainActivated,
     FountainIsAlreadyActivated,
     Attack,
+    CantShootThere,
+    CantMoveThere
 }

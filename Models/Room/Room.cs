@@ -16,6 +16,10 @@ public class Room : IRoom
     public Color RoomColor => SetRoomColor();
 
     public bool IsOccupied => Occupants.Count != 0;
+    
+    public bool IsDangerous => Occupants.OfType<IDangerous>().Any();
+    
+    public bool IsEntrance => Occupants.OfType<IEntrance>().Any();
 
     public List<MessageType> Messages => SetRoomMessages();
 
@@ -27,7 +31,7 @@ public class Room : IRoom
         Location = location;
         
         // Map visibility switch
-        IsVisited = false;
+        IsVisited = true;
     }
 
     public void AddObject(IPositionable obj)

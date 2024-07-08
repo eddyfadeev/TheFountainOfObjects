@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Creatures;
 using Model.Enums;
 using Model.Interfaces;
 using Model.Maze;
@@ -15,12 +16,14 @@ public class PlayerActionsHandler : IMovable, IShootable
     private readonly IMaze<IRoom> _maze;
     private readonly IPlayer _player;
     private readonly IGameView _gameView;
+    private readonly IMazeService<IRoom> _mazeService;
     
-    public PlayerActionsHandler(IPlayerRepository playerRepository, IMaze<IRoom> maze, IGameView gameView)
+    public PlayerActionsHandler(IPlayerRepository playerRepository, IMaze<IRoom> maze, IGameView gameView, IMazeService<IRoom> mazeService)
     {
         _player = playerRepository.Player!;
         _maze = maze;
         _gameView = gameView;
+        _mazeService = mazeService;
     }
 
     public void Attack(Direction direction)
@@ -31,7 +34,14 @@ public class PlayerActionsHandler : IMovable, IShootable
             var targetRoom = _maze[targetLocation];
 
             var enemy = targetRoom.GetObject<IEnemy>();
-            _player.Shoot();
+            
+            
+            if (_player.Arrows <= 0)
+            {
+                _gameView.UpdateSpecialMessage(MessageType.NoArrowsLeft);
+                
+                return;
+            }
             
             if (enemy is not null)
             {
@@ -43,6 +53,12 @@ public class PlayerActionsHandler : IMovable, IShootable
             {
                 _gameView.UpdateSpecialMessage(MessageType.MissedShot);
             }
+            
+            _player.Shoot();
+        }
+        else
+        {
+            _gameView.UpdateSpecialMessage(MessageType.CantShootThere);
         }
     }
     
@@ -54,13 +70,18 @@ public class PlayerActionsHandler : IMovable, IShootable
             var currentRoom = _maze[_player.Location];
             var newRoom = _maze[newLocation];
             
+            
             currentRoom.RemoveObject(_player);
             newRoom.AddObject(_player);
             _player.Location = newLocation;
         }
+        else
+        {
+            _gameView.UpdateSpecialMessage(MessageType.CantMoveThere);
+        }
     }
 
-    public void InteractWithRoom(Location location)
+    public void UseInRoom(Location location)
     {
         var activable = GetActivable(location);
         var isActivated = activable is not null && activable.IsActivated;
@@ -86,26 +107,22 @@ public class PlayerActionsHandler : IMovable, IShootable
     {
         var attackLocation = GetTargetLocation(_player.Location, direction);
 
-        return IsWithinMazeBounds(attackLocation);
+        return _mazeService.IsWithinMazeBounds(attackLocation);
     }
 
     private bool CanMove(Direction direction)
     {
         var newLocation = GetTargetLocation(_player.Location, direction);
         
-        return IsWithinMazeBounds(newLocation);
+        return _mazeService.IsWithinMazeBounds(newLocation);
     }
     
     private Location GetTargetLocation(Location currentLocation, Direction direction) => direction switch
     {
-        Direction.North => new Location(currentLocation.X - 1, currentLocation.Y),
-        Direction.East => new Location(currentLocation.X, currentLocation.Y + 1),
-        Direction.South => new Location(currentLocation.X + 1, currentLocation.Y),
-        Direction.West => new Location(currentLocation.X, currentLocation.Y - 1),
+        Direction.North => new Location(currentLocation.X, currentLocation.Y - 1),
+        Direction.East => new Location(currentLocation.X + 1, currentLocation.Y),
+        Direction.South => new Location(currentLocation.X, currentLocation.Y + 1),
+        Direction.West => new Location(currentLocation.X - 1, currentLocation.Y),
         _ => currentLocation
     };
-
-    private bool IsWithinMazeBounds(Location location) =>
-        location.X >= 0 && location.X < (int)_maze.MazeSize &&
-        location.Y >= 0 && location.Y < (int)_maze.MazeSize;
 }

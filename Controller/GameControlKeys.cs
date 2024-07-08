@@ -29,7 +29,7 @@ internal static class GameControlKeys
     {
         {TypeOfAction.Attack, AttackTrigger},
         {TypeOfAction.Move, DirectionKeys},
-        {TypeOfAction.Interact, InteractionKeys},
+        {TypeOfAction.Use, InteractionKeys},
         {TypeOfAction.Pause, PauseKey}
     };
     

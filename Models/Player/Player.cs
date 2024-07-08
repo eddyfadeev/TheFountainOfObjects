@@ -20,6 +20,8 @@ public class Player : IPlayer
     public string? Name { get; set; }
 
     public int Arrows { get; private set; } = 5;
+    
+    public bool IsAlive { get; private set; } = true;
     public Location Location { get; set; } = new()
     {
         X = 0,
@@ -27,4 +29,6 @@ public class Player : IPlayer
     };
     
     public void Shoot() => Arrows--;
+    
+    public void Kill() => IsAlive = false;
 }

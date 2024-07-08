@@ -6,5 +6,7 @@ public interface IPlayer : IPositionable
     public int? Score { get; set; }
     public string? Name { get; set; }
     public int Arrows { get; } 
+    public bool IsAlive { get; }
     public void Shoot();
+    public void Kill();
 }
