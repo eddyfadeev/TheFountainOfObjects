@@ -1,4 +1,7 @@
-﻿namespace Model.Player;
+﻿using Interfaces.Models.Player;
+using Shared;
+
+namespace Model.Player;
 
 public class Player : IPlayer
 {

@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
-using Services.Database.Interfaces;
+﻿using Interfaces.Models.Database;
+using Microsoft.Data.Sqlite;
 
 namespace Services.Database.Helpers;
 

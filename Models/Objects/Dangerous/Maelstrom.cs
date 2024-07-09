@@ -1,5 +1,10 @@
-﻿using Model.Extensions;
+﻿using Interfaces.Models.Maze;
+using Interfaces.Models.Objects;
+using Interfaces.Models.Player;
+using Interfaces.Services;
+using Model.Extensions;
 using Model.Maze;
+using Shared;
 
 namespace Model.Objects.Dangerous;
 
@@ -21,7 +26,7 @@ public class Maelstrom : IDangerous
         _maze = maze;
     }
 
-    public void Attack(Player.Player player)
+    public void Attack(IPlayer player)
     {
         // payer => 1 to north, 2 to east
         // maelstrom => 1 to south, 2 to west

@@ -1,7 +1,11 @@
-﻿using Model.Creatures;
-using Model.Messages.Enum;
+﻿using Interfaces.Models.Maze;
+using Interfaces.Models.Objects;
+using Interfaces.Services;
+using Model.Creatures;
 using Model.Objects;
 using Model.Objects.Dangerous;
+using Shared;
+using Shared.Enums.Models.Messages;
 using Spectre.Console;
 
 namespace Model.Room;

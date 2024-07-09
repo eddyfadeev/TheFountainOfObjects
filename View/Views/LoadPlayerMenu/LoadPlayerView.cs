@@ -1,4 +1,8 @@
-﻿namespace View.Views.LoadPlayerMenu;
+﻿using Interfaces.Models.Database;
+using Interfaces.View.LayoutManager;
+using Shared.Enums.Views.Factory;
+
+namespace View.Views.LoadPlayerMenu;
 
 public sealed class LoadPlayerView : SelectableMenuView<Enum>
 {
@@ -26,7 +30,7 @@ public sealed class LoadPlayerView : SelectableMenuView<Enum>
         {
             AnsiConsole.WriteLine("No players found. Please, create a player first.");
             
-            return MenuType.Back;
+            return CommandType.Back;
         }
         
         var selectedEntry = SelectEntry(entries);

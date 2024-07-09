@@ -1,6 +1,8 @@
-﻿namespace Model.Player;
+﻿using Interfaces.Models.Player;
 
-public record PlayerDTO
+namespace Model.Player;
+
+public record PlayerDTO : IPlayerDTO
 {
     public long? Id { get; init; }
     public string? Name { get; init; }
@@ -12,13 +14,5 @@ public record PlayerDTO
         Score = score;
     }
 
-    public PlayerDTO()
-    {
-        
-    }
-    
-    public (long?, string?, long?) Deconstruct()
-    {
-        return (Id, Name, Score);
-    }
+    public PlayerDTO() { }
 }

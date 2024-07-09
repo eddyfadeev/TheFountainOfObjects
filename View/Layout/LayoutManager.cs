@@ -1,4 +1,6 @@
-﻿namespace View.Layout;
+﻿using Interfaces.View.LayoutManager;
+
+namespace View.Layout;
 
 public sealed class LayoutManager : ILayoutManager
 {

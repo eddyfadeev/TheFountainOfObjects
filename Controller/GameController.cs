@@ -1,8 +1,12 @@
-﻿using Model.GameSettings;
-using Model.Interfaces;
+﻿using Interfaces.Models.Database;
+using Interfaces.Models.GameSettings;
+using Interfaces.Models.Maze;
+using Interfaces.Models.Objects;
+using Interfaces.Services;
+using Interfaces.View.Menu;
 using Model.Maze;
-using Model.Messages.Enum;
-using Services.Database.Interfaces;
+using Shared.Enums.Models.Messages;
+using Shared.Enums.Views.Menus;
 using View.Views.Game;
 using View.Views.MainMenu;
 

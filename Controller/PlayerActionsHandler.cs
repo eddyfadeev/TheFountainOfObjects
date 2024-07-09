@@ -1,17 +1,24 @@
-﻿using Model;
+﻿using Interfaces.Controller;
+using Interfaces.Models.Creatures;
+using Interfaces.Models.Database;
+using Interfaces.Models.Maze;
+using Interfaces.Models.Objects;
+using Interfaces.Models.Player;
+using Interfaces.Services;
+using Interfaces.View.Menu;
+using Model;
 using Model.Creatures;
-using Model.Enums;
-using Model.Interfaces;
 using Model.Maze;
-using Model.Messages.Enum;
 using Model.Objects;
 using Model.Player;
-using Services.Database.Interfaces;
+using Shared;
+using Shared.Enums.Models;
+using Shared.Enums.Models.Messages;
 using View.Views.Game;
 
 namespace Controller;
 
-public class PlayerActionsHandler : IMovable, IShootable
+public class PlayerActionsHandler : IMove, IShoot
 {
     private readonly IMaze<IRoom> _maze;
     private readonly IPlayer _player;

@@ -1,4 +1,8 @@
-﻿namespace View.Views.HelpScreen;
+﻿using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Shared.Enums.Views.Menus;
+
+namespace View.Views.HelpScreen;
 
 public class HelpView : MenuView, ISideMenu<HelpType>
 {

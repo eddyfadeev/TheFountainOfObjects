@@ -1,4 +1,9 @@
-﻿namespace View.Views.GameStats;
+﻿using Interfaces.Models.Database;
+using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Shared.Enums.Views.Menus;
+
+namespace View.Views.GameStats;
 
 public class GameStatsView : ISideMenu<GameStatsType>
 {

@@ -1,4 +1,6 @@
-﻿using Model.Enums;
+﻿using Interfaces.View.LayoutManager;
+using Shared.Enums.Models.Objects.Maze;
+using Shared.Enums.Views.Menus;
 
 namespace View.Views.SettingsMenu;
 

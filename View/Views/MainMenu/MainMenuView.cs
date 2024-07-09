@@ -1,4 +1,7 @@
-﻿using View.Views.HelpScreen;
+﻿using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Shared.Enums.Views.Menus;
+using View.Views.HelpScreen;
 using View.Views.Leaderboard;
 
 namespace View.Views.MainMenu;

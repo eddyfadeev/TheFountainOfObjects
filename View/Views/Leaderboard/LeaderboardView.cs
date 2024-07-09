@@ -1,10 +1,15 @@
-﻿using Model.Player;
+﻿using Interfaces.Models.Database;
+using Interfaces.Models.Player;
+using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Model.Player;
+using Shared.Enums.Views.Menus;
 
 namespace View.Views.Leaderboard;
 
 public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
 {
-    private readonly List<PlayerDTO> _players;
+    private readonly List<IPlayerDTO> _players;
     
     public override string MenuName { get; }
     public override ILayoutManager LayoutManager { get; }

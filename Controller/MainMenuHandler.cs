@@ -1,10 +1,11 @@
-﻿using Model;
-using Model.GameSettings;
-using Model.Interfaces;
+﻿using Interfaces.Models.Database;
+using Interfaces.Models.GameSettings;
+using Model;
 using Model.Player;
-using Services.Database.Interfaces;
 using Services.Extensions;
-using View.Enums;
+using Shared;
+using Shared.Enums.Views.Factory;
+using Shared.Enums.Views.Menus;
 using View.Views.CreatePlayerMenu;
 using View.Views.CreatePlayerScreen;
 using View.Views.SettingsMenu;
@@ -28,7 +29,7 @@ internal class MainMenuHandler
         _gameSettingsRepository = gameSettingsRepository;
     }
 
-    public void ShowStartScreen() => ShowMenu(MenuType.StartScreen);
+    public void ShowStartScreen() => ShowMenu(CommandType.StartScreen);
     
     public void ShowCreatePlayerMenu()
     {
@@ -36,7 +37,7 @@ internal class MainMenuHandler
         
         while (isRunning)
         {
-            var userChoice = ShowMenu(MenuType.CreatePlayerMenu);
+            var userChoice = ShowMenu(CommandType.CreatePlayerMenu);
             
             if (userChoice is CreatePlayerEntries.LoadPlayer)
             {
@@ -50,7 +51,7 @@ internal class MainMenuHandler
         }
     }
     
-    public Enum? ShowMainMenu() => ShowMenu(MenuType.MainMenu);
+    public Enum? ShowMainMenu() => ShowMenu(CommandType.MainMenu);
     
     public void ShowSettingsMenu()
     {
@@ -59,7 +60,7 @@ internal class MainMenuHandler
 
         do
         {
-            var userChoice = ShowMenu(MenuType.SettingsMenu);
+            var userChoice = ShowMenu(CommandType.SettingsMenu);
             
             if (userChoice is SettingsMenuEntries.Back)
             {
@@ -93,9 +94,9 @@ internal class MainMenuHandler
         } while (true);
     }
 
-    public void ShowLeaderboardMenu() => ShowMenu(MenuType.LeaderboardMenu);
+    public void ShowLeaderboardMenu() => ShowMenu(CommandType.LeaderboardMenu);
     
-    public void ShowHelpMenu() => ShowMenu(MenuType.HelpMenu);
+    public void ShowHelpMenu() => ShowMenu(CommandType.HelpMenu);
 
     private bool CheckIfPlayerExists(string player)
     {
@@ -151,7 +152,7 @@ internal class MainMenuHandler
 
     private bool TryLoadPlayer()
     {
-        var userChoice = ShowMenu(MenuType.LoadPlayerMenu);
+        var userChoice = ShowMenu(CommandType.LoadPlayerMenu);
         
         if (userChoice is null)
         {
@@ -164,15 +165,15 @@ internal class MainMenuHandler
         return true;
     }
 
-    private Enum? ShowMenu(MenuType commandType)
+    private Enum? ShowMenu(CommandType commandType)
     {
         var command = _menuCommandFactory.Create(commandType);
         
         if (commandType is
-            MenuType.CreatePlayerMenu or
-            MenuType.LoadPlayerMenu or
-            MenuType.SettingsMenu or
-            MenuType.MainMenu)
+            CommandType.CreatePlayerMenu or
+            CommandType.LoadPlayerMenu or
+            CommandType.SettingsMenu or
+            CommandType.MainMenu)
         {
             var userChoice = command.Execute();
             
@@ -182,7 +183,7 @@ internal class MainMenuHandler
         {
             command.Execute();
             
-            return MenuType.Back;
+            return CommandType.Back;
         }
     }
 }

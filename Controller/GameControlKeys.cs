@@ -1,4 +1,4 @@
-﻿using Model.Enums;
+﻿using Shared.Enums.Models;
 
 namespace Controller;
 

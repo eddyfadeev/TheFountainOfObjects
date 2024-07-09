@@ -1,6 +1,11 @@
-﻿using View.Commands;
-using View.Views.HelpScreen;
-using View.Views.Leaderboard;
+﻿using Interfaces.Models.Database;
+using Interfaces.View.Command;
+using Interfaces.View.Factory;
+using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Shared.Enums.Views.Factory;
+using Shared.Enums.Views.Menus;
+using View.Commands;
 
 namespace View.Factory;
 
@@ -24,16 +29,16 @@ public class MenuCommandFactory : IMenuCommandFactory
         _leaderboardSideView = leaderboardSideView;
     }
 
-    public ICommand Create(MenuType menuType) => 
-        menuType switch
+    public ICommand Create(CommandType commandType) => 
+        commandType switch
         {
-            MenuType.MainMenu => new ShowMainMenuCommand(_layoutManager, _helpSideView, _leaderboardSideView),
-            MenuType.CreatePlayerMenu => new ShowCreatePlayerMenuCommand(_layoutManager),
-            MenuType.LeaderboardMenu => new ShowLeaderboardCommand(_layoutManager, _playerRepository),
-            MenuType.LoadPlayerMenu => new ShowLoadPlayerMenuCommand(_layoutManager, _playerRepository),
-            MenuType.SettingsMenu => new ShowSettingsMenuCommand(_layoutManager),
-            MenuType.StartScreen => new ShowStartScreenCommand(_layoutManager),
-            MenuType.HelpMenu => new ShowHelpScreenCommand(_layoutManager),
+            CommandType.MainMenu => new ShowMainMenuCommand(_layoutManager, _helpSideView, _leaderboardSideView),
+            CommandType.CreatePlayerMenu => new ShowCreatePlayerMenuCommand(_layoutManager),
+            CommandType.LeaderboardMenu => new ShowLeaderboardCommand(_layoutManager, _playerRepository),
+            CommandType.LoadPlayerMenu => new ShowLoadPlayerMenuCommand(_layoutManager, _playerRepository),
+            CommandType.SettingsMenu => new ShowSettingsMenuCommand(_layoutManager),
+            CommandType.StartScreen => new ShowStartScreenCommand(_layoutManager),
+            CommandType.HelpMenu => new ShowHelpScreenCommand(_layoutManager),
             _ => throw new ArgumentException("Invalid menu type.")
         };
 }

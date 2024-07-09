@@ -1,4 +1,7 @@
-﻿using View.Views.StartScreen;
+﻿using Interfaces.View.Command;
+using Interfaces.View.LayoutManager;
+using Shared.Enums.Views.Factory;
+using View.Views.StartScreen;
 
 namespace View.Commands;
 
@@ -16,6 +19,6 @@ public class ShowStartScreenCommand : ICommand
         var startScreen = new StartScreen(_layoutManager);
         startScreen.Display();
             
-        return MenuType.Back;
+        return CommandType.Back;
     }
 }

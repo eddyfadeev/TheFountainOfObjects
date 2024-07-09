@@ -1,4 +1,8 @@
-﻿namespace Model.Objects.Dangerous;
+﻿using Interfaces.Models.Objects;
+using Interfaces.Models.Player;
+using Shared;
+
+namespace Model.Objects.Dangerous;
 
 public class Pit : IDangerous
 {
@@ -13,5 +17,5 @@ public class Pit : IDangerous
         };
     }
 
-    public void Attack(Player.Player player) => player.Kill();
+    public void Attack(IPlayer player) => player.Kill();
 }

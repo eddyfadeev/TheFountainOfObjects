@@ -1,4 +1,8 @@
-﻿using View.Views.Leaderboard;
+﻿using Interfaces.Models.Database;
+using Interfaces.View.Command;
+using Interfaces.View.LayoutManager;
+using Shared.Enums.Views.Factory;
+using View.Views.Leaderboard;
 
 namespace View.Commands;
 
@@ -18,6 +22,6 @@ public class ShowLeaderboardCommand : ICommand
         var leaderboardView = new LeaderboardView(_playerRepository, _layoutManager);
         leaderboardView.Display();
 
-        return MenuType.Back;
+        return CommandType.Back;
     }
 }

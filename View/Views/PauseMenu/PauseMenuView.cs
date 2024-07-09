@@ -1,4 +1,6 @@
-﻿namespace View.Views.PauseMenu;
+﻿using Interfaces.View.LayoutManager;
+
+namespace View.Views.PauseMenu;
 
 public class PauseMenuView : SelectableMenuView<PauseMenuEntries>
 {

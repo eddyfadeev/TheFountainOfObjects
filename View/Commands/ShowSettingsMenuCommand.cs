@@ -1,4 +1,6 @@
-﻿using View.Views.SettingsMenu;
+﻿using Interfaces.View.Command;
+using Interfaces.View.LayoutManager;
+using View.Views.SettingsMenu;
 
 namespace View.Commands;
 

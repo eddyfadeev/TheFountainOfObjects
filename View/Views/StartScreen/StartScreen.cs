@@ -1,4 +1,6 @@
-﻿namespace View.Views.StartScreen;
+﻿using Interfaces.View.LayoutManager;
+
+namespace View.Views.StartScreen;
 
 public sealed class StartScreen : MenuView
 {

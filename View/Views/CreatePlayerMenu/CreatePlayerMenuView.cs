@@ -1,4 +1,5 @@
-﻿using View.Interfaces;
+﻿using Interfaces.View.LayoutManager;
+using Shared.Enums.Views.Menus;
 
 namespace View.Views.CreatePlayerMenu;
 

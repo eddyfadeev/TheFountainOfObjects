@@ -1,4 +1,6 @@
-﻿using View.Extensions;
+﻿using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using View.Extensions;
 
 namespace View.Views;
 

@@ -1,4 +1,7 @@
-﻿namespace Model.Extensions;
+﻿using Interfaces.Models.Objects;
+using Shared;
+
+namespace Model.Extensions;
 
 public static class PositionalExtensions
 {

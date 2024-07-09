@@ -1,4 +1,7 @@
-﻿using View.Views.HelpScreen;
+﻿using Interfaces.View.Command;
+using Interfaces.View.LayoutManager;
+using Shared.Enums.Views.Factory;
+using View.Views.HelpScreen;
 
 namespace View.Commands;
 
@@ -16,6 +19,6 @@ public class ShowHelpScreenCommand : ICommand
         var helpScreen = new HelpView(_layoutManager);
         helpScreen.Display();
         
-        return MenuType.Back;
+        return CommandType.Back;
     }
 }

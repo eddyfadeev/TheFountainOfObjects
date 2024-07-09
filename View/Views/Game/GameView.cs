@@ -1,8 +1,12 @@
-﻿using Model.Interfaces;
+﻿using Interfaces.Models.Database;
+using Interfaces.Models.Factory;
+using Interfaces.Models.Maze;
+using Interfaces.Services;
+using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
 using Model.Maze;
-using Model.Messages.Enum;
-using Model.Messages.Interfaces;
-using View.MazeGenerator;
+using Shared.Enums.Models.Messages;
+using Shared.Enums.Views.Menus;
 using View.Views.GameStats;
 using View.Views.HelpScreen;
 

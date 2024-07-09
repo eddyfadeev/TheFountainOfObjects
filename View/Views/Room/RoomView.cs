@@ -1,6 +1,7 @@
-﻿using Model.Enums;
-using Model.Interfaces;
-using Model.RoomService;
+﻿using Interfaces.Models.Maze;
+using Interfaces.View.Maze;
+using Model.Extensions;
+using Shared.Enums.Models.Objects.Maze;
 
 namespace View.Views.Room;
 

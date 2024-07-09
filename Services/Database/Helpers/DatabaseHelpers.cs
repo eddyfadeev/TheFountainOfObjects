@@ -1,11 +1,11 @@
 ﻿using System.Text;
-using Model.Player;
+using Interfaces.Models.Player;
 
 namespace Services.Database.Helpers;
 
 public static class DatabaseHelpers
 {
-    public static string BuildUpdateQuery(PlayerDTO player)
+    public static string BuildUpdateQuery(IPlayerDTO player)
     {
         var queryBuilder = new StringBuilder("UPDATE Players SET ");
         const string setName = "Name = @Name";
@@ -30,7 +30,7 @@ public static class DatabaseHelpers
         return queryBuilder.ToString();
     }
 
-    public static object PrepareUpdateParameters(PlayerDTO player)
+    public static object PrepareUpdateParameters(IPlayerDTO player)
     {
         return player switch
         {

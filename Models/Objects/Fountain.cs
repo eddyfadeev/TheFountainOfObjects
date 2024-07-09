@@ -1,4 +1,7 @@
-﻿namespace Model.Objects;
+﻿using Interfaces.Models.Objects;
+using Shared;
+
+namespace Model.Objects;
 
 public class Fountain : IActivable
 {

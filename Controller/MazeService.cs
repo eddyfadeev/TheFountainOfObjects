@@ -1,7 +1,8 @@
-﻿using Model;
-using Model.Enums;
-using Model.Interfaces;
-using Model.Maze;
+﻿using Interfaces.Models.Maze;
+using Interfaces.Models.Objects;
+using Interfaces.Services;
+using Shared;
+using Shared.Enums.Models.Objects.Maze;
 using Spectre.Console;
 
 namespace Controller;
@@ -26,16 +27,16 @@ public class MazeService : IMazeService<IRoom>
         
         var dangerousOccupants = new List<IDangerous>();
 
-        for (int x = minX; x <= maxX; x++)
+        for (int y = minY; y <= maxX; y++)
         {
-            for (int y = minY; y <= maxY; y++)
+            for (int x = minX; x <= maxY; x++)
             {
                 if (x == location.X && y == location.Y)
                 {
                     continue;
                 }
                 
-                dangerousOccupants.AddRange(_maze.MazeRooms[x, y].Occupants.OfType<IDangerous>());
+                dangerousOccupants.AddRange(_maze.MazeRooms[y, x].Occupants.OfType<IDangerous>());
             }
         }
         

@@ -1,4 +1,6 @@
-﻿using Model.Enums;
+﻿using Interfaces.Models.Maze;
+using Shared;
+using Shared.Enums.Models.Objects.Maze;
 using Spectre.Console;
 
 namespace Model.Maze;

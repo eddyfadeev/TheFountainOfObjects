@@ -1,4 +1,6 @@
-﻿namespace Controller;
+﻿using Interfaces.View.LayoutManager;
+
+namespace Controller;
 
 public class PauseMenuHandler
 {

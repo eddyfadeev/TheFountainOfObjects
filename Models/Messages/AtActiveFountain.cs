@@ -1,4 +1,4 @@
-﻿using Model.Messages.Interfaces;
+﻿using Interfaces.Models.Messages;
 
 namespace View.Messages;
 

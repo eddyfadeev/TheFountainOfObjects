@@ -1,4 +1,8 @@
-﻿namespace Model.Creatures;
+﻿using Interfaces.Models.Creatures;
+using Interfaces.Models.Player;
+using Shared;
+
+namespace Model.Creatures;
 
 public class Amarok : IEnemy
 {
@@ -16,5 +20,5 @@ public class Amarok : IEnemy
         IsAlive = true;
     }
 
-    public void Attack(Player.Player player) => player.Kill();
+    public void Attack(IPlayer player) => player.Kill();
 }

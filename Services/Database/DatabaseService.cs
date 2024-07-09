@@ -1,7 +1,8 @@
 ﻿using Dapper;
+using Interfaces.Models.Database;
+using Interfaces.Models.Player;
 using Model.Player;
 using Services.Database.Helpers;
-using Services.Database.Interfaces;
 
 namespace Services.Database;
 
@@ -15,15 +16,17 @@ public class DatabaseService : IDatabaseService
         initializer.InitializeDatabase();
     }
     
-    public List<PlayerDTO> GetAllPlayers()
+    public List<IPlayerDTO> GetAllPlayers()
     {
         using var connection = _connectionProvider.GetConnection();
         const string query = "SELECT * FROM Players ORDER BY Score DESC";
         
-        return connection.Query<PlayerDTO>(query).ToList();
+        var retrievedPlayers = connection.Query<PlayerDTO>(query).ToList();
+        
+        return retrievedPlayers.Cast<IPlayerDTO>().ToList(); // Cast to interface
     }
 
-    public PlayerDTO? GetPlayerById(long playerId)
+    public IPlayerDTO? GetPlayerById(long playerId)
     {
         using var connection = _connectionProvider.GetConnection();
         const string query = "SELECT * FROM Players WHERE Id = @Id";
@@ -31,7 +34,7 @@ public class DatabaseService : IDatabaseService
         return connection.QueryFirstOrDefault<PlayerDTO>(query, new { Id = playerId });
     }
     
-    public PlayerDTO? GetPlayerByName(string playerName)
+    public IPlayerDTO? GetPlayerByName(string playerName)
     {
         using var connection = _connectionProvider.GetConnection();
         const string query = "SELECT * FROM Players WHERE Name = @Name";
@@ -39,7 +42,7 @@ public class DatabaseService : IDatabaseService
         return connection.QueryFirstOrDefault<PlayerDTO>(query, new { Name = playerName });
     }
 
-    public int AddPlayer(PlayerDTO player)
+    public int AddPlayer(IPlayerDTO player)
     {
         using var connection = _connectionProvider.GetConnection();
         const string query = "INSERT INTO Players (Name, Score) VALUES (@Name, @Score);";
@@ -47,7 +50,7 @@ public class DatabaseService : IDatabaseService
         return connection.Execute(query, new { Name = player.Name, Score = player.Score });
     }
 
-    public int UpdatePlayer(PlayerDTO player)
+    public int UpdatePlayer(IPlayerDTO player)
     {
         using var connection = _connectionProvider.GetConnection();
 

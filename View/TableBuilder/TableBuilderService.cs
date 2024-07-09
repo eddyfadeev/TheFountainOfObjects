@@ -1,13 +1,13 @@
-﻿using Model.Interfaces;
-using Model.Maze;
+﻿using Interfaces.Models.Maze;
+using Interfaces.View.TableBuilder;
 using Spectre.Console.Rendering;
 using View.Views.Room;
 
 namespace View.TableBuilder;
 
-public static class TableBuilderService
+public class TableBuilderService : ITableBuilderService
 {
-    public static Table CreateOuterTable(string menuName)
+    public Table CreateOuterTable(string menuName)
     {
         var table = new Table 
         {
@@ -22,7 +22,7 @@ public static class TableBuilderService
         return table;
     }
     
-    public static Table CreateInnerTable()
+    public Table CreateInnerTable()
     {
         var innerTable = new Table
         {
@@ -34,7 +34,7 @@ public static class TableBuilderService
         return innerTable;
     }
     
-    public static void AddColumns(Table table, int cols)
+    public void AddColumns(Table table, int cols)
     {
         for (int i = 0; i < cols; i++)
         {
@@ -42,7 +42,7 @@ public static class TableBuilderService
         }
     }
     
-    public static void AddRows(IMaze<IRoom> maze, Table table, int rows)
+    public void AddRows(IMaze<IRoom> maze, Table table, int rows)
     {
         var cols = rows;
 
@@ -60,7 +60,7 @@ public static class TableBuilderService
         }
     }
 
-    public static void AddRows(IMaze<IRoom> maze, Table table)
+    public void AddRows(IMaze<IRoom> maze, Table table)
     {
         var cols = (int)maze.MazeSize;
         var rows = (int)maze.MazeSize;

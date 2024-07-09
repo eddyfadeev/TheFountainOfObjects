@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Services.Database.Interfaces;
+using Interfaces.Models.Database;
 
 namespace Services.Database.Helpers;
 

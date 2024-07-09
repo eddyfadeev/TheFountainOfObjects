@@ -1,7 +1,13 @@
-﻿namespace View.Extensions;
+﻿using Interfaces.View.Menu;
+using Interfaces.View.TableBuilder;
+using View.TableBuilder;
+
+namespace View.Extensions;
 
 public static class SelectableExtensions
 {
+    private static readonly ITableBuilderService _tableBuilderService = new TableBuilderService();
+    
     public static TEnum SelectEntry<TEnum>(
         this ISelectableMenu<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
@@ -57,7 +63,7 @@ public static class SelectableExtensions
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var menuTable = CreateOuterTable(menuName);
+        var menuTable = _tableBuilderService.CreateOuterTable(menuName);
         
         for (int i = 0; i < menuEntries.Count; i++)
         {
