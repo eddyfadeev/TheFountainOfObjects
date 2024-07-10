@@ -2,6 +2,7 @@
 using Interfaces.Models.Player;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
+using Interfaces.View.TableBuilder;
 using Model.Player;
 using Shared.Enums.Views.Menus;
 
@@ -9,14 +10,16 @@ namespace View.Views.Leaderboard;
 
 public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
 {
+    private readonly ITableBuilderService _tableBuilderService;
+    
     private readonly List<IPlayerDTO> _players;
     
     public override string MenuName { get; }
-    public override ILayoutManager LayoutManager { get; }
 
-    public LeaderboardView(IPlayerRepository playerRepository, ILayoutManager layoutManager)
+    public LeaderboardView(ILayoutManager layoutManager, IPlayerRepository playerRepository, ITableBuilderService tableBuilderService) : base(layoutManager)
     {
-        LayoutManager = layoutManager;
+        _tableBuilderService = tableBuilderService;
+        
         MenuName = "Leaderboard";
         _players = playerRepository.GetAllPlayers();
     }
@@ -42,8 +45,8 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
 
     private Table CreateLeaderboardTable(LeaderboardType leaderboardType)
     {
-        var table = CreateOuterTable(MenuName);
-        var leaderboardTable = CreateInnerTable();
+        var table = _tableBuilderService.CreateOuterTable(MenuName);
+        var leaderboardTable = _tableBuilderService.CreateInnerTable();
         
         leaderboardTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]");
         

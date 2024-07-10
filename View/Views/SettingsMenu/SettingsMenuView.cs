@@ -35,10 +35,12 @@ public class SettingsMenuView : SelectableMenuView<SettingsMenuEntries>
         new SelectionPrompt<MazeSize>()
             .Title("Select maze size")
             .PageSize(10)
-            .AddChoices([
-                MazeSize.Small,
-                MazeSize.Medium,
-                MazeSize.Large
-            ]);
+            .AddChoices(GetMazeSizeChoices());
     
+    private static MazeSize[] GetMazeSizeChoices() =>
+    [
+        MazeSize.Small,
+        MazeSize.Medium,
+        MazeSize.Large
+    ];
 }

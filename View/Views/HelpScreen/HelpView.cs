@@ -1,18 +1,19 @@
 ﻿using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
+using Interfaces.View.TableBuilder;
 using Shared.Enums.Views.Menus;
 
 namespace View.Views.HelpScreen;
 
 public class HelpView : MenuView, ISideMenu<HelpType>
 {
+    private readonly ITableBuilderService _tableBuilderService;
     public override string MenuName { get; }
-
-    public override ILayoutManager LayoutManager { get; }
-
-    public HelpView(ILayoutManager layoutManager)
+    
+    public HelpView(ILayoutManager layoutManager, ITableBuilderService tableBuilderService) : base(layoutManager)
     {
-        LayoutManager = layoutManager;
+        _tableBuilderService = tableBuilderService;
+        
         MenuName = "Help";
     }
 
@@ -36,8 +37,8 @@ public class HelpView : MenuView, ISideMenu<HelpType>
 
     private Table CreateHelpTable(HelpType helpType)
     {
-        var table = CreateOuterTable(MenuName);
-        var helpTable = CreateInnerTable();
+        var table = _tableBuilderService.CreateOuterTable(MenuName);
+        var helpTable = _tableBuilderService.CreateInnerTable();
         
         helpTable.AddColumn("[white bold]Help[/]").Centered();
         var tableText = SetPanelText(helpType);

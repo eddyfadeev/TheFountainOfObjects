@@ -4,16 +4,15 @@ using Interfaces.Models.Maze;
 using Interfaces.Services;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
-using Model.Maze;
+using Interfaces.View.TableBuilder;
 using Shared.Enums.Models.Messages;
 using Shared.Enums.Views.Menus;
-using View.Views.GameStats;
-using View.Views.HelpScreen;
 
 namespace View.Views.Game;
 
-public class GameView : IGameView
+public class GameView : MenuView, IGameView
 {
+    private readonly ITableBuilderService _tableBuilderService;
     private readonly IMazeGeneratorService _mazeGeneratorService;
     private readonly IMessagesFactory _messagesFactory;
     private readonly IPlayerRepository _playerRepository;
@@ -23,11 +22,12 @@ public class GameView : IGameView
     private readonly ISideMenu<GameStatsType> _gameStatsView;
     
     public Table? Maze { get; private set; }
-    public string MenuName { get; }
-    public ILayoutManager LayoutManager { get; }
+    public override string MenuName { get; }
+
     public string SpecialMessage { get; private set; }
     
     public GameView(
+        ITableBuilderService tableBuilderService,
         ILayoutManager layoutManager, 
         IMazeGeneratorService mazeGeneratorService,
         IMessagesFactory messagesFactory,
@@ -35,9 +35,9 @@ public class GameView : IGameView
         IMaze<IRoom> maze,
         ISideMenu<HelpType> helpView,
         ISideMenu<GameStatsType> gameStatsView
-        )
+        ) : base(layoutManager)
     {
-        LayoutManager = layoutManager;
+        _tableBuilderService = tableBuilderService;
         _mazeGeneratorService = mazeGeneratorService;
         _messagesFactory = messagesFactory;
         _playerRepository = playerRepository;
@@ -50,7 +50,7 @@ public class GameView : IGameView
         SpecialMessage = string.Empty;
     }
     
-    public void Display()
+    public override void Display()
     {
         var helpSideWindow = _helpView.GetSideTable(HelpType.GameSideMenu);
         Maze = GenerateMazeTable();
@@ -98,7 +98,7 @@ public class GameView : IGameView
 
     private Table CreateMessagesTable()
     {
-        var messagesTable = CreateInnerTable();
+        var messagesTable = _tableBuilderService.CreateInnerTable();
         messagesTable.AddColumn("Messages");
         
         AddMessages(messagesTable);
@@ -132,7 +132,7 @@ public class GameView : IGameView
     
     private Table PrepareGameWindow(Table maze)
     {
-        var table = CreateOuterTable(MenuName);
+        var table = _tableBuilderService.CreateOuterTable(MenuName);
         var gameTable = InitializeGameTable();
         
         gameTable.AddRow(maze);
@@ -144,7 +144,7 @@ public class GameView : IGameView
     
     private Table InitializeGameTable()
     {
-        var mazeTable = CreateInnerTable();
+        var mazeTable = _tableBuilderService.CreateInnerTable();
 
         mazeTable.AddColumn("Game").Centered();
         

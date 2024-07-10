@@ -1,6 +1,7 @@
 ﻿using Interfaces.Models.Maze;
 using Interfaces.Models.Objects;
 using Interfaces.Services;
+using Interfaces.View.TableBuilder;
 using Shared;
 using Shared.Enums.Models.Objects.Maze;
 using Spectre.Console;
@@ -10,10 +11,12 @@ namespace Controller;
 public class MazeService : IMazeService<IRoom>
 {
     private readonly IMaze<IRoom> _maze;
+    private readonly ITableBuilderService _tableBuilderService;
     
-    public MazeService(IMaze<IRoom> maze)
+    public MazeService(IMaze<IRoom> maze, ITableBuilderService tableBuilderService)
     {
         _maze = maze;
+        _tableBuilderService = tableBuilderService;
     }
     
     public List<IDangerous> GetAdjacentRoomsOccupants(Location location)
@@ -47,9 +50,9 @@ public class MazeService : IMazeService<IRoom>
     {
         var fieldSize = (int)maze.MazeSize;
         
-        var table = CreateInnerTable();
-        AddColumns(table, fieldSize);
-        AddRows(maze, table);
+        var table = _tableBuilderService.CreateInnerTable();
+        _tableBuilderService.AddColumns(table, fieldSize);
+        _tableBuilderService.AddRows(maze, table);
         
         return table;
     }

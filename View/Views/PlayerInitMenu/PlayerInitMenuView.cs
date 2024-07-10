@@ -3,20 +3,20 @@ using Shared.Enums.Views.Menus;
 
 namespace View.Views.CreatePlayerMenu;
 
-public sealed class CreatePlayerMenuView : SelectableMenuView<CreatePlayerEntries>
+public sealed class PlayerInitMenuView : SelectableMenuView<PLayerInitMenuEntries>
 {
     public override string MenuName { get; }
     public override ILayoutManager LayoutManager { get; }
-    private readonly List<KeyValuePair<CreatePlayerEntries, string>> _createPlayerMenuEntries;
+    private readonly List<KeyValuePair<PLayerInitMenuEntries, string>> _createPlayerMenuEntries;
     
-    public CreatePlayerMenuView(ILayoutManager layoutManager)
+    public PlayerInitMenuView(ILayoutManager layoutManager)
     {
         LayoutManager = layoutManager;
-        _createPlayerMenuEntries = GetEnumValuesAndDisplayNames<CreatePlayerEntries>();
+        _createPlayerMenuEntries = GetEnumValuesAndDisplayNames<PLayerInitMenuEntries>();
         MenuName = "Create Player";
     }
     
-    public override CreatePlayerEntries Display()
+    public override PLayerInitMenuEntries Display()
     {
         LayoutManager.SupportWindowIsVisible = false;
         

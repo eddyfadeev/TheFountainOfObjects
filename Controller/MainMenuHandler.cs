@@ -1,12 +1,11 @@
 ﻿using Interfaces.Models.Database;
 using Interfaces.Models.GameSettings;
-using Model;
+using Interfaces.View.Factory;
 using Model.Player;
 using Services.Extensions;
 using Shared;
 using Shared.Enums.Views.Factory;
 using Shared.Enums.Views.Menus;
-using View.Views.CreatePlayerMenu;
 using View.Views.CreatePlayerScreen;
 using View.Views.SettingsMenu;
 
@@ -39,7 +38,7 @@ internal class MainMenuHandler
         {
             var userChoice = ShowMenu(CommandType.CreatePlayerMenu);
             
-            if (userChoice is CreatePlayerEntries.LoadPlayer)
+            if (userChoice is PLayerInitMenuEntries.LoadPlayer)
             {
                 
                 isRunning = !TryLoadPlayer();

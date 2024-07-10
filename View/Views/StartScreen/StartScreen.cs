@@ -1,11 +1,12 @@
 ﻿using Interfaces.View.LayoutManager;
+using Interfaces.View.TableBuilder;
 
 namespace View.Views.StartScreen;
 
 public sealed class StartScreen : MenuView
 {
-    public override ILayoutManager LayoutManager { get; }
-
+    private readonly ITableBuilderService _tableBuilderService;
+    
     private const string IntroText = 
         """
         You enter the Cavern of Objects, a maze of rooms filled
@@ -18,9 +19,10 @@ public sealed class StartScreen : MenuView
 
     public override string MenuName { get; }
     
-    public StartScreen(ILayoutManager layoutManager)
+    public StartScreen(ILayoutManager layoutManager, ITableBuilderService tableBuilderService) : base(layoutManager)
     {
-        LayoutManager = layoutManager;
+        _tableBuilderService = tableBuilderService;
+        
         MenuName = "The Fountain of Objects";
     }
     
@@ -38,7 +40,7 @@ public sealed class StartScreen : MenuView
     
     private Table ComposeIntro()
     {
-        var introTable = CreateOuterTable(MenuName);
+        var introTable = _tableBuilderService.CreateOuterTable(MenuName);
         
         introTable.AddRow(IntroText);
         

@@ -2,7 +2,7 @@
 
 namespace Shared.Enums.Views.Menus;
 
-public enum CreatePlayerEntries
+public enum PLayerInitMenuEntries
 {
     [Display(Name = "Create Player")]
     CreatePlayer,

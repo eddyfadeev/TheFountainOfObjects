@@ -3,6 +3,7 @@ using Interfaces.View.Command;
 using Interfaces.View.Factory;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
+using Interfaces.View.TableBuilder;
 using Shared.Enums.Views.Factory;
 using Shared.Enums.Views.Menus;
 using View.Commands;
@@ -15,18 +16,21 @@ public class MenuCommandFactory : IMenuCommandFactory
     private readonly IPlayerRepository _playerRepository;
     private readonly ISideMenu<HelpType> _helpSideView;
     private readonly ISideMenu<LeaderboardType> _leaderboardSideView;
+    private readonly ITableBuilderService _tableBuilderService;
 
     public MenuCommandFactory(
         ILayoutManager layoutManager, 
         IPlayerRepository playerRepository,
         ISideMenu<HelpType> helpSideView,
-        ISideMenu<LeaderboardType> leaderboardSideView
+        ISideMenu<LeaderboardType> leaderboardSideView,
+        ITableBuilderService tableBuilderService
         )
     {
         _layoutManager = layoutManager;
         _playerRepository = playerRepository;
         _helpSideView = helpSideView;
         _leaderboardSideView = leaderboardSideView;
+        _tableBuilderService = tableBuilderService;
     }
 
     public ICommand Create(CommandType commandType) => 
@@ -34,11 +38,11 @@ public class MenuCommandFactory : IMenuCommandFactory
         {
             CommandType.MainMenu => new ShowMainMenuCommand(_layoutManager, _helpSideView, _leaderboardSideView),
             CommandType.CreatePlayerMenu => new ShowCreatePlayerMenuCommand(_layoutManager),
-            CommandType.LeaderboardMenu => new ShowLeaderboardCommand(_layoutManager, _playerRepository),
+            CommandType.LeaderboardMenu => new ShowLeaderboardCommand(_layoutManager, _playerRepository, _tableBuilderService),
             CommandType.LoadPlayerMenu => new ShowLoadPlayerMenuCommand(_layoutManager, _playerRepository),
             CommandType.SettingsMenu => new ShowSettingsMenuCommand(_layoutManager),
-            CommandType.StartScreen => new ShowStartScreenCommand(_layoutManager),
-            CommandType.HelpMenu => new ShowHelpScreenCommand(_layoutManager),
+            CommandType.StartScreen => new ShowStartScreenCommand(_layoutManager, _tableBuilderService),
+            CommandType.HelpMenu => new ShowHelpScreenCommand(_layoutManager, _tableBuilderService),
             _ => throw new ArgumentException("Invalid menu type.")
         };
 }

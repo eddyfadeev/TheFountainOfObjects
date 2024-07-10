@@ -15,7 +15,7 @@ public class ShowCreatePlayerMenuCommand : ICommand
     
     public Enum Execute()
     {
-        var createPlayerView = new CreatePlayerMenuView(_layoutManager);
+        var createPlayerView = new PlayerInitMenuView(_layoutManager);
         
         return createPlayerView.Display();
     }
