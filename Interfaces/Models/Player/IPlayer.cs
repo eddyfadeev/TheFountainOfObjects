@@ -11,4 +11,6 @@ public interface IPlayer : IPositionable
     public bool IsAlive { get; }
     public void Shoot();
     public void Kill();
+    public void Revive();
+    public void ResetArrows();
 }

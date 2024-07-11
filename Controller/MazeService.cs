@@ -30,9 +30,9 @@ public class MazeService : IMazeService<IRoom>
         
         var dangerousOccupants = new List<IDangerous>();
 
-        for (int y = minY; y <= maxX; y++)
+        for (int y = minY; y <= maxY; y++)
         {
-            for (int x = minX; x <= maxY; x++)
+            for (int x = minX; x <= maxX; x++)
             {
                 if (x == location.X && y == location.Y)
                 {

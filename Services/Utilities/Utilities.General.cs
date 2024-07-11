@@ -48,11 +48,6 @@ public static partial class Utilities
         return number;
     }
     
-    public static string ChangeStringColor(string text, Color color)
-    {
-        return $"[{color.ToString().ToLower()}]{text}[/]";
-    }
-    
     public static List<KeyValuePair<TEnum, string>>
         GetEnumValuesAndDisplayNames<TEnum>()
         where TEnum : Enum

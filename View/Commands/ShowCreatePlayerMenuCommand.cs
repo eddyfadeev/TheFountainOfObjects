@@ -1,6 +1,6 @@
 ﻿using Interfaces.View.Command;
 using Interfaces.View.LayoutManager;
-using View.Views.CreatePlayerMenu;
+using View.Views.PlayerInitMenu;
 
 namespace View.Commands;
 

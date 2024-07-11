@@ -16,7 +16,7 @@ public class DatabaseService : IDatabaseService
         initializer.InitializeDatabase();
     }
     
-    public List<IPlayerDTO> GetAllPlayers()
+    public List<IPlayerDTO>? GetAllPlayers()
     {
         using var connection = _connectionProvider.GetConnection();
         const string query = "SELECT * FROM Players ORDER BY Score DESC";
