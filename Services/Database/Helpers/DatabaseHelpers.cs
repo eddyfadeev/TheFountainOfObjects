@@ -12,6 +12,8 @@ public static class DatabaseHelpers
         const string setScore = "Score = @Score";
         const string idString = " WHERE Id = @Id";
 
+        ArgumentNullException.ThrowIfNull(player);
+
         if (player.Name is not null && player.Score is null)
         {
             queryBuilder.Append($"{setName}");

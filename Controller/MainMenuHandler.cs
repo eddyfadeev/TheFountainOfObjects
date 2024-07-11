@@ -139,7 +139,7 @@ internal class MainMenuHandler
         var playerName = ProcessUserNameInput();
         
         _playerRepository.Player = 
-            new Player
+            new Player (_gameSettingsRepository)
             {
                 Name = playerName,
                 Score = 0,
@@ -159,7 +159,7 @@ internal class MainMenuHandler
         }
         
         var player = _playerRepository.LoadPlayer(userChoice.ToString());
-        _playerRepository.Player = player.ToDomain();
+        _playerRepository.Player = player.ToDomain(_gameSettingsRepository);
 
         return true;
     }
@@ -182,7 +182,7 @@ internal class MainMenuHandler
         {
             command.Execute();
             
-            return CommandType.Back;
+            return null;
         }
     }
 }

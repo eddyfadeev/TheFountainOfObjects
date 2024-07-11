@@ -9,5 +9,5 @@ public interface IPlayerRepository
     int UpdatePlayer(int playerId, string? name = null, int? score = null);
     IPlayerDTO LoadPlayer(long playerId);
     IPlayerDTO LoadPlayer(string playerName);
-    List<IPlayerDTO> GetAllPlayers();
+    List<IPlayerDTO>? GetAllPlayers();
 }

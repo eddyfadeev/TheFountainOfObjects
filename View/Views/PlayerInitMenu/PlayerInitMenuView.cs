@@ -1,7 +1,7 @@
 ﻿using Interfaces.View.LayoutManager;
 using Shared.Enums.Views.Menus;
 
-namespace View.Views.CreatePlayerMenu;
+namespace View.Views.PlayerInitMenu;
 
 public sealed class PlayerInitMenuView : SelectableMenuView<PLayerInitMenuEntries>
 {
@@ -13,6 +13,7 @@ public sealed class PlayerInitMenuView : SelectableMenuView<PLayerInitMenuEntrie
     {
         LayoutManager = layoutManager;
         _createPlayerMenuEntries = GetEnumValuesAndDisplayNames<PLayerInitMenuEntries>();
+        
         MenuName = "Create Player";
     }
     

@@ -23,6 +23,7 @@ public class Maze : IMaze<IRoom>
             ResizeMaze();
         }
     }
+    
     public IRoom[,] MazeRooms { get; set; }
 
     public Maze()

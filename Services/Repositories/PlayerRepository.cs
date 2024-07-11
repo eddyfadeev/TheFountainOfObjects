@@ -45,6 +45,6 @@ public class PlayerRepository(IDatabaseService databaseService) : IPlayerReposit
         databaseService.GetPlayerByName(playerName) ?? 
         throw new ArgumentException("Player not found. Load by name failed.");
 
-    public List<IPlayerDTO> GetAllPlayers() => 
+    public List<IPlayerDTO>? GetAllPlayers() => 
         databaseService.GetAllPlayers();
 }

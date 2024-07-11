@@ -6,8 +6,6 @@ namespace View.Extensions;
 
 public static class SelectableExtensions
 {
-    private static readonly ITableBuilderService _tableBuilderService = new TableBuilderService();
-    
     public static TEnum SelectEntry<TEnum>(
         this ISelectableMenu<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
@@ -63,7 +61,8 @@ public static class SelectableExtensions
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var menuTable = _tableBuilderService.CreateOuterTable(menuName);
+        var tableBuilderService = new TableBuilderService();
+        var menuTable = tableBuilderService.CreateOuterTable(menuName);
         
         for (int i = 0; i < menuEntries.Count; i++)
         {

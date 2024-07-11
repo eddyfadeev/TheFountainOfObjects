@@ -1,9 +1,10 @@
-﻿using Interfaces.Models.Player;
+﻿using Interfaces.Models.GameSettings;
+using Interfaces.Models.Player;
 using Shared;
 
 namespace Model.Player;
 
-public class Player : IPlayer
+public class Player(IGameSettingsRepository gameSettingsRepository) : IPlayer
 {
     private int? _id;
     private int _score;
@@ -22,8 +23,12 @@ public class Player : IPlayer
     
     public string? Name { get; set; }
 
-    public int Arrows { get; private set; } = 5;
-    
+    public int Arrows
+    {
+        get;
+        private set;
+    } = gameSettingsRepository.ArrowsCount;
+
     public bool IsAlive { get; private set; } = true;
     public Location Location { get; set; } = new()
     {
@@ -34,4 +39,11 @@ public class Player : IPlayer
     public void Shoot() => Arrows--;
     
     public void Kill() => IsAlive = false;
+    
+    public void Revive() => IsAlive = true;
+
+    public void ResetArrows()
+    {
+        Arrows = gameSettingsRepository.ArrowsCount;
+    }
 }

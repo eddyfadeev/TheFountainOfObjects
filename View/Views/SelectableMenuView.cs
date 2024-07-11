@@ -12,7 +12,7 @@ public abstract class SelectableMenuView<TEnum>
     public abstract ILayoutManager LayoutManager { get; }
     public int SelectedIndex { get; set; } = 0;
 
-    public abstract TEnum Display();
+    public abstract TEnum? Display();
     
     public TEnum SelectEntry(List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.SelectEntry(this, menuEntries);

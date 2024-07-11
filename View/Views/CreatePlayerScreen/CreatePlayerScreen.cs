@@ -5,7 +5,7 @@ public class CreatePlayerScreen
     public string AskForUserName()
     {
         const string message = "Please enter your name:";
-        var userName = GetUserInput(ChangeStringColor(message, Color.White));
+        var userName = GetUserInput($"[white]{ message }[/]");
         
         return userName;
     }
@@ -14,20 +14,14 @@ public class CreatePlayerScreen
     {
         const string message = "This name is already taken. Please, choose another one.";
         
-        AnsiConsole.MarkupLine(ChangeStringColor(message, Color.Red));
+        AnsiConsole.MarkupLine($"[red]{ message }[/]");
     }
     
     public void ShowPlayerCreatedMessage()
     {
         const string message = "Player created";
         
-        AnsiConsole.MarkupLine(ChangeStringColor(message, Color.Green));
+        AnsiConsole.MarkupLine($"[green]{ message }[/]");
     }
     
-    public void ShowPlayerDoesNotExistMessage()
-    {
-        const string message = "Player does not exist. Please, create a new one.";
-        
-        AnsiConsole.MarkupLine(ChangeStringColor(message, Color.Red));
-    }
 }
