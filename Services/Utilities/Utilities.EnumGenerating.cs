@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Reflection.Emit;
+using Interfaces.Models.Player;
 using Model.Player;
 
 namespace Services.Utilities;
 
 public static partial class Utilities
 {
-    public static List<KeyValuePair<Enum,string>> PrepareEnum(IEnumerable<PlayerDTO> enumData, string enumName)
+    public static List<KeyValuePair<Enum,string>> PrepareEnum(IEnumerable<IPlayerDTO> enumData, string enumName)
     {
         var generatedEnum = InitializeEnum(enumData, enumName);
         var preparedData = GetEnumEntries(generatedEnum);
@@ -15,7 +16,7 @@ public static partial class Utilities
         return preparedData;
     }
 
-    private static Type InitializeEnum(IEnumerable<PlayerDTO> enumData, string enumName) =>
+    private static Type InitializeEnum(IEnumerable<IPlayerDTO> enumData, string enumName) =>
         BuildEnum(enumData, enumName);
 
     private static List<KeyValuePair<Enum, string>> GetEnumEntries(Type dynamicallyCreatedEnum)
@@ -30,7 +31,7 @@ public static partial class Utilities
         return entries;
     }
     
-    private static Type CreateEnumType(string enumName, List<PlayerDTO> enumData)
+    private static Type CreateEnumType(string enumName, List<IPlayerDTO> enumData)
     {
         var assemblyName = new AssemblyName("DynamicEnum");
         var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
@@ -50,6 +51,6 @@ public static partial class Utilities
         value.GetType().GetField(value.ToString())!
             .GetCustomAttribute<DisplayAttribute>()?.Name ?? value.ToString();
     
-    private static Type BuildEnum(IEnumerable<PlayerDTO> enumData, string enumName) => 
+    private static Type BuildEnum(IEnumerable<IPlayerDTO> enumData, string enumName) => 
         CreateEnumType(enumName, enumData.ToList());
 }

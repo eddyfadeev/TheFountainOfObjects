@@ -1,78 +1,86 @@
-﻿using Model.Player;
+﻿using Interfaces.Models.Database;
+using Interfaces.Models.Player;
+using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Interfaces.View.TableBuilder;
+using Model.Player;
+using Shared.Enums.Views.Menus;
 
 namespace View.Views.Leaderboard;
 
-public sealed class LeaderboardView : MenuView
+public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
 {
-    private readonly List<PlayerDTO> _players;
+    private readonly ITableBuilderService _tableBuilderService;
+    
+    private readonly List<IPlayerDTO> _players;
     
     public override string MenuName { get; }
-    public override ILayoutManager LayoutManager { get; }
 
-    public LeaderboardView(IPlayerRepository playerRepository, ILayoutManager layoutManager)
+    public LeaderboardView(ILayoutManager layoutManager, IPlayerRepository playerRepository, ITableBuilderService tableBuilderService) : base(layoutManager)
     {
-        LayoutManager = layoutManager;
+        _tableBuilderService = tableBuilderService;
+        
         MenuName = "Leaderboard";
         _players = playerRepository.GetAllPlayers();
     }
     
     public override void Display()
     {
-        Console.Clear();
         LayoutManager.SupportWindowIsVisible = false;
         
-        var leaderboardTable = CreateLeaderboardTable();
-        
-        AnsiConsole.Write(leaderboardTable);
+        var leaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardMenu).Centered();
+
+        LayoutManager.MainWindow.Update(leaderboardMenu);
+        LayoutManager.UpdateLayout();
         Console.ReadKey();
     }
 
-    public Table CreateTopTen()
+    public Table GetSideTable(LeaderboardType menuType)
     {
-        const int numberOfEntries = 10;
-        var topTenTable = CreateLeaderboardTable(numberOfEntries);
-        topTenTable.ShowFooters = false;
-
-        return topTenTable;
+        var sideLeaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardSideMenu);
+        sideLeaderboardMenu.Alignment(Justify.Left);
+        
+        return sideLeaderboardMenu;
     }
 
-    private Table CreateLeaderboardTable(int? numberOfEntries = null)
+    private Table CreateLeaderboardTable(LeaderboardType leaderboardType)
     {
-        var table = LayoutManager.CreateTableLayout(MenuName);
-        var leaderboardTable = CreateInnerTable();
+        var table = _tableBuilderService.CreateOuterTable(MenuName);
+        var leaderboardTable = _tableBuilderService.CreateInnerTable();
         
-        var numberOfEntriesToAdd = numberOfEntries is null || numberOfEntries > _players.Count ? _players.Count : numberOfEntries.Value;
+        leaderboardTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]");
+        
 
-        if (numberOfEntries is null)
+        if (leaderboardType is LeaderboardType.LeaderboardMenu)
         {
-            AddCaption(ref table);
+            AddCaption(table);
+            leaderboardTable.Centered();
         }
         
-        AddPlayersToTable(ref leaderboardTable, numberOfEntriesToAdd);
+        var numberOfEntriesToAdd = CalculateNumberOfEntries(leaderboardType);
+        
+        AddPlayersToTable(leaderboardTable, numberOfEntriesToAdd);
 
         table.AddRow(leaderboardTable);
         
         return table;
     }
 
-    private void AddPlayersToTable(ref Table table, int numberOfEntries)
+    private int CalculateNumberOfEntries(LeaderboardType leaderboardType) =>
+        leaderboardType switch
+        {
+            LeaderboardType.LeaderboardMenu => _players.Count,
+            LeaderboardType.LeaderboardSideMenu => _players.Count <= 10? _players.Count : 10,
+            _ => throw new ArgumentException("Wrong leaderboard type")
+        };
+    
+
+    private void AddPlayersToTable(Table table, int numberOfEntries)
     {
         for (int i = 0; i < numberOfEntries; i++)
         {
             var player = _players[i];
             table.AddRow($"{i + 1} {player.Name}", player.Score.ToString() ?? string.Empty);
         }
-    }
-    
-    private Table CreateInnerTable()
-    {
-        var innerTable = new Table()
-        {
-            Border = TableBorder.None,
-        };
-        
-        innerTable.AddColumns("[white bold]Name[/]", "[white bold]Score[/]").Centered();
-        
-        return innerTable;
     }
 }

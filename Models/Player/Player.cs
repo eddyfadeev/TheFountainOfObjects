@@ -1,6 +1,10 @@
-﻿namespace Model.Player;
+﻿using Interfaces.Models.GameSettings;
+using Interfaces.Models.Player;
+using Shared;
 
-public class Player : IPositionable
+namespace Model.Player;
+
+public class Player(IGameSettingsRepository gameSettingsRepository) : IPlayer
 {
     private int? _id;
     private int _score;
@@ -11,18 +15,35 @@ public class Player : IPositionable
         set => _id = value is null ? null : (int)value.Value;
     }
     
-    public long? Score
+    public int? Score
     {
         get => _score;
-        set => _score = value is null or < 0 ? 0 : (int)value.Value;
+        set => _score = value is null or < 0 ? 0 : value.Value;
     }
     
     public string? Name { get; set; }
 
-    public int Arrows { get; private set; } = 5;
+    public int Arrows
+    {
+        get;
+        private set;
+    } = gameSettingsRepository.ArrowsCount;
+
+    public bool IsAlive { get; private set; } = true;
     public Location Location { get; set; } = new()
     {
         X = 0,
         Y = 0
     };
+    
+    public void Shoot() => Arrows--;
+    
+    public void Kill() => IsAlive = false;
+    
+    public void Revive() => IsAlive = true;
+
+    public void ResetArrows()
+    {
+        Arrows = gameSettingsRepository.ArrowsCount;
+    }
 }

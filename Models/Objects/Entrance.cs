@@ -1,9 +1,13 @@
-﻿namespace Model.Objects;
+﻿using Interfaces.Models.Objects;
+using Shared;
 
-public class Entrance : IPositionable, IActivable
+namespace Model.Objects;
+
+public class Entrance : IEntrance
 {
     public Location Location { get; set; }
-    
+    public void Exit(Player.Player player) => throw new NotImplementedException();
+
     public Entrance(int x, int y)
     {
         Location = new Location
@@ -12,6 +16,9 @@ public class Entrance : IPositionable, IActivable
             Y = y
         };
     }
+}
 
-    public static void Activate() => throw new NotImplementedException();
+public interface IEntrance : IPositionable
+{
+    void Exit(Player.Player player);
 }

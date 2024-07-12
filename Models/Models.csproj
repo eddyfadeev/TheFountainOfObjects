@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="GameSettings\" />
+      <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,9 +1,11 @@
-﻿using View.Extensions;
+﻿using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using View.Extensions;
 
 namespace View.Views;
 
 public abstract class SelectableMenuView<TEnum>
-    : ISelectableMenu<TEnum>
+    : ISelectableMenuView<TEnum>
     where TEnum : Enum
 {
     public abstract string MenuName { get; }
@@ -12,8 +14,8 @@ public abstract class SelectableMenuView<TEnum>
 
     public abstract TEnum? Display();
     
-    public TEnum SelectEntry(ref List<KeyValuePair<TEnum, string>> menuEntries) =>
-        SelectableExtensions.SelectEntry(this, ref menuEntries);
+    public TEnum SelectEntry(List<KeyValuePair<TEnum, string>> menuEntries) =>
+        SelectableExtensions.SelectEntry(this, menuEntries);
 
     public void RenderMenu(List<KeyValuePair<TEnum, string>> menuEntries) =>
         SelectableExtensions.RenderMenu(this, menuEntries);

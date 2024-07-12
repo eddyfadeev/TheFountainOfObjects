@@ -1,17 +1,24 @@
-﻿using View.Views.Leaderboard;
+﻿using Interfaces.View.LayoutManager;
+using Interfaces.View.Menu;
+using Shared.Enums.Views.Menus;
+using View.Views.HelpScreen;
+using View.Views.Leaderboard;
 
 namespace View.Views.MainMenu;
 
 public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
 {
-    private readonly IPlayerRepository _playerRepository;
+    private readonly ISideMenu<HelpType> _helpSideView;
+    private readonly ISideMenu<LeaderboardType> _leaderboardSideView;
     public override string MenuName { get; }
     public override ILayoutManager LayoutManager { get; }
 
-    public MainMenuView(IPlayerRepository playerRepository, ILayoutManager layoutManager)
+    public MainMenuView(ILayoutManager layoutManager,
+        ISideMenu<HelpType> helpSideView, ISideMenu<LeaderboardType> leaderboardSideView)
     {
         LayoutManager = layoutManager;
-        _playerRepository = playerRepository;
+        _helpSideView = helpSideView;
+        _leaderboardSideView = leaderboardSideView;
         MenuName = "Main Menu";
     }
     
@@ -19,29 +26,16 @@ public sealed class MainMenuView : SelectableMenuView<MainMenuEntries>
     {
         var mainMenuEntriesList = GetEnumValuesAndDisplayNames<MainMenuEntries>();
         var leaderboardTopTen = GetLeaderboardTable();
+        var helpWindow = GetHelpWindow();
+        
         LayoutManager.SupportWindowIsVisible = true;
         LayoutManager.SupportWindowTop.Update(leaderboardTopTen);
+        LayoutManager.SupportWindowBottom.Update(helpWindow);
 
-        return SelectEntry(ref mainMenuEntriesList);
+        return SelectEntry(mainMenuEntriesList);
     }
 
-    private Table GetLeaderboardTable() => new LeaderboardView(_playerRepository, LayoutManager).CreateTopTen();
+    private Table GetHelpWindow() => _helpSideView.GetSideTable(HelpType.MainMenuSide);
 
-    // TODO: Fill up help menu with appropriate information and move to the other class
-    // !ShowHelp method should call the appropriate method from the other class to show the help information
-    internal void ShowHelp()
-    {
-        Console.Clear();
-        Console.WriteLine("HELP");
-        Console.WriteLine("----------------------------------");
-        Console.WriteLine("The following commands are available:");
-        Console.WriteLine("move {direction} - moves the player to the specified direction");
-        Console.WriteLine("shoot {direction} - shoots an arrow to the specified direction");
-        Console.WriteLine("help - prints this help information");
-        Console.WriteLine("exit - exits the game\n");
-        Console.WriteLine("Available directions: north, south, east, west\n");
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
-        Console.Clear();
-    }
+    private Table GetLeaderboardTable() => _leaderboardSideView.GetSideTable(LeaderboardType.LeaderboardSideMenu);
 }

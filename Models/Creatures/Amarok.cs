@@ -1,8 +1,13 @@
-﻿namespace Model.Creatures;
+﻿using Interfaces.Models.Creatures;
+using Interfaces.Models.Player;
+using Shared;
 
-public class Amarok : IPositionable, IInteractable
+namespace Model.Creatures;
+
+public class Amarok : IEnemy
 {
     public Location Location { get; set; }
+    public bool IsAlive { get; }
     
     public Amarok(int x, int y)
     {
@@ -11,8 +16,9 @@ public class Amarok : IPositionable, IInteractable
             X = x,
             Y = y
         };
+        
+        IsAlive = true;
     }
 
-
-    public void Interact(Player.Player player) => throw new NotImplementedException();
+    public void Attack(IPlayer player) => player.Kill();
 }

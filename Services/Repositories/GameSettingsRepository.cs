@@ -1,0 +1,85 @@
+﻿using Interfaces.Models.GameSettings;
+using Interfaces.Models.Maze;
+using Interfaces.Services;
+using Shared.Enums.Models.Objects.Maze;
+
+namespace Services.Repositories;
+
+public class GameSettingsRepository : IGameSettingsRepository
+{
+    private readonly IMazeService<IRoom> _mazeService;
+    
+    private int _pitsCount;
+    private int _maelstromsCount;
+    private int _amaroksCount;
+    private int _arrowsCount;
+    
+    public GameSettingsRepository(IMazeService<IRoom> mazeService)
+    {
+        _mazeService = mazeService;
+        SetDefaultSettings();
+    }
+    
+    public int PitsCount
+    {
+        get => _pitsCount;
+        set => _pitsCount = CheckObjectNum(value);
+    }
+    
+    public int MaelstromsCount
+    {
+        get => _maelstromsCount;
+        set => _maelstromsCount = CheckObjectNum(value);
+    }
+    
+    public int AmaroksCount
+    {
+        get => _amaroksCount;
+        set => _amaroksCount = CheckObjectNum(value);
+    }
+    
+    public int ArrowsCount
+    {
+        get => _arrowsCount;
+        set => _arrowsCount = CheckArrowsNumber(value);
+    }
+    
+    public void SetMazeSize(MazeSize mazeSize)
+    {
+        _mazeService.ChangeMazeSize(mazeSize);
+    }
+    
+    private void SetDefaultSettings()
+    {
+        _mazeService.ChangeMazeSize(MazeSize.Small);
+        PitsCount = 1;
+        MaelstromsCount = 1;
+        AmaroksCount = 1;
+        ArrowsCount = 3;
+    }
+
+    private int CheckObjectNum(int objectsNumber)
+    {
+        const int defaultObjectNumber = 1;
+        if (objectsNumber is >= 0 and <= 3)
+        {
+            return objectsNumber;
+        }
+
+        Console.WriteLine("Invalid number of objects. Defaulting to 1.");
+
+        return defaultObjectNumber;
+    }
+
+    private int CheckArrowsNumber(int arrowsNum)
+    {
+        const int defaultArrowsNumber = 3;
+        if (arrowsNum is >= 0 and <= 5)
+        {
+            return arrowsNum;
+        }
+        
+        Console.WriteLine("Invalid number of arrows. Defaulting to 3.");
+        return defaultArrowsNumber;
+    }
+}

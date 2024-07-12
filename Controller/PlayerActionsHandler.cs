@@ -1,0 +1,135 @@
+﻿using Interfaces.Controller;
+using Interfaces.Models.Creatures;
+using Interfaces.Models.Database;
+using Interfaces.Models.Maze;
+using Interfaces.Models.Objects;
+using Interfaces.Models.Player;
+using Interfaces.Services;
+using Interfaces.View.Menu;
+using Model;
+using Model.Creatures;
+using Model.Maze;
+using Model.Objects;
+using Model.Player;
+using Shared;
+using Shared.Enums.Models;
+using Shared.Enums.Models.Messages;
+using View.Views.Game;
+
+namespace Controller;
+
+public class PlayerActionsHandler : IMove, IShoot
+{
+    private readonly IMaze<IRoom> _maze;
+    private readonly IPlayer _player;
+    private readonly IGameView _gameView;
+    private readonly IMazeService<IRoom> _mazeService;
+    
+    public PlayerActionsHandler(IPlayerRepository playerRepository, IMaze<IRoom> maze, IGameView gameView, IMazeService<IRoom> mazeService)
+    {
+        _player = playerRepository.Player!;
+        _maze = maze;
+        _gameView = gameView;
+        _mazeService = mazeService;
+    }
+
+    public void Attack(Direction direction)
+    {
+        if (CanAttack(direction))
+        {
+            var targetLocation = GetTargetLocation(_player.Location, direction);
+            var targetRoom = _maze[targetLocation];
+
+            var enemy = targetRoom.GetObject<IEnemy>();
+            
+            
+            if (_player.Arrows <= 0)
+            {
+                _gameView.UpdateSpecialMessage(MessageType.NoArrowsLeft);
+                
+                return;
+            }
+            
+            if (enemy is not null)
+            {
+                _gameView.UpdateSpecialMessage(MessageType.KilledAmarok);
+                
+                targetRoom.RemoveObject(enemy);
+            }
+            else
+            {
+                _gameView.UpdateSpecialMessage(MessageType.MissedShot);
+            }
+            
+            _player.Shoot();
+        }
+        else
+        {
+            _gameView.UpdateSpecialMessage(MessageType.CantShootThere);
+        }
+    }
+    
+    public void Move(Direction direction)
+    {
+        if (CanMove(direction))
+        {
+            var newLocation = GetTargetLocation(_player.Location, direction);
+            var currentRoom = _maze[_player.Location];
+            var newRoom = _maze[newLocation];
+            
+            
+            currentRoom.RemoveObject(_player);
+            newRoom.AddObject(_player);
+            _player.Location = newLocation;
+        }
+        else
+        {
+            _gameView.UpdateSpecialMessage(MessageType.CantMoveThere);
+        }
+    }
+
+    public void UseInRoom(Location location)
+    {
+        var activable = GetActivable(location);
+        var isActivated = activable is not null && activable.IsActivated;
+
+        switch (activable)
+        {
+            case Fountain when !isActivated:
+                activable.Activate();
+                _gameView.UpdateSpecialMessage(MessageType.FountainActivated);
+                break;
+            case Fountain when isActivated:
+                _gameView.UpdateSpecialMessage(MessageType.FountainIsAlreadyActivated);
+                break;
+            default:
+                _gameView.UpdateSpecialMessage(MessageType.NothingHappened);
+                break;
+        }
+    }
+
+    private IActivable? GetActivable(Location location) => _maze[location].GetObject<IActivable>();
+
+    private bool CanAttack(Direction direction)
+    {
+        var attackLocation = GetTargetLocation(_player.Location, direction);
+
+        return _mazeService.IsWithinMazeBounds(attackLocation);
+    }
+
+    private bool CanMove(Direction direction)
+    {
+        var newLocation = GetTargetLocation(_player.Location, direction);
+        
+        return _mazeService.IsWithinMazeBounds(newLocation);
+    }
+    
+    private Location GetTargetLocation(Location currentLocation, Direction direction) => direction switch
+    {
+        Direction.North => new Location(currentLocation.X, currentLocation.Y - 1),
+        Direction.East => new Location(currentLocation.X + 1, currentLocation.Y),
+        Direction.South => new Location(currentLocation.X, currentLocation.Y + 1),
+        Direction.West => new Location(currentLocation.X - 1, currentLocation.Y),
+        _ => currentLocation
+    };
+}

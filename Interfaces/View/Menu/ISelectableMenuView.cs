@@ -1,0 +1,19 @@
+﻿using Spectre.Console;
+
+namespace Interfaces.View.Menu;
+
+public interface ISelectableMenuView<TEnum> : IMenuView
+    where TEnum : Enum
+{
+    int SelectedIndex { get; set; }
+    
+    TEnum? Display();
+    
+    TEnum SelectEntry(List<KeyValuePair<TEnum, string>> menuEntries);
+    
+    void RenderMenu(List<KeyValuePair<TEnum, string>> menuEntries);
+    
+    Table CreateMenuTable(
+        string menuName,
+        List<KeyValuePair<TEnum, string>> menuEntries);
+}

@@ -1,4 +1,6 @@
-﻿using Services.Database.Interfaces;
+﻿using Interfaces.Models.Database;
+using Interfaces.Models.GameSettings;
+using Interfaces.Models.Player;
 using Model.Player;
 
 namespace Services.Extensions;
@@ -13,12 +15,12 @@ public static class PlayerMapperExtensions
     /// </summary>
     /// <param name="dto">The PlayerDTO object to convert.</param>
     /// <returns>The converted Player object.</returns>
-    public static Player ToDomain(this PlayerDTO dto) => 
-        new()
+    public static IPlayer ToDomain(this IPlayerDTO dto, IGameSettingsRepository gameSettingsRepository) => 
+        new Player(gameSettingsRepository)
         {
             Id = dto.Id,
             Name = dto.Name,
-            Score = dto.Score ?? 0
+            Score = (int?)dto.Score ?? 0
         };
 
     /// <summary>
@@ -26,7 +28,7 @@ public static class PlayerMapperExtensions
     /// </summary>
     /// <param name="player">The <see cref="Player"/> object to convert.</param>
     /// <returns>A new instance of <see cref="PlayerDTO"/> that represents the converted player.</returns>
-    public static PlayerDTO ToDto(this Player player) => 
+    public static IPlayerDTO ToDto(this IPlayer player) => 
         new PlayerDTO
         {
             Id = player.Id,

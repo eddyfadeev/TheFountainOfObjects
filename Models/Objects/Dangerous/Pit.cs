@@ -1,6 +1,10 @@
-﻿namespace Model.Objects.Dangerous;
+﻿using Interfaces.Models.Objects;
+using Interfaces.Models.Player;
+using Shared;
 
-public class Pit : IPositionable, IInteractable
+namespace Model.Objects.Dangerous;
+
+public class Pit : IDangerous
 {
     public Location Location { get; set; }
     
@@ -13,5 +17,5 @@ public class Pit : IPositionable, IInteractable
         };
     }
 
-    public void Interact(Player.Player player) => throw new NotImplementedException();
+    public void Attack(IPlayer player) => player.Kill();
 }

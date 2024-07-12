@@ -1,4 +1,6 @@
-﻿namespace View.Layout;
+﻿using Interfaces.View.LayoutManager;
+
+namespace View.Layout;
 
 public sealed class LayoutManager : ILayoutManager
 {
@@ -40,26 +42,6 @@ public sealed class LayoutManager : ILayoutManager
         GameLayout[SupportWindowName].IsVisible = SupportWindowIsVisible;
         
         AnsiConsole.Write(GameLayout);
-    }
-    
-    public Table CreateTableLayout(string menuName)
-    {
-        var table = new Table 
-        {
-            ShowHeaders = false,
-            Border = TableBorder.Rounded,
-            Expand = true,
-            Title = new TableTitle(
-                menuName,
-                new Style(
-                    foreground: Color.White,
-                    decoration: Decoration.Bold
-                )),
-        };
-        
-        table.AddColumn(new TableColumn(menuName).Centered());
-
-        return table;
     }
     
     private void SetDefaultSize()

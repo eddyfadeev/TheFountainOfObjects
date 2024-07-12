@@ -1,1 +1,1 @@
-﻿global using Model.Interfaces;
+﻿

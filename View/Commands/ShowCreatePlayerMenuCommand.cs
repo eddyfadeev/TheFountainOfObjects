@@ -1,4 +1,6 @@
-﻿using View.Views.CreatePlayerMenu;
+﻿using Interfaces.View.Command;
+using Interfaces.View.LayoutManager;
+using View.Views.PlayerInitMenu;
 
 namespace View.Commands;
 
@@ -13,7 +15,8 @@ public class ShowCreatePlayerMenuCommand : ICommand
     
     public Enum Execute()
     {
-        var createPlayerView = new CreatePlayerView(_layoutManager);
+        var createPlayerView = new PlayerInitMenuView(_layoutManager);
+        
         return createPlayerView.Display();
     }
 }

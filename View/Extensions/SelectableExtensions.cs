@@ -1,16 +1,20 @@
-﻿namespace View.Extensions;
+﻿using Interfaces.View.Menu;
+using Interfaces.View.TableBuilder;
+using View.TableBuilder;
+
+namespace View.Extensions;
 
 public static class SelectableExtensions
 {
     public static TEnum SelectEntry<TEnum>(
-        this ISelectableMenu<TEnum> selectable,
-        ref List<KeyValuePair<TEnum, string>> menuEntries)
+        this ISelectableMenuView<TEnum> selectable,
+        List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
         var userMadeChoice = false;
         KeyValuePair<TEnum, string> selected = new();
         
-        AddEntryIfDynamicEnum(ref menuEntries);
+        AddEntryIfDynamicEnum(menuEntries);
         
         while (!userMadeChoice)
         {
@@ -40,7 +44,7 @@ public static class SelectableExtensions
     }
 
     public static void RenderMenu<TEnum>(
-        this ISelectableMenu<TEnum> selectable,
+        this ISelectableMenuView<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
@@ -52,13 +56,13 @@ public static class SelectableExtensions
     }
 
     public static Table CreateMenuTable<TEnum>(
-        this ISelectableMenu<TEnum> selectable,
+        this ISelectableMenuView<TEnum> selectable,
         string menuName,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
-        var layoutManager = selectable.LayoutManager;
-        var menuTable = layoutManager.CreateTableLayout(menuName);
+        var tableBuilderService = new TableBuilderService();
+        var menuTable = tableBuilderService.CreateOuterTable(menuName);
         
         for (int i = 0; i < menuEntries.Count; i++)
         {
@@ -70,7 +74,7 @@ public static class SelectableExtensions
         return menuTable;
     }
     
-    private static void AddEntryIfDynamicEnum<TEnum>(ref List<KeyValuePair<TEnum, string>> menuEntries)
+    private static void AddEntryIfDynamicEnum<TEnum>(List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
         var assemblyName = menuEntries[0].Key.GetType().Assembly.GetName().Name;

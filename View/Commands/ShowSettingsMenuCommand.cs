@@ -1,4 +1,6 @@
-﻿using View.Views.SettingsMenu;
+﻿using Interfaces.View.Command;
+using Interfaces.View.LayoutManager;
+using View.Views.SettingsMenu;
 
 namespace View.Commands;
 
@@ -14,6 +16,7 @@ public class ShowSettingsMenuCommand : ICommand
     public Enum Execute()
     {
         var settingsMenuView = new SettingsMenuView(_layoutManager);
+        
         return settingsMenuView.Display();
     }
 }

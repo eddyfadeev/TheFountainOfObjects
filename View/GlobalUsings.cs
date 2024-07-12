@@ -1,0 +1,7 @@
+﻿global using static Services.Utilities.Utilities;
+global using static View.TableBuilder.TableBuilderService;
+
+global using System;
+global using System.Collections.Generic;
+global using System.ComponentModel.DataAnnotations;
+global using Spectre.Console;

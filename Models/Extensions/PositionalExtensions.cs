@@ -1,13 +1,16 @@
-﻿namespace Model.Extensions;
+﻿using Interfaces.Models.Objects;
+using Shared;
+
+namespace Model.Extensions;
 
 public static class PositionalExtensions
 {
-    public static IPositionable SetPosition(this IPositionable obj, int x, int y)
+    public static IPositionable SetPosition(this IPositionable obj, Location location)
     {
-        obj.Location = new Location()
+        obj.Location = new Location
         {
-            X = x,
-            Y = y
+            X = location.X,
+            Y = location.Y
         };
 
         return obj;

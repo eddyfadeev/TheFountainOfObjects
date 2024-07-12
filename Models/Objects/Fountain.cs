@@ -1,8 +1,12 @@
-﻿namespace Model.Objects;
+﻿using Interfaces.Models.Objects;
+using Shared;
 
-public class Fountain : IPositionable, IActivable
+namespace Model.Objects;
+
+public class Fountain : IActivable
 {
     public Location Location { get; set; }
+    public bool IsActivated { get; private set; }
 
     public Fountain(int x, int y)
     {
@@ -11,7 +15,11 @@ public class Fountain : IPositionable, IActivable
             X = x,
             Y = y
         };
+        IsActivated = false;
     }
 
-    public static void Activate() => throw new NotImplementedException();
+    public void Activate()
+    {
+        IsActivated = true;
+    }
 }
