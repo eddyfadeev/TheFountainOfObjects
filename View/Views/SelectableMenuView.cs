@@ -5,7 +5,7 @@ using View.Extensions;
 namespace View.Views;
 
 public abstract class SelectableMenuView<TEnum>
-    : ISelectableMenu<TEnum>
+    : ISelectableMenuView<TEnum>
     where TEnum : Enum
 {
     public abstract string MenuName { get; }

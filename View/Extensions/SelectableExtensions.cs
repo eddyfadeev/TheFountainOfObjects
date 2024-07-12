@@ -7,7 +7,7 @@ namespace View.Extensions;
 public static class SelectableExtensions
 {
     public static TEnum SelectEntry<TEnum>(
-        this ISelectableMenu<TEnum> selectable,
+        this ISelectableMenuView<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
@@ -44,7 +44,7 @@ public static class SelectableExtensions
     }
 
     public static void RenderMenu<TEnum>(
-        this ISelectableMenu<TEnum> selectable,
+        this ISelectableMenuView<TEnum> selectable,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
     {
@@ -56,7 +56,7 @@ public static class SelectableExtensions
     }
 
     public static Table CreateMenuTable<TEnum>(
-        this ISelectableMenu<TEnum> selectable,
+        this ISelectableMenuView<TEnum> selectable,
         string menuName,
         List<KeyValuePair<TEnum, string>> menuEntries)
         where TEnum : Enum
