@@ -1,29 +1,26 @@
 ﻿using Interfaces.Controller;
 using Interfaces.Models.Creatures;
-using Interfaces.Models.Database;
 using Interfaces.Models.Maze;
 using Interfaces.Models.Objects;
 using Interfaces.Models.Player;
+using Interfaces.Models.Repository;
 using Interfaces.Services;
 using Interfaces.View.Menu;
-using Model;
-using Model.Creatures;
-using Model.Maze;
 using Model.Objects;
-using Model.Player;
 using Shared;
 using Shared.Enums.Models;
 using Shared.Enums.Models.Messages;
-using View.Views.Game;
 
 namespace Controller;
 
-public class PlayerActionsHandler : IMove, IShoot
+public class PlayerActionsHandler : IPlayerActionsHandler
 {
     private readonly IMaze<IRoom> _maze;
     private readonly IPlayer _player;
     private readonly IGameView _gameView;
     private readonly IMazeService<IRoom> _mazeService;
+    
+    public event Action? OnPlayerActionCompleted; 
     
     public PlayerActionsHandler(IPlayerRepository playerRepository, IMaze<IRoom> maze, IGameView gameView, IMazeService<IRoom> mazeService)
     {
@@ -86,6 +83,8 @@ public class PlayerActionsHandler : IMove, IShoot
         {
             _gameView.UpdateSpecialMessage(MessageType.CantMoveThere);
         }
+        
+        OnPlayerActionCompleted?.Invoke();
     }
 
     public void UseInRoom(Location location)

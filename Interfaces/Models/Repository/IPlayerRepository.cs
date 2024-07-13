@@ -1,6 +1,6 @@
 ﻿using Interfaces.Models.Player;
 
-namespace Interfaces.Models.Database;
+namespace Interfaces.Models.Repository;
 
 public interface IPlayerRepository
 {

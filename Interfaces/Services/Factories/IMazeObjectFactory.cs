@@ -2,7 +2,7 @@
 using Shared;
 using Shared.Enums.Models.Factory;
 
-namespace Interfaces.Models.Factory;
+namespace Interfaces.Services.Factories;
 
 public interface IMazeObjectFactory
 {

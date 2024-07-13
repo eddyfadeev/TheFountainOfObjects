@@ -1,11 +1,11 @@
-﻿using Interfaces.Models.GameSettings;
-using Interfaces.Models.Maze;
+﻿using Interfaces.Models.Maze;
 using Interfaces.Services;
+using Interfaces.Services.GameSettings;
 using Shared.Enums.Models.Objects.Maze;
 
-namespace Services.Repositories;
+namespace Services;
 
-public class GameSettingsRepository : IGameSettingsRepository
+public class GameSettingsManager : IGameSettingsManager
 {
     private readonly IMazeService<IRoom> _mazeService;
     
@@ -14,7 +14,7 @@ public class GameSettingsRepository : IGameSettingsRepository
     private int _amaroksCount;
     private int _arrowsCount;
     
-    public GameSettingsRepository(IMazeService<IRoom> mazeService)
+    public GameSettingsManager(IMazeService<IRoom> mazeService)
     {
         _mazeService = mazeService;
         SetDefaultSettings();

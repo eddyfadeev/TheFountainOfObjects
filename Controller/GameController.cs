@@ -1,8 +1,11 @@
-﻿using Interfaces.Models.Database;
-using Interfaces.Models.GameSettings;
+﻿using Interfaces.Controller;
+using Interfaces.Models.Database;
 using Interfaces.Models.Maze;
 using Interfaces.Models.Objects;
+using Interfaces.Models.Player;
+using Interfaces.Models.Repository;
 using Interfaces.Services;
+using Interfaces.Services.GameSettings;
 using Interfaces.View.Factory;
 using Interfaces.View.Menu;
 using Model.Objects;
@@ -25,7 +28,7 @@ public class GameController
         _serviceProvider = serviceProvider;
         var menuCommandFactory = _serviceProvider.GetRequiredService<IMenuCommandFactory>();
         _playerRepository = _serviceProvider.GetRequiredService<IPlayerRepository>();
-        var gameSettingsRepository = _serviceProvider.GetRequiredService<IGameSettingsRepository>();
+        var gameSettingsRepository = _serviceProvider.GetRequiredService<IGameSettingsManager>();
         _mainMenuHandler = new MainMenuHandler(menuCommandFactory, _playerRepository, gameSettingsRepository);
         _maze = _serviceProvider.GetRequiredService<IMaze<IRoom>>();
         _gameView = _serviceProvider.GetRequiredService<IGameView>();
@@ -60,15 +63,13 @@ public class GameController
                     return;
             }
         } while (true);
-        
-        
     }
     
     private void ProcessKeyPress(ConsoleKey key)
     {
         var mazeService = _serviceProvider.GetRequiredService<IMazeService<IRoom>>();
+        var playerActionsHandler = _serviceProvider.GetRequiredService<IPlayerActionsHandler>();
         var actionType = GameControlKeys.GetTypeOfAction(key);
-        var playerActionsHandler = new PlayerActionsHandler(_playerRepository, _maze, _gameView, mazeService);
         
         switch (actionType)
         {
@@ -102,19 +103,20 @@ public class GameController
     private void StartGame()
     {
         var mazeService = _serviceProvider.GetRequiredService<IMazeService<IRoom>>();
+        var playerActionsHandler = _serviceProvider.GetRequiredService<IPlayerActionsHandler>();
         _playerRepository.Player!.Revive();
         _playerRepository.Player!.ResetArrows();
+
+        playerActionsHandler.OnPlayerActionCompleted += OnPlayerActionCompleted;
+        
         
         _gameView.Display();
         do
         {
             var pressedKey = Console.ReadKey(true);
             ProcessKeyPress(pressedKey.Key);
-
-            if (_maze[_playerRepository.Player!.Location].IsDangerous)
-            {
-                _maze[_playerRepository.Player.Location].GetObject<IDangerous>()!.Attack(_playerRepository.Player); 
-            }
+            
+            CheckForDanger(_playerRepository.Player!);
 
             if (!_playerRepository.Player.IsAlive)
             {
@@ -133,6 +135,22 @@ public class GameController
             _gameView.UpdateMaze(newMaze);
         } while (true);
     }
+    
+    private void Attack(IPlayer player, IDangerous dangerous) => dangerous.Attack(player);
+
+    private void CheckForDanger(IPlayer player)
+    {
+        var location = player.Location;
+
+        if (!_maze[location].IsDangerous)
+        {
+            return;
+        }
+
+        var dangerousObject = _maze[location].GetObject<IDangerous>();
+            
+        Attack(player, dangerousObject);
+    }
 
     private bool CheckIfPlayerWon(Location location)
     {
@@ -150,5 +168,10 @@ public class GameController
 
         _gameView.UpdateSpecialMessage(MessageType.Victory);
         return true;
+    }
+    
+    private void OnPlayerActionCompleted()
+    {
+        CheckForDanger(_playerRepository.Player!);
     }
 }

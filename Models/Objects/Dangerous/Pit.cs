@@ -8,13 +8,9 @@ public class Pit : IDangerous
 {
     public Location Location { get; set; }
     
-    public Pit(int x, int y)
+    public Pit(Location location)
     {
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+        Location = location;
     }
 
     public void Attack(IPlayer player) => player.Kill();

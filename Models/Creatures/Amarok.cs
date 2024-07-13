@@ -9,13 +9,9 @@ public class Amarok : IEnemy
     public Location Location { get; set; }
     public bool IsAlive { get; }
     
-    public Amarok(int x, int y)
+    public Amarok(Location location)
     {
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+        Location = location;
         
         IsAlive = true;
     }

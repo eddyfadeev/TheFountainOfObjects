@@ -18,6 +18,7 @@ public static partial class Utilities
     
     public static int GetUserInput(string message, int max)
     {
+        Console.Clear();
         Console.CursorVisible = true;
         
         var number = AnsiConsole.Ask<int>(message);

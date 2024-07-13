@@ -6,19 +6,11 @@ namespace Model.Objects;
 public class Entrance : IEntrance
 {
     public Location Location { get; set; }
-    public void Exit(Player.Player player) => throw new NotImplementedException();
 
-    public Entrance(int x, int y)
+    public Entrance(Location location)
     {
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+        Location = location;
     }
 }
 
-public interface IEntrance : IPositionable
-{
-    void Exit(Player.Player player);
-}
+public interface IEntrance : IPositionable;

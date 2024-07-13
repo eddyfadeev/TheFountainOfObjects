@@ -26,16 +26,16 @@ public class MazeGeneratorService : IMazeGeneratorService
         var fieldSize = (int)_maze.MazeSize;
         
         var table = _tableBuilderService.CreateInnerTable();
-        PopulateMaze(table, fieldSize);
+        InitializeMaze(table, fieldSize);
         
         return table;
     }
 
-    private void PopulateMaze(Table table, int fieldSize)
+    private void InitializeMaze(Table table, int fieldSize)
     {
-        _roomPopulator.GenerateRooms();
+        _roomPopulator.InitializeRooms();
         _tableBuilderService.AddColumns(table, fieldSize);
-        _roomPopulator.SetRoomOccupants();
+        _roomPopulator.PopulateRooms();
         _tableBuilderService.AddRows(_maze, table, fieldSize);
     }
 }

@@ -14,13 +14,9 @@ public class Maelstrom : IDangerous
     private readonly IMaze<IRoom> _maze;
     public Location Location { get; set; }
     
-    public Maelstrom(int x, int y, IMazeService<IRoom> mazeService, IMaze<IRoom> maze)
+    public Maelstrom(Location location, IMazeService<IRoom> mazeService, IMaze<IRoom> maze)
     {
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+        Location = location;
         
         _mazeService = mazeService;
         _maze = maze;

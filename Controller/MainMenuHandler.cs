@@ -1,5 +1,6 @@
 ﻿using Interfaces.Models.Database;
-using Interfaces.Models.GameSettings;
+using Interfaces.Models.Repository;
+using Interfaces.Services.GameSettings;
 using Interfaces.View.Factory;
 using Model.Player;
 using Services.Extensions;
@@ -15,17 +16,17 @@ internal class MainMenuHandler
 {
     private readonly IMenuCommandFactory _menuCommandFactory;
     private readonly IPlayerRepository _playerRepository;
-    private readonly IGameSettingsRepository _gameSettingsRepository;
+    private readonly IGameSettingsManager _gameSettingsManager;
 
     public MainMenuHandler(
         IMenuCommandFactory menuCommandFactory, 
         IPlayerRepository playerRepository, 
-        IGameSettingsRepository gameSettingsRepository
+        IGameSettingsManager gameSettingsManager
         )
     {
         _menuCommandFactory = menuCommandFactory;
         _playerRepository = playerRepository;
-        _gameSettingsRepository = gameSettingsRepository;
+        _gameSettingsManager = gameSettingsManager;
     }
 
     public void ShowStartScreen() => ShowMenu(CommandType.StartScreen);
@@ -69,20 +70,20 @@ internal class MainMenuHandler
             switch (userChoice)
             {
                 case SettingsMenuEntries.Amaroks:
-                    _gameSettingsRepository.AmaroksCount = GetUserInput("Enter the number of Amaroks (0-3): ", maxDangerous);
+                    _gameSettingsManager.AmaroksCount = GetUserInput("Enter the number of Amaroks (0-3): ", maxDangerous);
                     break;
                 case SettingsMenuEntries.Pits:
-                    _gameSettingsRepository.PitsCount = GetUserInput("Enter the number of Pits (0-3): ", maxDangerous);
+                    _gameSettingsManager.PitsCount = GetUserInput("Enter the number of Pits (0-3): ", maxDangerous);
                     break;
                 case SettingsMenuEntries.Maelstroms:
-                    _gameSettingsRepository.MaelstromsCount = GetUserInput("Enter the number of Maelstroms (0-3): ", maxDangerous);
+                    _gameSettingsManager.MaelstromsCount = GetUserInput("Enter the number of Maelstroms (0-3): ", maxDangerous);
                     break;
                 case SettingsMenuEntries.Arrows:
-                    _gameSettingsRepository.ArrowsCount = GetUserInput("Enter the number of Arrows (0-5): ", maxArrows);
+                    _gameSettingsManager.ArrowsCount = GetUserInput("Enter the number of Arrows (0-5): ", maxArrows);
                     break;
                 case SettingsMenuEntries.FieldSize:
                     var newMazeSize = SettingsMenuView.AskForMazeSize();
-                    _gameSettingsRepository.SetMazeSize(newMazeSize);
+                    _gameSettingsManager.SetMazeSize(newMazeSize);
                     break;
                 case SettingsMenuEntries.ChangePlayerName:
                     _playerRepository.Player!.Name = ProcessUserNameInput();
@@ -139,7 +140,7 @@ internal class MainMenuHandler
         var playerName = ProcessUserNameInput();
         
         _playerRepository.Player = 
-            new Player (_gameSettingsRepository)
+            new Player (_gameSettingsManager)
             {
                 Name = playerName,
                 Score = 0,
@@ -159,7 +160,7 @@ internal class MainMenuHandler
         }
         
         var player = _playerRepository.LoadPlayer(userChoice.ToString());
-        _playerRepository.Player = player.ToDomain(_gameSettingsRepository);
+        _playerRepository.Player = player.ToDomain(_gameSettingsManager);
 
         return true;
     }

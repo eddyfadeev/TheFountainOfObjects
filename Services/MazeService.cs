@@ -6,7 +6,7 @@ using Shared;
 using Shared.Enums.Models.Objects.Maze;
 using Spectre.Console;
 
-namespace Controller;
+namespace Services;
 
 public class MazeService : IMazeService<IRoom>
 {

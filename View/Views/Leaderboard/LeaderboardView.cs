@@ -1,9 +1,8 @@
-﻿using Interfaces.Models.Database;
-using Interfaces.Models.Player;
+﻿using Interfaces.Models.Player;
+using Interfaces.Models.Repository;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
-using Model.Player;
 using Shared.Enums.Views.Menus;
 
 namespace View.Views.Leaderboard;

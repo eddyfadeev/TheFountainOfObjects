@@ -8,13 +8,10 @@ public class Fountain : IActivable
     public Location Location { get; set; }
     public bool IsActivated { get; private set; }
 
-    public Fountain(int x, int y)
+    public Fountain(Location location)
     {
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+        Location = location;
+        
         IsActivated = false;
     }
 
