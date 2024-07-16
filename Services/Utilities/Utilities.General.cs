@@ -71,4 +71,15 @@ public static partial class Utilities
             "\nPress any key to continue...",
             new Style(foreground: Color.White));
     }
+    
+    public static void CheckNulls(params object?[] objects)
+    {
+        foreach (var obj in objects)
+        {
+            if (obj is null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+        }
+    }
 }

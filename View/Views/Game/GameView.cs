@@ -10,7 +10,7 @@ using Shared.Enums.Views.Menus;
 
 namespace View.Views.Game;
 
-public class GameView : MenuView, IGameView
+public class GameView : NonSelectableMenuView, IGameView
 {
     private readonly ITableBuilderService _tableBuilderService;
     private readonly IMazeGeneratorService _mazeGeneratorService;
