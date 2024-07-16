@@ -9,21 +9,20 @@ using Model.Objects;
 using Model.Objects.Dangerous;
 using Shared;
 using Shared.Enums.Models.Factory;
+using static Services.Utilities.Utilities;
 
 namespace Services.Factories;
 
 public class MazeObjectFactory : IMazeObjectFactory
 {
     private readonly IPlayerRepository _playerRepository;
-    private readonly IMazeService<IRoom> _mazeService;
-    private readonly IMaze<IRoom> _maze;
 
     private readonly Dictionary<ObjectType, Func<Location, IPositionable>> _objectCreators; 
     public MazeObjectFactory(IMazeService<IRoom> mazeService, IMaze<IRoom> maze, IPlayerRepository playerRepository)
     {
-        _mazeService = mazeService ?? throw new ArgumentNullException(nameof(mazeService));
-        _maze = maze ?? throw new ArgumentNullException(nameof(maze));
-        _playerRepository = playerRepository ?? throw new ArgumentNullException(nameof(playerRepository));
+        CheckNulls(mazeService, maze, playerRepository);
+        
+        _playerRepository = playerRepository;
         
         _objectCreators = new Dictionary<ObjectType, Func<Location, IPositionable>>
         {
@@ -32,7 +31,7 @@ public class MazeObjectFactory : IMazeObjectFactory
             { ObjectType.Entrance, location => new Entrance(location) },
             { ObjectType.Amarok, location => new Amarok(location) },
             { ObjectType.Pit, location => new Pit(location) },
-            { ObjectType.Maelstrom, location => new Maelstrom(location, _mazeService, _maze) }
+            { ObjectType.Maelstrom, location => new Maelstrom(location, mazeService, maze) }
         };
     }
     public IPositionable CreateObject(ObjectType objectType, Location location)

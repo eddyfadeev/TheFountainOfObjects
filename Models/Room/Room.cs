@@ -17,7 +17,7 @@ public class Room : IRoom
     public bool IsVisited { get; private set; }
     public Location Location { get; set; }
 
-    public Color RoomColor => SetRoomColor();
+    public Color RoomColor => DetermineRoomColor();
 
     public bool IsOccupied => Occupants.Count != 0;
     
@@ -25,7 +25,7 @@ public class Room : IRoom
     
     public bool IsEntrance => Occupants.OfType<IEntrance>().Any();
 
-    public List<MessageType> Messages => SetRoomMessages();
+    public List<MessageType> Messages => GenerateRoomMessages();
 
     public Room(Location location, IMazeService<IRoom> mazeService)
     {
@@ -33,9 +33,12 @@ public class Room : IRoom
         Occupants = new List<IPositionable>();
 
         Location = location;
+
+        IsVisited = false;
         
-        // Map visibility switch
+        #if DEBUG
         IsVisited = true;
+        #endif
     }
 
     public void AddObject(IPositionable obj)
@@ -56,7 +59,7 @@ public class Room : IRoom
     
     public void Visit() => IsVisited = true;
     
-    private Color SetRoomColor() => 
+    private Color DetermineRoomColor() => 
         IsVisited switch
         {
             true when IsOccupiedBy<Player.Player>() => Color.Green,
@@ -69,7 +72,7 @@ public class Room : IRoom
             _ => Color.Grey11 
         };
     
-    private List<MessageType> SetRoomMessages()
+    private List<MessageType> GenerateRoomMessages()
     {
         var messages = new List<MessageType>();
         var dangerInAdjacent = _mazeService.GetAdjacentRoomsOccupants(Location).Count != 0;
@@ -78,13 +81,13 @@ public class Room : IRoom
         {
             foreach (var occupant in Occupants)
             {
-                SetOccupantMessage(occupant, messages);
+                AddOccupantMessage(occupant, messages);
             }
         }
         
         if (dangerInAdjacent)
         {
-            SetAdjacentDangerMessages(messages);
+            AddAdjacentDangerMessages(messages);
         }
         else
         {
@@ -94,7 +97,7 @@ public class Room : IRoom
         return messages;
     }
 
-    private void SetOccupantMessage(IPositionable occupant, List<MessageType> messages)
+    private void AddOccupantMessage(IPositionable occupant, List<MessageType> messages)
     {
         switch (occupant)
         {
@@ -120,7 +123,7 @@ public class Room : IRoom
         }
     }
     
-    private void SetAdjacentDangerMessages(List<MessageType> messages)
+    private void AddAdjacentDangerMessages(List<MessageType> messages)
     {
         var adjacentOccupants = _mazeService.GetAdjacentRoomsOccupants(Location);
         

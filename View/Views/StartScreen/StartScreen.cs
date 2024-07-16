@@ -3,7 +3,7 @@ using Interfaces.View.TableBuilder;
 
 namespace View.Views.StartScreen;
 
-public sealed class StartScreen : MenuView
+public sealed class StartScreen : NonSelectableMenuView
 {
     private readonly ITableBuilderService _tableBuilderService;
     
@@ -33,9 +33,7 @@ public sealed class StartScreen : MenuView
         
         AddCaption(startScreen);
 
-        LayoutManager.MainWindow.Update(startScreen);
-        LayoutManager.UpdateLayout();
-        Console.ReadKey();
+        UpdateLayout(startScreen);
     }
     
     private Table ComposeIntro()
