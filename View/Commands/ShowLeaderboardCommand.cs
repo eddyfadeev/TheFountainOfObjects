@@ -26,6 +26,6 @@ public class ShowLeaderboardCommand : ICommand
         var leaderboardView = new LeaderboardView(_layoutManager, _playerRepository, _tableBuilderService);
         leaderboardView.Display();
 
-        return CommandType.Back;
+        return MenuType.Back;
     }
 }

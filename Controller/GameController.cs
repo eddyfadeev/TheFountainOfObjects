@@ -1,4 +1,5 @@
-﻿using Interfaces.Controller;
+﻿using Controller.Handlers;
+using Interfaces.Controller;
 using Interfaces.Models.Database;
 using Interfaces.Models.Maze;
 using Interfaces.Models.Objects;
@@ -25,11 +26,12 @@ public class GameController
     
     public GameController(IServiceProvider serviceProvider)
     {
+        var settingsHandler = serviceProvider.GetRequiredService<ISettingsHandler>();
         _serviceProvider = serviceProvider;
-        var menuCommandFactory = _serviceProvider.GetRequiredService<IMenuCommandFactory>();
         _playerRepository = _serviceProvider.GetRequiredService<IPlayerRepository>();
-        var gameSettingsRepository = _serviceProvider.GetRequiredService<IGameSettingsManager>();
-        _mainMenuHandler = new MainMenuHandler(menuCommandFactory, _playerRepository, gameSettingsRepository);
+        var menuHandler = _serviceProvider.GetRequiredService<IMenuHandler>();
+        var playerHandler = _serviceProvider.GetRequiredService<IPlayerHandler>();
+        _mainMenuHandler = new MainMenuHandler(menuHandler, settingsHandler, playerHandler);
         _maze = _serviceProvider.GetRequiredService<IMaze<IRoom>>();
         _gameView = _serviceProvider.GetRequiredService<IGameView>();
     }
@@ -62,6 +64,42 @@ public class GameController
                 case MainMenuEntries.Exit:
                     return;
             }
+        } while (true);
+    }
+    
+    private void StartGame()
+    {
+        var mazeService = _serviceProvider.GetRequiredService<IMazeService<IRoom>>();
+        var playerActionsHandler = _serviceProvider.GetRequiredService<IPlayerActionsHandler>();
+        _playerRepository.Player!.Revive();
+        _playerRepository.Player!.ResetArrows();
+
+        playerActionsHandler.OnPlayerActionCompleted += OnPlayerActionCompleted;
+        
+        
+        _gameView.Display();
+        do
+        {
+            var pressedKey = Console.ReadKey(true);
+            ProcessKeyPress(pressedKey.Key);
+            
+            CheckForDanger(_playerRepository.Player!);
+
+            if (!_playerRepository.Player.IsAlive)
+            {
+                // TODO: Game over screen
+                break;
+            }
+
+            if (CheckIfPlayerWon(_playerRepository.Player!.Location))
+            {
+                // TODO: Winning screen and save score
+                break;
+            }
+            
+            var newMaze = mazeService.UpdateMaze(_maze);
+            
+            _gameView.UpdateMaze(newMaze);
         } while (true);
     }
     
@@ -100,44 +138,6 @@ public class GameController
         
     }
 
-    private void StartGame()
-    {
-        var mazeService = _serviceProvider.GetRequiredService<IMazeService<IRoom>>();
-        var playerActionsHandler = _serviceProvider.GetRequiredService<IPlayerActionsHandler>();
-        _playerRepository.Player!.Revive();
-        _playerRepository.Player!.ResetArrows();
-
-        playerActionsHandler.OnPlayerActionCompleted += OnPlayerActionCompleted;
-        
-        
-        _gameView.Display();
-        do
-        {
-            var pressedKey = Console.ReadKey(true);
-            ProcessKeyPress(pressedKey.Key);
-            
-            CheckForDanger(_playerRepository.Player!);
-
-            if (!_playerRepository.Player.IsAlive)
-            {
-                // TODO: Game over screen
-                break;
-            }
-
-            if (CheckIfPlayerWon(_playerRepository.Player!.Location))
-            {
-                // TODO: Winning screen and save score
-                break;
-            }
-            
-            var newMaze = mazeService.UpdateMaze(_maze);
-            
-            _gameView.UpdateMaze(newMaze);
-        } while (true);
-    }
-    
-    private void Attack(IPlayer player, IDangerous dangerous) => dangerous.Attack(player);
-
     private void CheckForDanger(IPlayer player)
     {
         var location = player.Location;
@@ -149,8 +149,10 @@ public class GameController
 
         var dangerousObject = _maze[location].GetObject<IDangerous>();
             
-        Attack(player, dangerousObject);
+        AttackPlayer(player, dangerousObject);
     }
+    
+    private void AttackPlayer(IPlayer player, IDangerous dangerous) => dangerous.Attack(player);
 
     private bool CheckIfPlayerWon(Location location)
     {

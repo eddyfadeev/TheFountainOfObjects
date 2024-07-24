@@ -21,7 +21,7 @@ public static partial class Utilities
         Console.Clear();
         Console.CursorVisible = true;
         
-        var number = AnsiConsole.Ask<int>(message);
+        var number = AnsiConsole.Ask<int>("");
 
         while (number < 0 || number > max)
         {

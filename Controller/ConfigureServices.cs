@@ -1,4 +1,7 @@
-﻿using Interfaces.Controller;
+﻿using Controller.Factories;
+using Controller.Handlers;
+using Controller.Handlers.Settings;
+using Interfaces.Controller;
 using Interfaces.Models.Database;
 using Interfaces.Models.Maze;
 using Interfaces.Models.Player;
@@ -56,5 +59,9 @@ public static class ConfigureServices
         services.AddTransient<ISideMenu<HelpType>, HelpView>();
         services.AddTransient<ISideMenu<LeaderboardType>, LeaderboardView>();
         services.AddTransient<ISideMenu<GameStatsType>, GameStatsView>();
+        services.AddTransient<ISettingOptionsFactory, SettingOptionsFactory>();
+        services.AddTransient<ISettingsHandler, SettingsHandler>();
+        services.AddTransient<IMenuHandler, MenuHandler>();
+        services.AddTransient<IPlayerHandler, PlayerHandler>();
     }
 }

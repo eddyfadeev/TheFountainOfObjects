@@ -1,6 +1,6 @@
 ﻿namespace Shared.Enums.Views.Factory;
 
-public enum CommandType
+public enum MenuType
 {
     StartScreen,
     MainMenu,

@@ -22,6 +22,6 @@ public class ShowHelpScreenCommand : ICommand
         var helpScreen = new HelpView(_layoutManager, _tableBuilderService);
         helpScreen.Display();
         
-        return CommandType.Back;
+        return MenuType.Back;
     }
 }

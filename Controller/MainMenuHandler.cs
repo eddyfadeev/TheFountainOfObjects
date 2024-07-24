@@ -1,4 +1,4 @@
-﻿using Interfaces.Models.Database;
+﻿using Interfaces.Controller;
 using Interfaces.Models.Repository;
 using Interfaces.Services.GameSettings;
 using Interfaces.View.Factory;
@@ -8,28 +8,27 @@ using Shared;
 using Shared.Enums.Views.Factory;
 using Shared.Enums.Views.Menus;
 using View.Views.CreatePlayerScreen;
-using View.Views.SettingsMenu;
 
 namespace Controller;
 
 internal class MainMenuHandler
 {
-    private readonly IMenuCommandFactory _menuCommandFactory;
-    private readonly IPlayerRepository _playerRepository;
-    private readonly IGameSettingsManager _gameSettingsManager;
+    private readonly IMenuHandler _menuHandler;
+    private readonly ISettingsHandler _settingsHandler;
+    private readonly IPlayerHandler _playerHandler;
 
     public MainMenuHandler(
-        IMenuCommandFactory menuCommandFactory, 
-        IPlayerRepository playerRepository, 
-        IGameSettingsManager gameSettingsManager
+        IMenuHandler menuHandler, 
+        ISettingsHandler settingsHandler,
+        IPlayerHandler playerHandler
         )
     {
-        _menuCommandFactory = menuCommandFactory;
-        _playerRepository = playerRepository;
-        _gameSettingsManager = gameSettingsManager;
+        _menuHandler = menuHandler;
+        _settingsHandler = settingsHandler;
+        _playerHandler = playerHandler;
     }
 
-    public void ShowStartScreen() => ShowMenu(CommandType.StartScreen);
+    public void ShowStartScreen() => _menuHandler.ShowMenu(MenuType.StartScreen);
     
     public void ShowCreatePlayerMenu()
     {
@@ -37,82 +36,104 @@ internal class MainMenuHandler
         
         while (isRunning)
         {
-            var userChoice = ShowMenu(CommandType.CreatePlayerMenu);
+            var userChoice = _menuHandler.ShowMenu(MenuType.CreatePlayerMenu);
             
             if (userChoice is PLayerInitMenuEntries.LoadPlayer)
             {
                 
-                isRunning = !TryLoadPlayer();
+                isRunning = !_playerHandler.TryLoadPlayer();
             }
             else
             {
-                isRunning = !CreatePlayerScreen();
+                isRunning = !_playerHandler.CreatePlayer();
             }
         }
     }
     
-    public Enum? ShowMainMenu() => ShowMenu(CommandType.MainMenu);
+    public Enum? ShowMainMenu() => _menuHandler.ShowMenu(MenuType.MainMenu);
     
     public void ShowSettingsMenu()
     {
-        const int maxDangerous = 3;
-        const int maxArrows = 5;
-
         do
         {
-            var userChoice = ShowMenu(CommandType.SettingsMenu);
+            var userChoice = _menuHandler.ShowMenu(MenuType.SettingsMenu);
             
             if (userChoice is SettingsMenuEntries.Back)
             {
                 break;
             }
 
-            switch (userChoice)
+            if (userChoice is null)
             {
-                case SettingsMenuEntries.Amaroks:
-                    _gameSettingsManager.AmaroksCount = GetUserInput("Enter the number of Amaroks (0-3): ", maxDangerous);
-                    break;
-                case SettingsMenuEntries.Pits:
-                    _gameSettingsManager.PitsCount = GetUserInput("Enter the number of Pits (0-3): ", maxDangerous);
-                    break;
-                case SettingsMenuEntries.Maelstroms:
-                    _gameSettingsManager.MaelstromsCount = GetUserInput("Enter the number of Maelstroms (0-3): ", maxDangerous);
-                    break;
-                case SettingsMenuEntries.Arrows:
-                    _gameSettingsManager.ArrowsCount = GetUserInput("Enter the number of Arrows (0-5): ", maxArrows);
-                    break;
-                case SettingsMenuEntries.FieldSize:
-                    var newMazeSize = SettingsMenuView.AskForMazeSize();
-                    _gameSettingsManager.SetMazeSize(newMazeSize);
-                    break;
-                case SettingsMenuEntries.ChangePlayerName:
-                    _playerRepository.Player!.Name = ProcessUserNameInput();
-                    break;
+                Console.WriteLine("Invalid menu entry. Please try again.");
             }
-
-            userChoice = null;
+            else
+            {
+                _settingsHandler.HandleSetting((SettingsMenuEntries)userChoice);
+            }
         } while (true);
     }
 
-    public void ShowLeaderboardMenu() => ShowMenu(CommandType.LeaderboardMenu);
+    public void ShowLeaderboardMenu() => _menuHandler.ShowMenu(MenuType.LeaderboardMenu);
     
-    public void ShowHelpMenu() => ShowMenu(CommandType.HelpMenu);
+    public void ShowHelpMenu() => _menuHandler.ShowMenu(MenuType.HelpMenu);
+}
 
-    private bool CheckIfPlayerExists(string player)
+public class MenuHandler : IMenuHandler
+{
+    private readonly IMenuCommandFactory _menuCommandFactory;
+    
+    public MenuHandler(IMenuCommandFactory menuCommandFactory)
     {
-        try
-        {
-            _playerRepository.LoadPlayer(player);
-        }
-        catch (ArgumentException)
-        {
-            return false;
-        }
+        _menuCommandFactory = menuCommandFactory;
+    }
+    
+    public Enum? ShowMenu(MenuType menuType)
+    {
+        var command = _menuCommandFactory.Create(menuType);
+        var userChoice = command.Execute();
+        
+        return userChoice;
+    }
+}
 
+public interface IMenuHandler
+{
+    Enum? ShowMenu(MenuType menuType);
+}
+
+public class PlayerHandler : IPlayerHandler
+{
+    private readonly IPlayerRepository _playerRepository;
+    private readonly IGameSettingsManager _gameSettingsManager;
+    private readonly IMenuHandler _menuHandler;
+    
+    public PlayerHandler(
+        IPlayerRepository playerRepository, 
+        IGameSettingsManager gameSettingsManager,
+        IMenuHandler menuHandler
+        )
+    {
+        _playerRepository = playerRepository;
+        _gameSettingsManager = gameSettingsManager;
+        _menuHandler = menuHandler;
+    }
+    
+    public bool CreatePlayer()
+    {
+        var playerName = ProcessUserNameInput();
+        
+        _playerRepository.Player = 
+            new Player (_gameSettingsManager)
+            {
+                Name = playerName,
+                Score = 0,
+                Location = new Location()
+            };
+        
         return true;
     }
-
-    private string ProcessUserNameInput()
+    public string ProcessUserNameInput()
     {
         Console.Clear();
         
@@ -135,24 +156,23 @@ internal class MainMenuHandler
         } while (true);
     }
     
-    private bool CreatePlayerScreen()
+    public bool CheckIfPlayerExists(string playerName)
     {
-        var playerName = ProcessUserNameInput();
-        
-        _playerRepository.Player = 
-            new Player (_gameSettingsManager)
-            {
-                Name = playerName,
-                Score = 0,
-                Location = new Location()
-            };
-        
+        try
+        {
+            _playerRepository.LoadPlayer(playerName);
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
+
         return true;
     }
-
-    private bool TryLoadPlayer()
+    
+    public bool TryLoadPlayer()
     {
-        var userChoice = ShowMenu(CommandType.LoadPlayerMenu);
+        var userChoice = _menuHandler.ShowMenu(MenuType.LoadPlayerMenu);
         
         if (userChoice is null)
         {
@@ -164,26 +184,12 @@ internal class MainMenuHandler
 
         return true;
     }
+}
 
-    private Enum? ShowMenu(CommandType commandType)
-    {
-        var command = _menuCommandFactory.Create(commandType);
-        
-        if (commandType is
-            CommandType.CreatePlayerMenu or
-            CommandType.LoadPlayerMenu or
-            CommandType.SettingsMenu or
-            CommandType.MainMenu)
-        {
-            var userChoice = command.Execute();
-            
-            return userChoice;
-        }
-        else
-        {
-            command.Execute();
-            
-            return null;
-        }
-    }
+public interface IPlayerHandler
+{
+    bool TryLoadPlayer();
+    bool CreatePlayer();
+    bool CheckIfPlayerExists(string playerName);
+    string ProcessUserNameInput();
 }
