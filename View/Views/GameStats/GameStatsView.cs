@@ -1,5 +1,4 @@
-﻿using Interfaces.Models.Database;
-using Interfaces.View.LayoutManager;
+﻿using Interfaces.Models.Repository;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
 using Shared.Enums.Views.Menus;
@@ -8,10 +7,14 @@ namespace View.Views.GameStats;
 
 public class GameStatsView : ISideMenu<GameStatsType>
 {
+    private const string EntryColumn = "Entry";
+    private const string ValueColumn = "Value";
+    
     private readonly ITableBuilderService _tableBuilderService;
     private readonly IPlayerRepository _playerRepository;
 
     private readonly string _menuName;
+    
     public GameStatsView(ITableBuilderService tableBuilderService, IPlayerRepository playerRepository)
     {
         _tableBuilderService = tableBuilderService;
@@ -20,12 +23,7 @@ public class GameStatsView : ISideMenu<GameStatsType>
         _menuName = "Stats and Messages";
     }
 
-    public Table GetSideTable(GameStatsType menuType)
-    {
-        var sideStats = CreateStatsTable();
-
-        return sideStats;
-    }
+    public Table GetSideTable(GameStatsType menuType) => CreateStatsTable();
 
     private Table CreateStatsTable()
     {
@@ -40,7 +38,7 @@ public class GameStatsView : ISideMenu<GameStatsType>
     private Table PrepareStats()
     {
         var statsTable = _tableBuilderService.CreateInnerTable();
-        statsTable.AddColumns("Entry", "Value");
+        statsTable.AddColumns(EntryColumn, ValueColumn);
         
         AddStats(statsTable);
 

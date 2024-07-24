@@ -3,7 +3,6 @@ using Interfaces.Models.Objects;
 using Interfaces.Models.Player;
 using Interfaces.Services;
 using Model.Extensions;
-using Model.Maze;
 using Shared;
 
 namespace Model.Objects.Dangerous;
@@ -14,13 +13,9 @@ public class Maelstrom : IDangerous
     private readonly IMaze<IRoom> _maze;
     public Location Location { get; set; }
     
-    public Maelstrom(int x, int y, IMazeService<IRoom> mazeService, IMaze<IRoom> maze)
+    public Maelstrom(Location location, IMazeService<IRoom> mazeService, IMaze<IRoom> maze)
     {
-        Location = new Location
-        {
-            X = x,
-            Y = y
-        };
+        Location = location;
         
         _mazeService = mazeService;
         _maze = maze;
@@ -45,8 +40,7 @@ public class Maelstrom : IDangerous
         
         newPlayerLocation = _mazeService.GetAdjustedLocation(newPlayerLocation);
         newMaelstromLocation = _mazeService.GetAdjustedLocation(newMaelstromLocation);
-
-
+        
         var currentRoom = _maze[player.Location];
         var newPlayerRoom = _maze[newPlayerLocation];
         var newMaelstromRoom = _maze[newMaelstromLocation];
@@ -58,5 +52,9 @@ public class Maelstrom : IDangerous
         
         player.SetPosition(newPlayerLocation);
         Location = newMaelstromLocation;
+
+        var nextMaelstrom = newPlayerRoom.GetObject<Maelstrom>();
+
+        nextMaelstrom?.Attack(player);
     }
 }

@@ -2,6 +2,6 @@
 
 public interface IRoomPopulator
 {
-    void GenerateRooms();
-    void SetRoomOccupants();
+    void InitializeRooms();
+    void PopulateRooms();
 }

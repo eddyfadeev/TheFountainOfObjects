@@ -1,15 +1,16 @@
-﻿using Interfaces.Models.Database;
-using Interfaces.Models.Player;
+﻿using Interfaces.Models.Player;
+using Interfaces.Models.Repository;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
-using Model.Player;
 using Shared.Enums.Views.Menus;
 
 namespace View.Views.Leaderboard;
 
-public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
+public sealed class LeaderboardView : NonSelectableMenuView, ISideMenu<LeaderboardType>
 {
+    private const int MaxSideEntries = 10;
+    
     private readonly ITableBuilderService _tableBuilderService;
     
     private readonly List<IPlayerDTO> _players;
@@ -21,7 +22,7 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
         _tableBuilderService = tableBuilderService;
         
         MenuName = "Leaderboard";
-        _players = playerRepository.GetAllPlayers();
+        _players = playerRepository.GetAllPlayers()!;
     }
     
     public override void Display()
@@ -29,10 +30,8 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
         LayoutManager.SupportWindowIsVisible = false;
         
         var leaderboardMenu = CreateLeaderboardTable(LeaderboardType.LeaderboardMenu).Centered();
-
-        LayoutManager.MainWindow.Update(leaderboardMenu);
-        LayoutManager.UpdateLayout();
-        Console.ReadKey();
+        
+        UpdateLayout(leaderboardMenu);
     }
 
     public Table GetSideTable(LeaderboardType menuType)
@@ -70,7 +69,7 @@ public sealed class LeaderboardView : MenuView, ISideMenu<LeaderboardType>
         leaderboardType switch
         {
             LeaderboardType.LeaderboardMenu => _players.Count,
-            LeaderboardType.LeaderboardSideMenu => _players.Count <= 10? _players.Count : 10,
+            LeaderboardType.LeaderboardSideMenu => Math.Min(_players.Count, MaxSideEntries),
             _ => throw new ArgumentException("Wrong leaderboard type")
         };
     

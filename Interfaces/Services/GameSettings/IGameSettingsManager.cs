@@ -1,8 +1,8 @@
 ﻿using Shared.Enums.Models.Objects.Maze;
 
-namespace Interfaces.Models.GameSettings;
+namespace Interfaces.Services.GameSettings;
 
-public interface IGameSettingsRepository
+public interface IGameSettingsManager
 {
     int PitsCount { get; set; }
     int MaelstromsCount { get; set; }

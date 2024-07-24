@@ -21,7 +21,7 @@ public class ShowStartScreenCommand : ICommand
     {
         var startScreen = new StartScreen(_layoutManager, _tableBuilderService);
         startScreen.Display();
-            
-        return CommandType.Back;
+        
+        return MenuType.Back;
     }
 }

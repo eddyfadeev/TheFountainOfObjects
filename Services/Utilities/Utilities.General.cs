@@ -18,9 +18,10 @@ public static partial class Utilities
     
     public static int GetUserInput(string message, int max)
     {
+        Console.Clear();
         Console.CursorVisible = true;
         
-        var number = AnsiConsole.Ask<int>(message);
+        var number = AnsiConsole.Ask<int>("");
 
         while (number < 0 || number > max)
         {
@@ -69,5 +70,16 @@ public static partial class Utilities
         table.Caption = new TableTitle(
             "\nPress any key to continue...",
             new Style(foreground: Color.White));
+    }
+    
+    public static void CheckNulls(params object?[] objects)
+    {
+        foreach (var obj in objects)
+        {
+            if (obj is null)
+            {
+                throw new ArgumentNullException(nameof(obj));
+            }
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Interfaces.Models.Database;
 using Interfaces.Models.Player;
+using Interfaces.Models.Repository;
 using Model.Player;
 
-namespace Services.Repositories;
+namespace Model.Repository;
 
 public class PlayerRepository(IDatabaseService databaseService) : IPlayerRepository
 {

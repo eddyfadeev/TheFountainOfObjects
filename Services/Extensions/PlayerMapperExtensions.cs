@@ -1,6 +1,6 @@
 ﻿using Interfaces.Models.Database;
-using Interfaces.Models.GameSettings;
 using Interfaces.Models.Player;
+using Interfaces.Services.GameSettings;
 using Model.Player;
 
 namespace Services.Extensions;
@@ -15,8 +15,8 @@ public static class PlayerMapperExtensions
     /// </summary>
     /// <param name="dto">The PlayerDTO object to convert.</param>
     /// <returns>The converted Player object.</returns>
-    public static IPlayer ToDomain(this IPlayerDTO dto, IGameSettingsRepository gameSettingsRepository) => 
-        new Player(gameSettingsRepository)
+    public static IPlayer ToDomain(this IPlayerDTO dto, IGameSettingsManager gameSettingsManager) => 
+        new Player(gameSettingsManager)
         {
             Id = dto.Id,
             Name = dto.Name,

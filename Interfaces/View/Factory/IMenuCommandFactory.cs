@@ -5,5 +5,5 @@ namespace Interfaces.View.Factory;
 
 public interface IMenuCommandFactory
 {
-    ICommand Create(CommandType commandType);
+    ICommand Create(MenuType menuType);
 }

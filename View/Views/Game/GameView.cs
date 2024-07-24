@@ -1,7 +1,7 @@
-﻿using Interfaces.Models.Database;
-using Interfaces.Models.Factory;
-using Interfaces.Models.Maze;
+﻿using Interfaces.Models.Maze;
+using Interfaces.Models.Repository;
 using Interfaces.Services;
+using Interfaces.Services.Factories;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
@@ -10,11 +10,11 @@ using Shared.Enums.Views.Menus;
 
 namespace View.Views.Game;
 
-public class GameView : MenuView, IGameView
+public class GameView : NonSelectableMenuView, IGameView
 {
     private readonly ITableBuilderService _tableBuilderService;
     private readonly IMazeGeneratorService _mazeGeneratorService;
-    private readonly IMessagesFactory _messagesFactory;
+    private readonly IMessageFactory _messageFactory;
     private readonly IPlayerRepository _playerRepository;
     private readonly IMaze<IRoom> _maze;
     
@@ -30,7 +30,7 @@ public class GameView : MenuView, IGameView
         ITableBuilderService tableBuilderService,
         ILayoutManager layoutManager, 
         IMazeGeneratorService mazeGeneratorService,
-        IMessagesFactory messagesFactory,
+        IMessageFactory messageFactory,
         IPlayerRepository playerRepository,
         IMaze<IRoom> maze,
         ISideMenu<HelpType> helpView,
@@ -39,7 +39,7 @@ public class GameView : MenuView, IGameView
     {
         _tableBuilderService = tableBuilderService;
         _mazeGeneratorService = mazeGeneratorService;
-        _messagesFactory = messagesFactory;
+        _messageFactory = messageFactory;
         _playerRepository = playerRepository;
         _maze = maze;
         
@@ -81,7 +81,7 @@ public class GameView : MenuView, IGameView
 
     public void UpdateSpecialMessage(MessageType messageType)
     {
-        var messageToUpdate = _messagesFactory.CreateMessage(messageType);
+        var messageToUpdate = _messageFactory.Create(messageType);
         
         SpecialMessage = messageToUpdate.GetMessage();
     }
@@ -124,7 +124,7 @@ public class GameView : MenuView, IGameView
         
         foreach (var message in roomMessages)
         {
-            var messageText = _messagesFactory.CreateMessage(message).GetMessage();
+            var messageText = _messageFactory.Create(message).GetMessage();
 
             messagesTable.AddRow(messageText);
         }
