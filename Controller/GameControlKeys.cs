@@ -1,10 +1,11 @@
-﻿using Shared.Enums.Models;
+﻿using Shared.Enums.Controller;
+using Shared.Enums.Models;
 
 namespace Controller;
 
 internal static class GameControlKeys
 {
-    private static List<ConsoleKey> DirectionKeys { get; } =
+    private static readonly HashSet<ConsoleKey> DirectionKeys =
     [
         ConsoleKey.W,
         ConsoleKey.A,
@@ -16,31 +17,33 @@ internal static class GameControlKeys
         ConsoleKey.RightArrow
     ];
 
-    private static List<ConsoleKey> InteractionKeys { get; } =
+    private static readonly HashSet<ConsoleKey> InteractionKeys =
     [
         ConsoleKey.E,
         ConsoleKey.Enter
     ];
     
-    private static ConsoleKey AttackTrigger => ConsoleKey.Spacebar;
-    private static ConsoleKey PauseKey => ConsoleKey.Escape;
+    private static readonly ConsoleKey AttackTrigger = ConsoleKey.Spacebar;
+    private static readonly ConsoleKey PauseKey = ConsoleKey.Escape;
 
-    private static readonly Dictionary<Enum, object> GameKeys = new()
+    private static readonly Dictionary<TypeOfAction, object> GameKeys = new()
     {
-        {TypeOfAction.Attack, AttackTrigger},
-        {TypeOfAction.Move, DirectionKeys},
-        {TypeOfAction.Use, InteractionKeys},
-        {TypeOfAction.Pause, PauseKey}
+        { TypeOfAction.Attack, AttackTrigger },
+        { TypeOfAction.Move, DirectionKeys },
+        { TypeOfAction.Use, InteractionKeys },
+        { TypeOfAction.Pause, PauseKey }
     };
     
     public static TypeOfAction GetTypeOfAction(ConsoleKey key)
     {
-        foreach (var keyType in GameKeys)
+        foreach (var (action, keyObj) in GameKeys)
         {
-            if (keyType.Value is List<ConsoleKey> keyList && keyList.Contains(key) ||
-                keyType.Value is ConsoleKey singleKey && singleKey == key)
+            switch (keyObj)
             {
-                return (TypeOfAction)keyType.Key;
+                case HashSet<ConsoleKey> keySet when keySet.Contains(key):
+                    return action;
+                case ConsoleKey singleKey when singleKey == key:
+                    return action;
             }
         }
         

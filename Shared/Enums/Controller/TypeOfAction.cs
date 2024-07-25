@@ -1,4 +1,4 @@
-﻿namespace Controller;
+﻿namespace Shared.Enums.Controller;
 
 public enum TypeOfAction 
 {

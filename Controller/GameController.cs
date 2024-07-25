@@ -1,16 +1,13 @@
 ﻿using Controller.Handlers;
 using Interfaces.Controller;
-using Interfaces.Models.Database;
 using Interfaces.Models.Maze;
 using Interfaces.Models.Objects;
 using Interfaces.Models.Player;
 using Interfaces.Models.Repository;
 using Interfaces.Services;
-using Interfaces.Services.GameSettings;
-using Interfaces.View.Factory;
 using Interfaces.View.Menu;
-using Model.Objects;
 using Shared;
+using Shared.Enums.Controller;
 using Shared.Enums.Views.Menus;
 using Shared.Enums.Views.Messages;
 
