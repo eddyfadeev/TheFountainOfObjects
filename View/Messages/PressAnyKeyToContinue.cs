@@ -4,5 +4,5 @@ namespace View.Messages;
 
 public sealed class PressAnyKeyToContinue : IMessage
 {
-    public string GetMessage() => "[white]Press any key to continue...[/]";
+    public string GetMessage() => "[white]\nPress any key to continue...[/]";
 }

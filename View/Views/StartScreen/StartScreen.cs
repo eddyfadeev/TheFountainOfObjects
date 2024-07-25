@@ -1,5 +1,7 @@
 ﻿using Interfaces.View.LayoutManager;
 using Interfaces.View.TableBuilder;
+using View.Extensions;
+using View.TableBuilder;
 
 namespace View.Views.StartScreen;
 
@@ -31,7 +33,7 @@ public sealed class StartScreen : NonSelectableMenuView
         var startScreen = ComposeIntro();
         LayoutManager.SupportWindowIsVisible = false;
         
-        AddCaption(startScreen);
+        startScreen.AddCaption();
 
         UpdateLayout(startScreen);
     }

@@ -65,13 +65,6 @@ public static partial class Utilities
             )).ToList();
     }
     
-    public static void AddCaption(Table table)
-    {
-        table.Caption = new TableTitle(
-            "\nPress any key to continue...",
-            new Style(foreground: Color.White));
-    }
-    
     public static void CheckNulls(params object?[] objects)
     {
         if (Array.Exists(objects, obj => obj is null))

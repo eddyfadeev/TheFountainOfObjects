@@ -4,6 +4,8 @@ using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
 using Shared.Enums.Views.Menus;
+using View.Extensions;
+using View.TableBuilder;
 
 namespace View.Views.Leaderboard;
 
@@ -52,7 +54,7 @@ public sealed class LeaderboardView : NonSelectableMenuView, ISideMenu<Leaderboa
 
         if (leaderboardType is LeaderboardType.LeaderboardMenu)
         {
-            AddCaption(table);
+            table.AddCaption();
             leaderboardTable.Centered();
         }
         

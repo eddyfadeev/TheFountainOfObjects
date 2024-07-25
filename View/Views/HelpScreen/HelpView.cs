@@ -2,6 +2,8 @@
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
 using Shared.Enums.Views.Menus;
+using View.Extensions;
+using View.TableBuilder;
 
 namespace View.Views.HelpScreen;
 
@@ -67,7 +69,7 @@ public class HelpView : NonSelectableMenuView, ISideMenu<HelpType>
 
         if (helpType is HelpType.HelpMenu)
         {
-            AddCaption(table);
+            table.AddCaption();
         }
 
         table.AddRow(helpTable);
