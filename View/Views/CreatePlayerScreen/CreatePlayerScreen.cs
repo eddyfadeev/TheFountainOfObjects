@@ -1,27 +1,18 @@
-﻿namespace View.Views.CreatePlayerScreen;
+﻿using Interfaces.Models.Messages;
+using Interfaces.Services.Factories;
+using Shared.Enums.Views.Messages;
+
+namespace View.Views.CreatePlayerScreen;
 
 public class CreatePlayerScreen
 {
-    public string AskForUserName()
-    {
-        const string message = "Please enter your name:";
-        var userName = GetUserInput($"[white]{ message }[/]");
-        
-        return userName;
-    }
+    private readonly IMessage _enterNameMessage;
 
-    public void ShowAlreadyExistsMessage()
+    public CreatePlayerScreen(IMessageFactory messageFactory)
     {
-        const string message = "This name is already taken. Please, choose another one.";
-        
-        AnsiConsole.MarkupLine($"[red]{ message }[/]");
+        _enterNameMessage = messageFactory.Create(MessageType.EnterNameMessage);
     }
     
-    public void ShowPlayerCreatedMessage()
-    {
-        const string message = "Player created";
-        
-        AnsiConsole.MarkupLine($"[green]{ message }[/]");
-    }
-    
+    public string AskForUserName() => GetUserInput( _enterNameMessage.GetMessage());
 }
+

@@ -1,5 +1,5 @@
 ﻿using Interfaces.Models.Messages;
-using Shared.Enums.Models.Messages;
+using Shared.Enums.Views.Messages;
 
 namespace Interfaces.Services.Factories;
 

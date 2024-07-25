@@ -1,4 +1,4 @@
-﻿namespace Shared.Enums.Models.Messages;
+﻿namespace Shared.Enums.Views.Messages;
 
 public enum MessageType
 {
@@ -21,5 +21,9 @@ public enum MessageType
     FountainIsAlreadyActivated,
     Attack,
     CantShootThere,
-    CantMoveThere
+    CantMoveThere,
+    PlayerAlreadyExistsMessage,
+    PlayerCreatedMessage,
+    EnterNameMessage,
+    PressAnyKeyToContinue
 }

@@ -1,6 +1,6 @@
 ﻿using Interfaces.Models.Messages;
 
-namespace Model.Messages;
+namespace View.Messages;
 
 public class AttackDirection : IMessage
 {

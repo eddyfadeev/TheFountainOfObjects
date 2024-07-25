@@ -1,18 +1,31 @@
 ﻿using Interfaces.Models.Messages;
 using Interfaces.Services.Factories;
-using Model.Messages;
-using Shared.Enums.Models.Messages;
+using Shared.Enums.Views.Messages;
 using View.Messages;
 
-namespace Services.Factories;
+namespace View.Factories;
 
 public class MessageFactory : IMessageFactory
 {
-    private readonly Dictionary<MessageType, Func<IMessage>> _messageCreators;
+    private readonly Dictionary<MessageType, Func<IMessage>> _messageFactories;
 
     public MessageFactory()
     {
-        _messageCreators = new Dictionary<MessageType, Func<IMessage>>
+        _messageFactories = InitializeMessageFactories();
+    }
+    
+    public IMessage Create(MessageType messageType)
+    {
+        if (_messageFactories.TryGetValue(messageType, out var factory))
+        {
+            return factory();
+        }
+        
+        throw new ArgumentException($"No such message type { messageType.ToString() }.", nameof(messageType));
+    }
+
+    private static Dictionary<MessageType, Func<IMessage>> InitializeMessageFactories() =>
+        new()
         {
             { MessageType.FeelNothing, () => new FeelNothing() },
             { MessageType.AmarokNearby, () => new AmarokNearby() },
@@ -33,16 +46,10 @@ public class MessageFactory : IMessageFactory
             { MessageType.FountainIsAlreadyActivated, () => new FountainIsAlreadyActivated() },
             { MessageType.Attack, () => new AttackDirection() },
             { MessageType.CantShootThere, () => new CantShootThere() },
-            { MessageType.CantMoveThere, () => new CantMoveThere() }
+            { MessageType.CantMoveThere, () => new CantMoveThere() },
+            { MessageType.PlayerAlreadyExistsMessage, () => new AlreadyExistsMessage() },
+            { MessageType.PlayerCreatedMessage, () => new PlayerCreated() },
+            { MessageType.EnterNameMessage, () => new EnterName() },
+            { MessageType.PressAnyKeyToContinue, () => new PressAnyKeyToContinue() }
         };
-    }
-    public IMessage Create(MessageType messageType)
-    {
-        if (_messageCreators.TryGetValue(messageType, out var creator))
-        {
-            return creator();
-        }
-        
-        throw new ArgumentException($"No such message type { nameof(messageType) }. Message factory.");
-    }
 }

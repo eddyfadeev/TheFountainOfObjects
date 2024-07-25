@@ -9,7 +9,7 @@ using Interfaces.View.Menu;
 using Model.Objects;
 using Shared;
 using Shared.Enums.Models;
-using Shared.Enums.Models.Messages;
+using Shared.Enums.Views.Messages;
 
 namespace Controller;
 

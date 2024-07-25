@@ -5,7 +5,7 @@ using Model.Creatures;
 using Model.Objects;
 using Model.Objects.Dangerous;
 using Shared;
-using Shared.Enums.Models.Messages;
+using Shared.Enums.Views.Messages;
 using Spectre.Console;
 
 namespace Model.Room;

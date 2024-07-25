@@ -16,6 +16,6 @@ public class ChangePlayerNameSettingsOption : ISettingsOptionHandler
 
     public void Handle()
     {
-        _playerRepository.Player!.Name = _playerHandler.ProcessUserNameInput();
+        _playerRepository.Player!.Name = _playerHandler.GetValidUserName();
     }
 }

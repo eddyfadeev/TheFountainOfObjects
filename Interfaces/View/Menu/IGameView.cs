@@ -1,4 +1,4 @@
-﻿using Shared.Enums.Models.Messages;
+﻿using Shared.Enums.Views.Messages;
 using Spectre.Console;
 
 namespace Interfaces.View.Menu;

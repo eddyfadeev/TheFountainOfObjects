@@ -23,7 +23,7 @@ using Services.Database.Helpers;
 using Services.Factories;
 using Services.MazeGeneration;
 using Shared.Enums.Views.Menus;
-using View.Factory;
+using View.Factories;
 using View.Layout;
 using View.TableBuilder;
 using View.Views.Game;
@@ -63,5 +63,6 @@ public static class ConfigureServices
         services.AddTransient<ISettingsHandler, SettingsHandler>();
         services.AddTransient<IMenuHandler, MenuHandler>();
         services.AddTransient<IPlayerHandler, PlayerHandler>();
+        services.AddTransient<IMessagesHandler, MessagesHandler>();
     }
 }

@@ -5,8 +5,8 @@ using Interfaces.Services.Factories;
 using Interfaces.View.LayoutManager;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
-using Shared.Enums.Models.Messages;
 using Shared.Enums.Views.Menus;
+using Shared.Enums.Views.Messages;
 
 namespace View.Views.Game;
 
