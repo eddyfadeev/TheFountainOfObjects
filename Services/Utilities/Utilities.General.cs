@@ -74,12 +74,9 @@ public static partial class Utilities
     
     public static void CheckNulls(params object?[] objects)
     {
-        foreach (var obj in objects)
+        if (Array.Exists(objects, obj => obj is null))
         {
-            if (obj is null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
+            throw new ArgumentNullException(nameof(objects), "One or more elements in the collection are null.");
         }
     }
 }

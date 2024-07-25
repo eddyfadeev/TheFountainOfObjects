@@ -18,14 +18,3 @@ public class SettingsHandler : ISettingsHandler
         settingToChange.Handle();
     }
 }
-
-/*
- * 
-                case SettingsMenuEntries.FieldSize:
-                    
-                    _gameSettingsManager.SetMazeSize(newMazeSize);
-                    break;
-                case SettingsMenuEntries.ChangePlayerName:
-                    _playerRepository.Player!.Name = ProcessUserNameInput();
-                    break;
- */
