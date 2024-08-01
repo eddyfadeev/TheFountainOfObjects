@@ -1,7 +1,8 @@
-﻿using Shared.Enums.Views.Messages;
+﻿using Interfaces.View.Menu;
+using Shared.Enums.Views.Messages;
 using Spectre.Console;
 
-namespace Interfaces.View.Menu;
+namespace Interfaces.View.Maze;
 
 public interface IGameView : INonSelectableMenu
 {

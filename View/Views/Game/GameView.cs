@@ -3,6 +3,7 @@ using Interfaces.Models.Repository;
 using Interfaces.Services;
 using Interfaces.Services.Factories;
 using Interfaces.View.LayoutManager;
+using Interfaces.View.Maze;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
 using Shared.Enums.Views.Menus;

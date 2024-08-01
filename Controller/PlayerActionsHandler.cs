@@ -5,6 +5,7 @@ using Interfaces.Models.Objects;
 using Interfaces.Models.Player;
 using Interfaces.Models.Repository;
 using Interfaces.Services;
+using Interfaces.View.Maze;
 using Interfaces.View.Menu;
 using Model.Objects;
 using Shared;

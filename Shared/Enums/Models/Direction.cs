@@ -2,6 +2,7 @@
 
 public enum Direction
 {
+    NotSelected,
     North,
     South,
     East,

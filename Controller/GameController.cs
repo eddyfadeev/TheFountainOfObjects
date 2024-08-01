@@ -5,9 +5,11 @@ using Interfaces.Models.Objects;
 using Interfaces.Models.Player;
 using Interfaces.Models.Repository;
 using Interfaces.Services;
+using Interfaces.View.Maze;
 using Interfaces.View.Menu;
 using Shared;
 using Shared.Enums.Controller;
+using Shared.Enums.Models;
 using Shared.Enums.Views.Menus;
 using Shared.Enums.Views.Messages;
 
@@ -118,9 +120,17 @@ public class GameController
                 
                 _gameView.UpdateMaze(newMaze);
                 var keyPress = Console.ReadKey(true);
-                var directionToAttack = GameControlKeys.GetDirectionFromKey(keyPress.Key);
 
-                playerActionsHandler.Attack(directionToAttack);
+                try
+                {
+                    var directionOfAttack = GameControlKeys.GetDirectionFromKey(keyPress.Key);
+                    
+                    playerActionsHandler.Attack(directionOfAttack);
+                } catch (ArgumentException)
+                {
+                    _gameView.UpdateSpecialMessage(MessageType.InvalidAttackKey);
+                }
+                
                 break;
             case TypeOfAction.Use:
                 playerActionsHandler.UseInRoom(_playerRepository.Player!.Location);

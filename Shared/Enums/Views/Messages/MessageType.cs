@@ -25,5 +25,6 @@ public enum MessageType
     PlayerAlreadyExistsMessage,
     PlayerCreatedMessage,
     EnterNameMessage,
-    PressAnyKeyToContinue
+    PressAnyKeyToContinue,
+    InvalidAttackKey,
 }

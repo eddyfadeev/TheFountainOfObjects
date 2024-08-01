@@ -11,6 +11,7 @@ using Interfaces.Services.Factories;
 using Interfaces.Services.GameSettings;
 using Interfaces.View.Factory;
 using Interfaces.View.LayoutManager;
+using Interfaces.View.Maze;
 using Interfaces.View.Menu;
 using Interfaces.View.TableBuilder;
 using Model.Maze;

@@ -50,6 +50,7 @@ public class MessageFactory : IMessageFactory
             { MessageType.PlayerAlreadyExistsMessage, () => new AlreadyExistsMessage() },
             { MessageType.PlayerCreatedMessage, () => new PlayerCreated() },
             { MessageType.EnterNameMessage, () => new EnterName() },
-            { MessageType.PressAnyKeyToContinue, () => new PressAnyKeyToContinue() }
+            { MessageType.PressAnyKeyToContinue, () => new PressAnyKeyToContinue() },
+            { MessageType.InvalidAttackKey, () => new InvalidAttackKey() },
         };
 }
